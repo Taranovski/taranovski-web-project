@@ -11,28 +11,29 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
  * @author Alyx
  */
 @Controller
-@RequestMapping(value = "/getAdminById")
 public class AdminController {
 
     @Autowired
     AdminRepository adminRepository;
 
-    @RequestMapping("/")
-    public String index(){
-        return "index";
-    }
-    
-    @RequestMapping("/getAdminById")
-    public String getAdminById(Model model) {
-        System.out.println("1");
-        model.addAttribute("admin", adminRepository.getById(1));
-        return "admin";
+    @RequestMapping("/admin")
+    public ModelAndView getAdminById(ModelAndView modelAndView) {
+        modelAndView.addObject("admin", adminRepository.getById(1));
+        modelAndView.setViewName("admin.jsp");
+        return modelAndView;
     }
 
+    @RequestMapping("/newjsp")
+    public ModelAndView getAdminById1(ModelAndView modelAndView) {
+        modelAndView.addObject("admin", adminRepository.getById(2));
+        modelAndView.setViewName("newjsp.jsp");
+        return modelAndView;
+    }
 }

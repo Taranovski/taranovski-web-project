@@ -92,12 +92,12 @@
             <version>2.5.0-RC1</version>
         </dependency>
         
-        <!-- oracle jdbc -->
-<!--        <dependency>
+         <!--oracle jdbc--> 
+        <dependency>
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc12</artifactId>
             <version>12c</version>
-        </dependency>-->
+        </dependency>
         
     </dependencies>
 

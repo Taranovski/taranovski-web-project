@@ -10,7 +10,7 @@
     </head>
     <body>
         <h1>Hello World!</h1>
-        <form method="post" action="getAdminById">
+        <form method="post" action="admin.html">
             <input type="submit" value="getAdminById" />
         </form>
     </body>

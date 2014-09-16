@@ -1,11 +1,10 @@
 <%-- 
-    Document   : admin
-    Created on : 14.09.2014, 21:46:15
+    Document   : newjsp
+    Created on : 16.09.2014, 22:43:02
     Author     : Alyx
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,7 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World! admin</h1>
-        ${admin.name}
+        ${admin.adminName}
     </body>
 </html>
