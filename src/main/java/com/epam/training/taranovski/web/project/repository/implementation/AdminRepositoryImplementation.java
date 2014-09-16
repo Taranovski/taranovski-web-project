@@ -8,12 +8,28 @@ package com.epam.training.taranovski.web.project.repository.implementation;
 import com.epam.training.taranovski.web.project.domain.Admin;
 import com.epam.training.taranovski.web.project.repository.AdminRepository;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Alyx
  */
+@Repository
 public class AdminRepositoryImplementation implements AdminRepository {
+
+    @Autowired
+    private EntityManagerFactory emf;
+
+    public AdminRepositoryImplementation() {
+    }
+
+    @Autowired
+    public AdminRepositoryImplementation(EntityManagerFactory emf) {
+        this.emf = emf;
+    }
 
     @Override
     public Admin getByName(String name) {
@@ -22,7 +38,20 @@ public class AdminRepositoryImplementation implements AdminRepository {
 
     @Override
     public Admin getById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager em = emf.createEntityManager();
+        Admin admin;
+        try {
+            em.getTransaction().begin();
+            admin = em.find(Admin.class, id);
+            em.getTransaction().commit();
+        } finally {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            em.close();
+        }
+
+        return admin;
     }
 
     @Override
