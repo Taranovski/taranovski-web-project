@@ -39,7 +39,7 @@
     />
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/"/>
+        <property name="prefix" value="/WEB-INF/pages/"/>
     </bean>
 
 </beans>
