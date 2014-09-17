@@ -1,7 +1,7 @@
 <%-- 
-    Document   : newjsp
-    Created on : 16.09.2014, 22:43:02
-    Author     : Alyx
+    Document   : register
+    Created on : Sep 17, 2014, 11:59:57 AM
+    Author     : Oleksandr_Taranovsky
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -12,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        ${admin.adminName}
+        <h1>Hello World!</h1>
     </body>
 </html>
