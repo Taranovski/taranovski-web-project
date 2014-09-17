@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.epam.training.taranovski.web.project.domain;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
+//import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+//import javax.persistence.Id;
+//import javax.persistence.JoinColumn;
+//import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -25,32 +25,32 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "\"Admin\"")
+@PrimaryKeyJoinColumn(name = "adminId", referencedColumnName = "userId")
 @NamedQueries({
     @NamedQuery(name = "Admin.findAll", query = "SELECT a FROM Admin a"),
-    @NamedQuery(name = "Admin.findByAdminName", query = "SELECT a FROM Admin a WHERE a.adminName = :adminName"),
-    @NamedQuery(name = "Admin.findByAdminId", query = "SELECT a FROM Admin a WHERE a.adminId = :adminId")})
-public class Admin implements Serializable {
+    @NamedQuery(name = "Admin.findByAdminName", query = "SELECT a FROM Admin a WHERE a.adminName = :adminName")})
+public class Admin extends User implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Size(max = 50)
     @Column(name = "ADMIN_NAME")
     private String adminName;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ADMIN_ID")
-    private Integer adminId;
-    @JoinColumn(name = "ADMIN_USER_ID", referencedColumnName = "USER_ID")
-    @ManyToOne(optional = false)
-    private User adminUserId;
+//    @Id
+//    @Basic(optional = false)
+//    @NotNull
+//    @Column(name = "ADMIN_ID")
+//    private Integer adminId;
+//    @JoinColumn(name = "ADMIN_USER_ID", referencedColumnName = "USER_ID")
+//    @ManyToOne(optional = false)
+//    private User adminUserId;
 
     public Admin() {
     }
 
-    public Admin(Integer adminId) {
-        this.adminId = adminId;
-    }
-
+//    public Admin(Integer adminId) {
+//        this.adminId = adminId;
+//    }
     public String getAdminName() {
         return adminName;
     }
@@ -59,37 +59,37 @@ public class Admin implements Serializable {
         this.adminName = adminName;
     }
 
-    public Integer getAdminId() {
-        return adminId;
-    }
-
-    public void setAdminId(Integer adminId) {
-        this.adminId = adminId;
-    }
-
-    public User getAdminUserId() {
-        return adminUserId;
-    }
-
-    public void setAdminUserId(User adminUserId) {
-        this.adminUserId = adminUserId;
-    }
-
+//    public Integer getAdminId() {
+//        return adminId;
+//    }
+//
+//    public void setAdminId(Integer adminId) {
+//        this.adminId = adminId;
+//    }
+//    public User getAdminUserId() {
+//        return adminUserId;
+//    }
+//
+//    public void setAdminUserId(User adminUserId) {
+//        this.adminUserId = adminUserId;
+//    }
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (adminId != null ? adminId.hashCode() : 0);
+        int hash = 3;
+        hash = 89 * hash + (this.adminName != null ? this.adminName.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Admin)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Admin other = (Admin) object;
-        if ((this.adminId == null && other.adminId != null) || (this.adminId != null && !this.adminId.equals(other.adminId))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Admin other = (Admin) obj;
+        if ((this.adminName == null) ? (other.adminName != null) : !this.adminName.equals(other.adminName)) {
             return false;
         }
         return true;
@@ -97,7 +97,7 @@ public class Admin implements Serializable {
 
     @Override
     public String toString() {
-        return "com.epam.training.taranovski.spring.domain1.Admin[ adminId=" + adminId + " ]";
+        return "Admin{" + "adminName=" + adminName + '}';
     }
-    
+
 }

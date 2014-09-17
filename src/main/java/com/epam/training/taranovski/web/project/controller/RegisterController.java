@@ -8,7 +8,6 @@ package com.epam.training.taranovski.web.project.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -16,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Oleksandr_Taranovsky
  */
 @Controller
-public class LoginController {
+public class RegisterController {
 
     /**
      *
@@ -24,28 +23,22 @@ public class LoginController {
      * @return
      */
     @Autowired
-    @RequestMapping("/toLogin")
-    public ModelAndView toLoginPage(ModelAndView modelAndView) {
-        modelAndView.setViewName("login.jsp");
+    @RequestMapping("/toRegister")
+    public ModelAndView toRegister(ModelAndView modelAndView) {
+        modelAndView.setViewName("register.jsp");
         return modelAndView;
     }
 
     /**
      *
-     * @param username
-     * @param password
      * @param modelAndView
      * @return
      */
     @Autowired
-    @RequestMapping("/login")
-    public ModelAndView getAdminById(
-            @RequestParam String username,
-            @RequestParam String password,
-            ModelAndView modelAndView) {
+    @RequestMapping("/register")
+    public ModelAndView register(ModelAndView modelAndView) {
 
         modelAndView.setViewName("login.jsp");
         return modelAndView;
     }
-
 }

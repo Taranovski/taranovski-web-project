@@ -3,19 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.epam.training.taranovski.web.project.domain;
 
 import java.io.Serializable;
-import java.util.Collection;
+//import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
+//import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
+//import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -26,14 +27,14 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "\"User\"")
+@Inheritance(strategy=InheritanceType.JOINED)
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
     @NamedQuery(name = "User.findByUserLogin", query = "SELECT u FROM User u WHERE u.userLogin = :userLogin"),
-    @NamedQuery(name = "User.findByUserPassword", query = "SELECT u FROM User u WHERE u.userPassword = :userPassword"),
     @NamedQuery(name = "User.findByUserType", query = "SELECT u FROM User u WHERE u.userType = :userType"),
-    @NamedQuery(name = "User.findByUserId", query = "SELECT u FROM User u WHERE u.userId = :userId"),
-    @NamedQuery(name = "User.findByUserTypeId", query = "SELECT u FROM User u WHERE u.userTypeId = :userTypeId")})
+    @NamedQuery(name = "User.findByUserId", query = "SELECT u FROM User u WHERE u.userId = :userId")})
 public class User implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Size(max = 25)
     @Column(name = "USER_LOGIN")
@@ -52,12 +53,12 @@ public class User implements Serializable {
     private Integer userId;
     @Column(name = "USER_TYPE_ID")
     private Integer userTypeId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    private Collection<Employer> employerCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    private Collection<Employee> employeeCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "adminUserId")
-    private Collection<Admin> adminCollection;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+//    private Collection<Employer> employerCollection;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+//    private Collection<Employee> employeeCollection;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "adminUserId")
+//    private Collection<Admin> adminCollection;
 
     public User() {
     }
@@ -106,45 +107,50 @@ public class User implements Serializable {
         this.userTypeId = userTypeId;
     }
 
-    public Collection<Employer> getEmployerCollection() {
-        return employerCollection;
-    }
-
-    public void setEmployerCollection(Collection<Employer> employerCollection) {
-        this.employerCollection = employerCollection;
-    }
-
-    public Collection<Employee> getEmployeeCollection() {
-        return employeeCollection;
-    }
-
-    public void setEmployeeCollection(Collection<Employee> employeeCollection) {
-        this.employeeCollection = employeeCollection;
-    }
-
-    public Collection<Admin> getAdminCollection() {
-        return adminCollection;
-    }
-
-    public void setAdminCollection(Collection<Admin> adminCollection) {
-        this.adminCollection = adminCollection;
-    }
-
+//    public Collection<Employer> getEmployerCollection() {
+//        return employerCollection;
+//    }
+//
+//    public void setEmployerCollection(Collection<Employer> employerCollection) {
+//        this.employerCollection = employerCollection;
+//    }
+//
+//    public Collection<Employee> getEmployeeCollection() {
+//        return employeeCollection;
+//    }
+//
+//    public void setEmployeeCollection(Collection<Employee> employeeCollection) {
+//        this.employeeCollection = employeeCollection;
+//    }
+//
+//    public Collection<Admin> getAdminCollection() {
+//        return adminCollection;
+//    }
+//
+//    public void setAdminCollection(Collection<Admin> adminCollection) {
+//        this.adminCollection = adminCollection;
+//    }
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (userId != null ? userId.hashCode() : 0);
+        int hash = 7;
+        hash = 67 * hash + (this.userLogin != null ? this.userLogin.hashCode() : 0);
+        hash = 67 * hash + (this.userType != null ? this.userType.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof User)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        User other = (User) object;
-        if ((this.userId == null && other.userId != null) || (this.userId != null && !this.userId.equals(other.userId))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final User other = (User) obj;
+        if ((this.userLogin == null) ? (other.userLogin != null) : !this.userLogin.equals(other.userLogin)) {
+            return false;
+        }
+        if ((this.userType == null) ? (other.userType != null) : !this.userType.equals(other.userType)) {
             return false;
         }
         return true;
@@ -152,7 +158,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "com.epam.training.taranovski.spring.domain1.User[ userId=" + userId + " ]";
+        return "User[ userId=" + userId + " ]";
     }
-    
+
 }

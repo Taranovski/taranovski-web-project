@@ -7,20 +7,21 @@
 package com.epam.training.taranovski.web.project.domain;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
+//import java.math.BigDecimal;
 import java.util.Collection;
-import javax.persistence.Basic;
+//import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+//import javax.persistence.Id;
+//import javax.persistence.JoinColumn;
+//import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -29,6 +30,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "Employer")
+@PrimaryKeyJoinColumn(name = "employerId", referencedColumnName = "userId")
 @NamedQueries({
     @NamedQuery(name = "Employer.findAll", query = "SELECT e FROM Employer e"),
     @NamedQuery(name = "Employer.findByCompanyName", query = "SELECT e FROM Employer e WHERE e.companyName = :companyName"),
@@ -36,7 +38,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Employer.findByAdress", query = "SELECT e FROM Employer e WHERE e.adress = :adress"),
     @NamedQuery(name = "Employer.findByTelephoneNumber", query = "SELECT e FROM Employer e WHERE e.telephoneNumber = :telephoneNumber"),
     @NamedQuery(name = "Employer.findByEmployerId", query = "SELECT e FROM Employer e WHERE e.employerId = :employerId")})
-public class Employer implements Serializable {
+public class Employer extends User implements Serializable {
     private static final long serialVersionUID = 1L;
     @Size(max = 50)
     @Column(name = "companyName")
@@ -50,25 +52,25 @@ public class Employer implements Serializable {
     @Column(name = "telephoneNumber")
     private Long telephoneNumber;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "employerId")
-    private BigDecimal employerId;
+//    @Id
+//    @Basic(optional = false)
+//    @NotNull
+//    @Column(name = "employerId")
+//    private BigDecimal employerId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employerId")
     private Collection<Vacancy> vacancyCollection;
-    @JoinColumn(name = "userId", referencedColumnName = "USER_ID")
-    @ManyToOne(optional = false)
-    private User userId;
+//    @JoinColumn(name = "userId", referencedColumnName = "USER_ID")
+//    @ManyToOne(optional = false)
+//    private User userId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employerId")
     private Collection<CheckDocument> checkDocumentCollection;
 
     public Employer() {
     }
 
-    public Employer(BigDecimal employerId) {
-        this.employerId = employerId;
-    }
+//    public Employer(BigDecimal employerId) {
+//        this.employerId = employerId;
+//    }
 
     public String getCompanyName() {
         return companyName;
@@ -102,13 +104,13 @@ public class Employer implements Serializable {
         this.telephoneNumber = telephoneNumber;
     }
 
-    public BigDecimal getEmployerId() {
-        return employerId;
-    }
-
-    public void setEmployerId(BigDecimal employerId) {
-        this.employerId = employerId;
-    }
+//    public BigDecimal getEmployerId() {
+//        return employerId;
+//    }
+//
+//    public void setEmployerId(BigDecimal employerId) {
+//        this.employerId = employerId;
+//    }
 
     public Collection<Vacancy> getVacancyCollection() {
         return vacancyCollection;
@@ -118,13 +120,13 @@ public class Employer implements Serializable {
         this.vacancyCollection = vacancyCollection;
     }
 
-    public User getUserId() {
-        return userId;
-    }
+//    public User getUserId() {
+//        return userId;
+//    }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
-    }
+//    public void setUserId(User userId) {
+//        this.userId = userId;
+//    }
 
     public Collection<CheckDocument> getCheckDocumentCollection() {
         return checkDocumentCollection;
@@ -135,28 +137,44 @@ public class Employer implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return "Employer{" + "companyName=" + companyName + ", field=" + field + ", adress=" + adress + ", telephoneNumber=" + telephoneNumber + '}';
+    }
+
+    @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (employerId != null ? employerId.hashCode() : 0);
+        int hash = 7;
+        hash = 59 * hash + (this.companyName != null ? this.companyName.hashCode() : 0);
+        hash = 59 * hash + (this.field != null ? this.field.hashCode() : 0);
+        hash = 59 * hash + (this.adress != null ? this.adress.hashCode() : 0);
+        hash = 59 * hash + (this.telephoneNumber != null ? this.telephoneNumber.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Employer)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Employer other = (Employer) object;
-        if ((this.employerId == null && other.employerId != null) || (this.employerId != null && !this.employerId.equals(other.employerId))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Employer other = (Employer) obj;
+        if ((this.companyName == null) ? (other.companyName != null) : !this.companyName.equals(other.companyName)) {
+            return false;
+        }
+        if ((this.field == null) ? (other.field != null) : !this.field.equals(other.field)) {
+            return false;
+        }
+        if ((this.adress == null) ? (other.adress != null) : !this.adress.equals(other.adress)) {
+            return false;
+        }
+        if (this.telephoneNumber != other.telephoneNumber && (this.telephoneNumber == null || !this.telephoneNumber.equals(other.telephoneNumber))) {
             return false;
         }
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "com.epam.training.taranovski.spring.domain1.Employer[ employerId=" + employerId + " ]";
-    }
+    
     
 }
