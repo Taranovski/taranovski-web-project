@@ -8,15 +8,17 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title><spring:message code="index.title"/></title>
+        <title>
+            <spring:message code="index.title"/>
+        </title>
     </head>
     <body>
         
-        <spring:message code="index.language"/><a href="?language=en">English</a>|<a href="?language=ru">Русский</a>
+        <spring:message code="index.language"/><a href="?lang=en">English</a>|<a href="?lang=ru">Русский</a>
         
         
         <form method="post" action="./index.jsp">
-            <select id="language" name="language" onchange="submit()">
+            <select id="language" name="lang" onchange="submit()">
                 <option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
                 <option value="ru" ${language == 'ru' ? 'selected' : ''}>Русский</option>
             </select>

@@ -51,20 +51,22 @@
     
     <bean id="localeChangeInterceptor"
           class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-        <property name="paramName" value="language" />
+        <property name="paramName" value="lang" />
     </bean>
     
-    <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" >
+<!--    <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" >
         <property name="interceptors">
             <list>
                 <ref bean="localeChangeInterceptor" />
             </list>
         </property>
-    </bean>
+    </bean>-->
  
-    <!--    <mvc:interceptors>
-        <ref bean="localeChangeInterceptor"/>
-    </mvc:interceptors>-->
+    <mvc:interceptors>
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+            <property name="paramName" value="lang" />
+        </bean>
+    </mvc:interceptors>
     
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>
