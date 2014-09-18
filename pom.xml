@@ -72,11 +72,11 @@
             <version>${org.springframework.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
+<!--        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc-portlet</artifactId>
             <version>${org.springframework.version}</version>
-        </dependency>
+        </dependency>-->
         
         <!-- hibernate -->
         <dependency>
@@ -98,13 +98,13 @@
         </dependency>
         
         <!--oracle jdbc--> 
-        <dependency>
+<!--        <dependency>
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc12</artifactId>
             <version>12c</version>
-        </dependency>
+        </dependency>-->
         
-        <dependency>
+<!--        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <version>2.5</version>
@@ -120,7 +120,7 @@
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
             <version>1.2</version>
-        </dependency>
+        </dependency>-->
         
     </dependencies>
 

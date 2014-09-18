@@ -17,8 +17,29 @@
     <!-- Use @Component annotations for bean definitions -->
     <context:component-scan base-package="com.epam.training.taranovski.web.project.controller"/>
 
+    <!--<context:annotation-config/>-->
     <!-- Use @Controller annotations for MVC controller definitions -->
     <mvc:annotation-driven />
+        
+    <bean id="localeResolver"
+          class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+        <property name="defaultLocale" value="en"/>
+    </bean>
     
+    <bean id="messageSource"
+          class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="text"/>
+    </bean>
+    
+    <mvc:interceptors>
+        <bean id="localeChangeInterceptor"
+              class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+            <property name="paramName" value="lang"/>
+        </bean>
+    </mvc:interceptors>
+    
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/pages/"/>
+    </bean>
 
 </beans>
