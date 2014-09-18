@@ -42,6 +42,8 @@ public class RegisterController {
             HttpServletRequest request,
             ModelAndView modelAndView) {
 
+//        ModelAndView modelAndView = new ModelAndView();
+        
         modelAndView.setViewName("login.jsp");
         return modelAndView;
     }

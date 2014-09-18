@@ -24,37 +24,35 @@ public class LoginController {
 
     /**
      *
-     * @param modelAndView
      * @return
      */
 //    @Autowired
-    @RequestMapping("/toLogin")
-    public ModelAndView toLoginPage(ModelAndView modelAndView) {
+    @RequestMapping("/toLoginPage")
+    public ModelAndView toLoginPage() {
+        ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login.jsp");
         return modelAndView;
     }
 
     /**
      *
-     * @param request
-     * @param modelAndView
+     * @param userName
+     * @param password
      * @return
      */
 //    @Autowired
-    @RequestMapping("/login")
-    public ModelAndView getAdminById(
-            HttpServletRequest request, 
-            ModelAndView modelAndView) {
+    @RequestMapping("/loginSystem")
+    public ModelAndView login(
+            @RequestParam(value = "username") String userName,
+            @RequestParam(value = "password") String password
+    ) {
 
-        String userName = (String) request.getAttribute("username");
-        String password = (String) request.getAttribute("password");
-        
+        ModelAndView modelAndView = new ModelAndView();
+
         boolean error = true;
 
-        if (error) {
-            modelAndView.addObject(LOGIN_ERROR, LOGIN_ERROR);
-            modelAndView.setViewName("login.jsp");
-        }
+        modelAndView.addObject(LOGIN_ERROR, LOGIN_ERROR);
+        modelAndView.setViewName("login.jsp");
 
         return modelAndView;
     }

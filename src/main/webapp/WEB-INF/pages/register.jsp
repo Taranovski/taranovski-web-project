@@ -16,7 +16,7 @@
         <title><fmt:message key="register.title"/></title>
     </head>
     <body>
-        <form method="post" action="register.jsp">
+        <form method="post" action="register.html">
             <label for="username"><fmt:message key="register.label.username" />:</label>
             <input type="text" id="username" name="username">
             <br>
