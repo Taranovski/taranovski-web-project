@@ -5,6 +5,7 @@
  */
 package com.epam.training.taranovski.web.project.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,7 @@ public class RegisterController {
      * @param modelAndView
      * @return
      */
-    @Autowired
+//    @Autowired
     @RequestMapping("/toRegister")
     public ModelAndView toRegister(ModelAndView modelAndView) {
         modelAndView.setViewName("register.jsp");
@@ -31,12 +32,15 @@ public class RegisterController {
 
     /**
      *
+     * @param request
      * @param modelAndView
      * @return
      */
-    @Autowired
+//    @Autowired
     @RequestMapping("/register")
-    public ModelAndView register(ModelAndView modelAndView) {
+    public ModelAndView register(
+            HttpServletRequest request,
+            ModelAndView modelAndView) {
 
         modelAndView.setViewName("login.jsp");
         return modelAndView;

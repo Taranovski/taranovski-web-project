@@ -16,9 +16,27 @@
         <title><fmt:message key="register.title"/></title>
     </head>
     <body>
-        
-        
-        
-        
+        <form method="post" action="register.jsp">
+            <label for="username"><fmt:message key="register.label.username" />:</label>
+            <input type="text" id="username" name="username">
+            <br>
+            <label for="password"><fmt:message key="register.label.password" />:</label>
+            <input type="password" id="password" name="password">
+            <br>
+            <input type="radio" name="userType" value="employee" /><fmt:message key="register.label.employee" /><br>
+            <input type="radio" name="userType" value="employer" /><fmt:message key="register.label.employer" /><br>
+            <fmt:message key="register.button.submit" var="buttonValue" />
+            <input type="submit" name="submit" value="${buttonValue}">
+        </form>
+
+        <c:if test = "${not empty name_error}">
+            <fmt:message key="register.name.error"/>
+            <c:set var="name_error" value="0"/>
+        </c:if>
+        <c:if test = "${not empty password_error}">
+            <fmt:message key="register.password.error"/>
+            <c:set var="password_error" value="0"/>
+        </c:if>
+
     </body>
 </html>
