@@ -21,18 +21,21 @@
         <constructor-arg value="com.epam.training.taranovski-web-projectPU"/>
     </bean>
     
-    <bean id="entityManager" 
+<!--    <bean id="entityManager" 
           factory-bean="entityManagerFactory" 
           factory-method="createEntityManager" 
           scope="prototype" 
           destroy-method="close"> 
-    </bean>
+    </bean>-->
     
-    <bean id = "adminRepository" 
+    <!-- Use @Component annotations for bean definitions -->
+    <context:component-scan base-package="com.epam.training.taranovski.web.project.repository.implementation"/>
+    <context:component-scan base-package="com.epam.training.taranovski.web.project.service.implementation"/>
+    
+<!--    <bean id = "adminRepository" 
           class="com.epam.training.taranovski.web.project.repository.implementation.AdminRepositoryImplementation"/>
     
-    <!--<mvc:resources mapping="/resources/**" location="/resources/"/>-->
-
-    
+    <bean id = "loginService"
+          class="com.epam.training.taranovski.web.project.service.implementation.LoginServiceImplementation"/>-->
       
 </beans>

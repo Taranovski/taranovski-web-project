@@ -5,9 +5,9 @@
  */
 package com.epam.training.taranovski.web.project.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import com.epam.training.taranovski.web.project.domain.User;
+import com.epam.training.taranovski.web.project.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,14 +22,16 @@ public class LoginController {
 
     private static final String LOGIN_ERROR = "login_error";
 
+    @Autowired
+    LoginService loginService;
+
     /**
      *
+     * @param modelAndView
      * @return
      */
-//    @Autowired
     @RequestMapping("/toLoginPage")
-    public ModelAndView toLoginPage() {
-        ModelAndView modelAndView = new ModelAndView();
+    public ModelAndView toLoginPage(ModelAndView modelAndView) {
         modelAndView.setViewName("login.jsp");
         return modelAndView;
     }
@@ -38,21 +40,45 @@ public class LoginController {
      *
      * @param userName
      * @param password
+     * @param modelAndView
      * @return
      */
-//    @Autowired
     @RequestMapping("/loginSystem")
     public ModelAndView login(
             @RequestParam(value = "username") String userName,
-            @RequestParam(value = "password") String password
+            @RequestParam(value = "password") String password,
+            ModelAndView modelAndView
     ) {
 
-        ModelAndView modelAndView = new ModelAndView();
+        User user = loginService.login(userName, password);
 
-        boolean error = true;
+        if (user == null) {
+            modelAndView.addObject(LOGIN_ERROR, LOGIN_ERROR);
+            modelAndView.setViewName("login.jsp");
+        } else {
 
-        modelAndView.addObject(LOGIN_ERROR, LOGIN_ERROR);
-        modelAndView.setViewName("login.jsp");
+            // manage session here
+            
+            String type = user.getUserType();
+            switch (type) {
+                case "employee": {
+                    modelAndView.setViewName("employee.jsp");
+                    break;
+                }
+                case "employer": {
+                    modelAndView.setViewName("employer.jsp");
+                    break;
+                }
+                case "admin": {
+                    modelAndView.setViewName("admin.jsp");
+                    break;
+                }
+                default: {
+                    modelAndView.addObject(LOGIN_ERROR, LOGIN_ERROR);
+                    modelAndView.setViewName("login.jsp");
+                }
+            }
+        }
 
         return modelAndView;
     }

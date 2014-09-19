@@ -27,13 +27,13 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "\"User\"")
-@Inheritance(strategy=InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.JOINED)
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
     @NamedQuery(name = "User.findByUserLogin", query = "SELECT u FROM User u WHERE u.userLogin = :userLogin"),
-    @NamedQuery(name = "User.findByUserType", query = "SELECT u FROM User u WHERE u.userType = :userType"),
-    @NamedQuery(name = "User.findByUserId", query = "SELECT u FROM User u WHERE u.userId = :userId")})
-public class User implements Serializable {
+    @NamedQuery(name = "User.findByUserId", query = "SELECT u FROM User u WHERE u.userId = :userId"),
+    @NamedQuery(name = "User.findByUserLoginAndPassword", query = "SELECT u FROM User u WHERE u.userLogin = :name AND u.userPassword = :password")})
+public abstract class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Size(max = 25)
@@ -51,8 +51,8 @@ public class User implements Serializable {
     @NotNull
     @Column(name = "USER_ID")
     private Integer userId;
-    @Column(name = "USER_TYPE_ID")
-    private Integer userTypeId;
+//    @Column(name = "USER_TYPE_ID")
+//    private Integer userTypeId;
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
 //    private Collection<Employer> employerCollection;
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
@@ -99,14 +99,13 @@ public class User implements Serializable {
         this.userId = userId;
     }
 
-    public Integer getUserTypeId() {
-        return userTypeId;
-    }
-
-    public void setUserTyprId(Integer userTypeId) {
-        this.userTypeId = userTypeId;
-    }
-
+//    public Integer getUserTypeId() {
+//        return userTypeId;
+//    }
+//
+//    public void setUserTyprId(Integer userTypeId) {
+//        this.userTypeId = userTypeId;
+//    }
 //    public Collection<Employer> getEmployerCollection() {
 //        return employerCollection;
 //    }
@@ -158,7 +157,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User[ userId=" + userId + " ]";
+        return "User{" + "userLogin=" + userLogin + ", userType=" + userType + '}';
     }
 
 }

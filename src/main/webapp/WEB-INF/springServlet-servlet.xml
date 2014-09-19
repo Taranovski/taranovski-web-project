@@ -21,7 +21,7 @@
     <!-- Use @Controller annotations for MVC controller definitions -->
     <mvc:annotation-driven />
         
-    <bean id="localeResolver"
+<!--    <bean id="localeResolver"
           class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
         <property name="defaultLocale" value="en"/>
     </bean>
@@ -36,7 +36,7 @@
               class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
             <property name="paramName" value="lang"/>
         </bean>
-    </mvc:interceptors>
+    </mvc:interceptors>-->
     
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>

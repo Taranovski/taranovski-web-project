@@ -21,14 +21,14 @@ import org.springframework.stereotype.Repository;
 public class AdminRepositoryImplementation implements AdminRepository {
 
     @Autowired
-    private EntityManagerFactory emf;
+    private EntityManagerFactory entityManagerFactory;
 
     public AdminRepositoryImplementation() {
     }
 
     @Autowired
     public AdminRepositoryImplementation(EntityManagerFactory emf) {
-        this.emf = emf;
+        this.entityManagerFactory = emf;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class AdminRepositoryImplementation implements AdminRepository {
 
     @Override
     public Admin getById(int id) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = entityManagerFactory.createEntityManager();
         Admin admin;
         try {
             em.getTransaction().begin();

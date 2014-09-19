@@ -7,7 +7,14 @@ package com.epam.training.taranovski.web.project.repository.implementation;
 
 import com.epam.training.taranovski.web.project.domain.User;
 import com.epam.training.taranovski.web.project.repository.UserRepository;
+import com.epam.training.taranovski.web.project.service.EncryptionService;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -15,18 +22,14 @@ import java.util.List;
  */
 public class UserRepositoryImplementation implements UserRepository {
 
-    @Override
-    public User getByName(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    @Autowired
+    private EncryptionService encryptionService;
+
+    @Autowired
+    private EntityManagerFactory entityManagerFactory;
 
     @Override
     public String getTypeOf(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean validate(User user) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -52,6 +55,45 @@ public class UserRepositoryImplementation implements UserRepository {
 
     @Override
     public boolean delete(User admin) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public User getByNameAndPassword(String name, String password) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        User user = null;
+        boolean exists = false;
+
+        try {
+            em.getTransaction().begin();
+
+            TypedQuery<User> query = em.createNamedQuery("User.findByUserLoginAndPassword", User.class);
+            query.setParameter("name", name);
+            query.setParameter("password", encryptionService.encrypt(password));
+
+            user = query.getSingleResult();
+
+            em.getTransaction().commit();
+            exists = true;
+        } catch (NoResultException ex) {
+            exists = false;
+        } finally {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            em.close();
+        }
+
+        if (exists) {
+            return user;
+        } else {
+            return null;
+        }
+
+    }
+
+    @Override
+    public boolean nameExistsInDB(String name) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -35,8 +35,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Employee.findBySurname", query = "SELECT e FROM Employee e WHERE e.surname = :surname"),
     @NamedQuery(name = "Employee.findByPatronymic", query = "SELECT e FROM Employee e WHERE e.patronymic = :patronymic"),
     @NamedQuery(name = "Employee.findByQualification", query = "SELECT e FROM Employee e WHERE e.qualification = :qualification"),
-    @NamedQuery(name = "Employee.findByOccupation", query = "SELECT e FROM Employee e WHERE e.occupation = :occupation"),
-    @NamedQuery(name = "Employee.findByEmployeeId", query = "SELECT e FROM Employee e WHERE e.employeeId = :employeeId")})
+    @NamedQuery(name = "Employee.findByOccupation", query = "SELECT e FROM Employee e WHERE e.occupation = :occupation")})
 public class Employee extends User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -137,7 +136,6 @@ public class Employee extends User implements Serializable {
 //    public void setUserId(User userId) {
 //        this.userId = userId;
 //    }
-
     public CheckDocument getCheckDocumentId() {
         return checkDocumentId;
     }
@@ -148,7 +146,7 @@ public class Employee extends User implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 3;
+        int hash = super.hashCode();
         hash = 83 * hash + (this.name != null ? this.name.hashCode() : 0);
         hash = 83 * hash + (this.surname != null ? this.surname.hashCode() : 0);
         hash = 83 * hash + (this.patronymic != null ? this.patronymic.hashCode() : 0);
@@ -166,6 +164,9 @@ public class Employee extends User implements Serializable {
             return false;
         }
         final Employee other = (Employee) obj;
+        if (!super.equals((User) obj)) {
+            return false;
+        }
         if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
             return false;
         }
@@ -186,7 +187,7 @@ public class Employee extends User implements Serializable {
 
     @Override
     public String toString() {
-        return "Employee{" + "name=" + name + ", surname=" + surname + ", patronymic=" + patronymic + ", qualification=" + qualification + ", occupation=" + occupation + '}';
+        return super.toString() + "Employee{" + "name=" + name + ", surname=" + surname + ", patronymic=" + patronymic + ", qualification=" + qualification + ", occupation=" + occupation + '}';
     }
 
 }

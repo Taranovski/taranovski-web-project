@@ -29,6 +29,11 @@
             <input type="submit" name="submit" value="${buttonValue}">
         </form>
 
+        <form method="post" action="toLoginPage.html">
+            <fmt:message key="index.to.login.page" var="toLoginPage"/>
+            <input type="submit" value="${toLoginPage}" />
+        </form>
+
         <c:if test = "${not empty name_error}">
             <fmt:message key="register.name.error"/>
             <c:set var="name_error" value="0"/>
@@ -36,6 +41,10 @@
         <c:if test = "${not empty password_error}">
             <fmt:message key="register.password.error"/>
             <c:set var="password_error" value="0"/>
+        </c:if>
+        <c:if test = "${not empty register_success}">
+            <fmt:message key="register.success"/>
+            <c:set var="register_success" value="0"/>
         </c:if>
 
     </body>

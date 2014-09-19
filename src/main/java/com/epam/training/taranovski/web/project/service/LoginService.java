@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.epam.training.taranovski.web.project.repository;
+package com.epam.training.taranovski.web.project.service;
 
 import com.epam.training.taranovski.web.project.domain.User;
 
@@ -11,12 +11,8 @@ import com.epam.training.taranovski.web.project.domain.User;
  *
  * @author Oleksandr_Taranovsky
  */
-public interface UserRepository extends TemplateRepository<User> {
+public interface LoginService {
 
-    User getByNameAndPassword(String name, String password);
-
-    String getTypeOf(int id);
-
-    boolean nameExistsInDB(String name);
-
+    User login(String userName, String password);
+    
 }
