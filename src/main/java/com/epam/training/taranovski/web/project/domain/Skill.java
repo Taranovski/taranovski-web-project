@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.epam.training.taranovski.web.project.domain;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
+//import java.math.BigDecimal;
 import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -26,7 +25,7 @@ import javax.validation.constraints.Size;
  * @author Alyx
  */
 @Entity
-@Table(name = "Skill")
+@Table(name = "\"Skill\"")
 @NamedQueries({
     @NamedQuery(name = "Skill.findAll", query = "SELECT s FROM Skill s"),
     @NamedQuery(name = "Skill.findBySkillName", query = "SELECT s FROM Skill s WHERE s.skillName = :skillName"),
@@ -36,30 +35,27 @@ import javax.validation.constraints.Size;
 public class Skill implements Serializable {
     private static final long serialVersionUID = 1L;
     @Size(max = 50)
-    @Column(name = "skillName")
+    @Column(name = "\"skillName\"")
     private String skillName;
     @Size(max = 100)
-    @Column(name = "description")
+    @Column(name = "\"description\"")
     private String description;
-    @Column(name = "experience")
+    @Column(name = "\"experience\"")
     private BigInteger experience;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "skillId")
-    private BigDecimal skillId;
-    @JoinColumn(name = "vacancyId", referencedColumnName = "vacancyId")
-    @ManyToOne
-    private Vacancy vacancyId;
-    @JoinColumn(name = "employeeId", referencedColumnName = "employeeId")
-    @ManyToOne
-    private Employee employeeId;
+    @Column(name = "\"skillId\"")
+    private Integer skillId;
+//    @JoinColumn(name = "\"vacancyId\"", referencedColumnName = "\"vacancyId\"")
+//    @ManyToOne
+//    private Vacancy vacancyId;
 
     public Skill() {
     }
 
-    public Skill(BigDecimal skillId) {
+    public Skill(Integer skillId) {
         this.skillId = skillId;
     }
 
@@ -87,29 +83,21 @@ public class Skill implements Serializable {
         this.experience = experience;
     }
 
-    public BigDecimal getSkillId() {
+    public Integer getSkillId() {
         return skillId;
     }
 
-    public void setSkillId(BigDecimal skillId) {
+    public void setSkillId(Integer skillId) {
         this.skillId = skillId;
     }
 
-    public Vacancy getVacancyId() {
-        return vacancyId;
-    }
-
-    public void setVacancyId(Vacancy vacancyId) {
-        this.vacancyId = vacancyId;
-    }
-
-    public Employee getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(Employee employeeId) {
-        this.employeeId = employeeId;
-    }
+//    public Vacancy getVacancyId() {
+//        return vacancyId;
+//    }
+//
+//    public void setVacancyId(Vacancy vacancyId) {
+//        this.vacancyId = vacancyId;
+//    }
 
     @Override
     public int hashCode() {
@@ -133,7 +121,7 @@ public class Skill implements Serializable {
 
     @Override
     public String toString() {
-        return "com.epam.training.taranovski.spring.domain1.Skill[ skillId=" + skillId + " ]";
+        return "com.epam.training.taranovski.web.project.domain.Skill[ skillId=" + skillId + " ]";
     }
     
 }

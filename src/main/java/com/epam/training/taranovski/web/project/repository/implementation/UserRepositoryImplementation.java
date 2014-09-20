@@ -5,6 +5,7 @@
  */
 package com.epam.training.taranovski.web.project.repository.implementation;
 
+import com.epam.training.taranovski.web.project.domain.Admin;
 import com.epam.training.taranovski.web.project.domain.User;
 import com.epam.training.taranovski.web.project.repository.UserRepository;
 import com.epam.training.taranovski.web.project.service.EncryptionService;
@@ -15,11 +16,13 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Alyx
  */
+@Repository
 public class UserRepositoryImplementation implements UserRepository {
 
     @Autowired
@@ -67,11 +70,17 @@ public class UserRepositoryImplementation implements UserRepository {
         try {
             em.getTransaction().begin();
 
-            TypedQuery<User> query = em.createNamedQuery("User.findByUserLoginAndPassword", User.class);
-            query.setParameter("name", name);
-            query.setParameter("password", encryptionService.encrypt(password));
-
-            user = query.getSingleResult();
+            user = em.find(Admin.class, 1);
+            
+//            if (user instanceof Admin) {
+//                user = (Admin) user;
+//            }
+            
+//            TypedQuery<User> query = em.createNamedQuery("User.findByUserLoginAndPassword", User.class);
+//            query.setParameter("name", name);
+//            query.setParameter("password", encryptionService.encrypt(password));
+//
+//            user = query.getSingleResult();
 
             em.getTransaction().commit();
             exists = true;

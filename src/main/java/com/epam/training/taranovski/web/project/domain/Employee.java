@@ -6,10 +6,10 @@
 package com.epam.training.taranovski.web.project.domain;
 
 import java.io.Serializable;
-//import java.math.BigDecimal;
 import java.util.Collection;
 //import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 //import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -27,8 +27,9 @@ import javax.validation.constraints.Size;
  * @author Alyx
  */
 @Entity
-@Table(name = "Employee")
-@PrimaryKeyJoinColumn(name = "employeeId", referencedColumnName = "userId")
+@Table(name = "\"Employee\"")
+@DiscriminatorValue("employee")
+@PrimaryKeyJoinColumn(name = "\"employeeUserId\"", referencedColumnName = "\"userId\"")
 @NamedQueries({
     @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e"),
     @NamedQuery(name = "Employee.findByName", query = "SELECT e FROM Employee e WHERE e.name = :name"),
@@ -40,41 +41,33 @@ public class Employee extends User implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Size(max = 50)
-    @Column(name = "name")
+    @Column(name = "\"name\"")
     private String name;
     @Size(max = 50)
-    @Column(name = "surname")
+    @Column(name = "\"surname\"")
     private String surname;
     @Size(max = 50)
-    @Column(name = "patronymic")
+    @Column(name = "\"patronymic\"")
     private String patronymic;
     @Size(max = 50)
-    @Column(name = "qualification")
+    @Column(name = "\"qualification\"")
     private String qualification;
     @Size(max = 50)
-    @Column(name = "occupation")
+    @Column(name = "\"occupation\"")
     private String occupation;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-//    @Id
-//    @Basic(optional = false)
-//    @NotNull
-//    @Column(name = "employeeId")
-//    private BigDecimal employeeId;
-    @OneToMany(mappedBy = "employeeId")
+    @Column(name = "\"employeeUserId\"")
+    private Integer employeeUserId;
+    @JoinColumn(referencedColumnName = "\"skillId\"")
+    @OneToMany
     private Collection<Skill> skillCollection;
-//    @JoinColumn(name = "userId", referencedColumnName = "USER_ID")
-//    @ManyToOne(optional = false)
-//    private User userId;
-    @JoinColumn(name = "checkDocumentId", referencedColumnName = "checkDocumentId")
+    @JoinColumn(name = "\"employeeCheckDocumentId\"", referencedColumnName = "\"checkDocumentId\"")
     @ManyToOne
-    private CheckDocument checkDocumentId;
+    private CheckDocument employeeCheckDocumentId;
 
     public Employee() {
     }
 
-//    public Employee(BigDecimal employeeId) {
-//        this.employeeId = employeeId;
-//    }
+    
     public String getName() {
         return name;
     }
@@ -115,13 +108,13 @@ public class Employee extends User implements Serializable {
         this.occupation = occupation;
     }
 
-//    public BigDecimal getEmployeeId() {
-//        return employeeId;
-//    }
-//
-//    public void setEmployeeId(BigDecimal employeeId) {
-//        this.employeeId = employeeId;
-//    }
+    public Integer getEmployeeUserId() {
+        return employeeUserId;
+    }
+
+    public void setEmployeeUserId(Integer employeeUserId) {
+        this.employeeUserId = employeeUserId;
+    }
     public Collection<Skill> getSkillCollection() {
         return skillCollection;
     }
@@ -136,12 +129,12 @@ public class Employee extends User implements Serializable {
 //    public void setUserId(User userId) {
 //        this.userId = userId;
 //    }
-    public CheckDocument getCheckDocumentId() {
-        return checkDocumentId;
+    public CheckDocument getEmployeeCheckDocumentId() {
+        return employeeCheckDocumentId;
     }
 
-    public void setCheckDocumentId(CheckDocument checkDocumentId) {
-        this.checkDocumentId = checkDocumentId;
+    public void setEmployeeCheckDocumentId(CheckDocument employeeCheckDocumentId) {
+        this.employeeCheckDocumentId = employeeCheckDocumentId;
     }
 
     @Override

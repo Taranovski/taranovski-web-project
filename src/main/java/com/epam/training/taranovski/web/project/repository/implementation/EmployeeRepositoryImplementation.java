@@ -10,11 +10,13 @@ import com.epam.training.taranovski.web.project.domain.Employee;
 import com.epam.training.taranovski.web.project.domain.Skill;
 import com.epam.training.taranovski.web.project.repository.EmployeeRepository;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Alyx
  */
+@Repository
 public class EmployeeRepositoryImplementation implements EmployeeRepository {
 
     @Override

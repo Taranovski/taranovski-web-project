@@ -17,7 +17,7 @@
     </head>
     <body>
         <h1>Hello World! admin</h1>
-        ${admin.adminName}
+        ${user}
         <form method="post" action="newjsp.html">
             <input type="submit" value="getAdminById" />
         </form>

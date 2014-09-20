@@ -58,6 +58,7 @@ public class LoginController {
         } else {
 
             // manage session here
+            modelAndView.addObject("user", user.toString());
             
             String type = user.getUserType();
             switch (type) {

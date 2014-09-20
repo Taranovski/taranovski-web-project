@@ -6,17 +6,19 @@
 package com.epam.training.taranovski.web.project.domain;
 
 import java.io.Serializable;
-//import java.util.Collection;
+//import java.math.BigDecimal;
+import java.util.Objects;
 import javax.persistence.Basic;
-//import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-//import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -27,38 +29,31 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "\"User\"")
+//@MappedSuperclass
 @Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(discriminatorType=DiscriminatorType.STRING, name="\"userType\"", length = 25)
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
-    @NamedQuery(name = "User.findByUserLogin", query = "SELECT u FROM User u WHERE u.userLogin = :userLogin"),
-    @NamedQuery(name = "User.findByUserId", query = "SELECT u FROM User u WHERE u.userId = :userId"),
-    @NamedQuery(name = "User.findByUserLoginAndPassword", query = "SELECT u FROM User u WHERE u.userLogin = :name AND u.userPassword = :password")})
-public abstract class User implements Serializable {
-
+    @NamedQuery(name = "User.findByLogin", query = "SELECT u FROM User u WHERE u.login = :login"),
+    @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
+    @NamedQuery(name = "User.findByUserId", query = "SELECT u FROM User u WHERE u.userId = :userId")})
+public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     @Size(max = 25)
-    @Column(name = "USER_LOGIN")
-    private String userLogin;
+    @Column(name = "\"login\"")
+    private String login;
     @Size(max = 25)
-    @Column(name = "USER_PASSWORD")
-    private String userPassword;
+    @Column(name = "\"password\"")
+    private String password;
     @Size(max = 25)
-    @Column(name = "USER_TYPE")
+    @Column(name = "\"userType\"")
     private String userType;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "USER_ID")
+    @Column(name = "\"userId\"")
     private Integer userId;
-//    @Column(name = "USER_TYPE_ID")
-//    private Integer userTypeId;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-//    private Collection<Employer> employerCollection;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-//    private Collection<Employee> employeeCollection;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "adminUserId")
-//    private Collection<Admin> adminCollection;
 
     public User() {
     }
@@ -67,20 +62,20 @@ public abstract class User implements Serializable {
         this.userId = userId;
     }
 
-    public String getUserLogin() {
-        return userLogin;
+    public String getLogin() {
+        return login;
     }
 
-    public void setUserLogin(String userLogin) {
-        this.userLogin = userLogin;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
-    public String getUserPassword() {
-        return userPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getUserType() {
@@ -99,41 +94,11 @@ public abstract class User implements Serializable {
         this.userId = userId;
     }
 
-//    public Integer getUserTypeId() {
-//        return userTypeId;
-//    }
-//
-//    public void setUserTyprId(Integer userTypeId) {
-//        this.userTypeId = userTypeId;
-//    }
-//    public Collection<Employer> getEmployerCollection() {
-//        return employerCollection;
-//    }
-//
-//    public void setEmployerCollection(Collection<Employer> employerCollection) {
-//        this.employerCollection = employerCollection;
-//    }
-//
-//    public Collection<Employee> getEmployeeCollection() {
-//        return employeeCollection;
-//    }
-//
-//    public void setEmployeeCollection(Collection<Employee> employeeCollection) {
-//        this.employeeCollection = employeeCollection;
-//    }
-//
-//    public Collection<Admin> getAdminCollection() {
-//        return adminCollection;
-//    }
-//
-//    public void setAdminCollection(Collection<Admin> adminCollection) {
-//        this.adminCollection = adminCollection;
-//    }
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + (this.userLogin != null ? this.userLogin.hashCode() : 0);
-        hash = 67 * hash + (this.userType != null ? this.userType.hashCode() : 0);
+        int hash = 5;
+        hash = 79 * hash + Objects.hashCode(this.login);
+        hash = 79 * hash + Objects.hashCode(this.userType);
         return hash;
     }
 
@@ -146,10 +111,10 @@ public abstract class User implements Serializable {
             return false;
         }
         final User other = (User) obj;
-        if ((this.userLogin == null) ? (other.userLogin != null) : !this.userLogin.equals(other.userLogin)) {
+        if (!Objects.equals(this.login, other.login)) {
             return false;
         }
-        if ((this.userType == null) ? (other.userType != null) : !this.userType.equals(other.userType)) {
+        if (!Objects.equals(this.userType, other.userType)) {
             return false;
         }
         return true;
@@ -157,7 +122,9 @@ public abstract class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" + "userLogin=" + userLogin + ", userType=" + userType + '}';
+        return "User{" + "login=" + login + ", type=" + userType + '}';
     }
 
+    
+    
 }

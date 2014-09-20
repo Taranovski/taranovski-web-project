@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.epam.training.taranovski.web.project.domain;
 
 import java.io.Serializable;
@@ -18,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -27,7 +27,7 @@ import javax.validation.constraints.Size;
  * @author Alyx
  */
 @Entity
-@Table(name = "Vacancy")
+@Table(name = "\"Vacancy\"")
 @NamedQueries({
     @NamedQuery(name = "Vacancy.findAll", query = "SELECT v FROM Vacancy v"),
     @NamedQuery(name = "Vacancy.findByPosition", query = "SELECT v FROM Vacancy v WHERE v.position = :position"),
@@ -35,34 +35,33 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Vacancy.findByDescription", query = "SELECT v FROM Vacancy v WHERE v.description = :description"),
     @NamedQuery(name = "Vacancy.findByVacancyId", query = "SELECT v FROM Vacancy v WHERE v.vacancyId = :vacancyId")})
 public class Vacancy implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Size(max = 50)
-    @Column(name = "position")
+    @Column(name = "\"position\"")
     private String position;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "salary")
+    @Column(name = "\"salary\"")
     private BigDecimal salary;
     @Size(max = 100)
-    @Column(name = "description")
+    @Column(name = "\"description\"")
     private String description;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "vacancyId")
-    private BigDecimal vacancyId;
-    @JoinColumn(name = "employerId", referencedColumnName = "employerId")
-    @ManyToOne(optional = false)
-    private Employer employerId;
-    @JoinColumn(name = "checkDocumentId", referencedColumnName = "checkDocumentId")
-    @ManyToOne
+    @Column(name = "\"vacancyId\"")
+    private Integer vacancyId;
+    @OneToOne
+    @JoinColumn(referencedColumnName = "\"checkDocumentId\"")
     private CheckDocument checkDocumentId;
-    @OneToMany(mappedBy = "vacancyId")
+    @OneToMany
+    @JoinColumn(referencedColumnName = "\"skillId\"")
     private Collection<Skill> skillCollection;
 
     public Vacancy() {
     }
 
-    public Vacancy(BigDecimal vacancyId) {
+    public Vacancy(Integer vacancyId) {
         this.vacancyId = vacancyId;
     }
 
@@ -90,20 +89,12 @@ public class Vacancy implements Serializable {
         this.description = description;
     }
 
-    public BigDecimal getVacancyId() {
+    public Integer getVacancyId() {
         return vacancyId;
     }
 
-    public void setVacancyId(BigDecimal vacancyId) {
+    public void setVacancyId(Integer vacancyId) {
         this.vacancyId = vacancyId;
-    }
-
-    public Employer getEmployerId() {
-        return employerId;
-    }
-
-    public void setEmployerId(Employer employerId) {
-        this.employerId = employerId;
     }
 
     public CheckDocument getCheckDocumentId() {
@@ -144,7 +135,7 @@ public class Vacancy implements Serializable {
 
     @Override
     public String toString() {
-        return "com.epam.training.taranovski.spring.domain1.Vacancy[ vacancyId=" + vacancyId + " ]";
+        return "com.epam.training.taranovski.web.project.domain.Vacancy[ vacancyId=" + vacancyId + " ]";
     }
-    
+
 }

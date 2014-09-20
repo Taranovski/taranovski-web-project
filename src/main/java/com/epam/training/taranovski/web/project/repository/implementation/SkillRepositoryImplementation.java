@@ -8,11 +8,13 @@ package com.epam.training.taranovski.web.project.repository.implementation;
 import com.epam.training.taranovski.web.project.domain.Skill;
 import com.epam.training.taranovski.web.project.repository.SkillRepository;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Alyx
  */
+@Repository
 public class SkillRepositoryImplementation implements SkillRepository {
 
     @Override

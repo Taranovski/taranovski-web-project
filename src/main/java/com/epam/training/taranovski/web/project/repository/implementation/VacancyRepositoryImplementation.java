@@ -9,11 +9,13 @@ import com.epam.training.taranovski.web.project.domain.Skill;
 import com.epam.training.taranovski.web.project.domain.Vacancy;
 import com.epam.training.taranovski.web.project.repository.VacancyRepository;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Alyx
  */
+@Repository
 public class VacancyRepositoryImplementation implements VacancyRepository {
 
     @Override

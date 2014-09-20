@@ -8,11 +8,13 @@ package com.epam.training.taranovski.web.project.repository.implementation;
 import com.epam.training.taranovski.web.project.domain.CheckDocument;
 import com.epam.training.taranovski.web.project.repository.CheckDocumentRepository;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Alyx
  */
+@Repository
 public class CheckDocumentRepositoryImplementation implements CheckDocumentRepository {
 
     @Override

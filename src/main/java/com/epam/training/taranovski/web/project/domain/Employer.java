@@ -7,12 +7,14 @@
 package com.epam.training.taranovski.web.project.domain;
 
 import java.io.Serializable;
-//import java.math.BigDecimal;
+//import java.math.Integer;
 import java.util.Collection;
 //import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 //import javax.persistence.Id;
 //import javax.persistence.JoinColumn;
 //import javax.persistence.ManyToOne;
@@ -29,8 +31,9 @@ import javax.validation.constraints.Size;
  * @author Alyx
  */
 @Entity
-@Table(name = "Employer")
-@PrimaryKeyJoinColumn(name = "employerId", referencedColumnName = "userId")
+@Table(name = "\"Employer\"")
+@DiscriminatorValue("employer")
+@PrimaryKeyJoinColumn(name = "\"employerUserId\"", referencedColumnName = "\"userId\"")
 @NamedQueries({
     @NamedQuery(name = "Employer.findAll", query = "SELECT e FROM Employer e"),
     @NamedQuery(name = "Employer.findByCompanyName", query = "SELECT e FROM Employer e WHERE e.companyName = :companyName"),
@@ -40,34 +43,36 @@ import javax.validation.constraints.Size;
 public class Employer extends User implements Serializable {
     private static final long serialVersionUID = 1L;
     @Size(max = 50)
-    @Column(name = "companyName")
+    @Column(name = "\"companyName\"")
     private String companyName;
     @Size(max = 50)
-    @Column(name = "field")
+    @Column(name = "\"field\"")
     private String field;
     @Size(max = 256)
-    @Column(name = "adress")
+    @Column(name = "\"adress\"")
     private String adress;
-    @Column(name = "telephoneNumber")
+    @Column(name = "\"telephoneNumber\"")
     private Long telephoneNumber;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
 //    @Id
 //    @Basic(optional = false)
 //    @NotNull
-//    @Column(name = "employerId")
-//    private BigDecimal employerId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employerId")
+    @Column(name = "\"employerId\"")
+    private Integer employerId;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(referencedColumnName = "\"vacancyId\"")
     private Collection<Vacancy> vacancyCollection;
 //    @JoinColumn(name = "userId", referencedColumnName = "USER_ID")
 //    @ManyToOne(optional = false)
 //    private User userId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employerId")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(referencedColumnName = "\"checkDocumentId\"")
     private Collection<CheckDocument> checkDocumentCollection;
 
     public Employer() {
     }
 
-//    public Employer(BigDecimal employerId) {
+//    public Employer(Integer employerId) {
 //        this.employerId = employerId;
 //    }
 
@@ -103,13 +108,13 @@ public class Employer extends User implements Serializable {
         this.telephoneNumber = telephoneNumber;
     }
 
-//    public BigDecimal getEmployerId() {
-//        return employerId;
-//    }
-//
-//    public void setEmployerId(BigDecimal employerId) {
-//        this.employerId = employerId;
-//    }
+    public Integer getEmployerId() {
+        return employerId;
+    }
+
+    public void setEmployerId(Integer employerId) {
+        this.employerId = employerId;
+    }
 
     public Collection<Vacancy> getVacancyCollection() {
         return vacancyCollection;
