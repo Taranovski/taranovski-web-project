@@ -51,9 +51,13 @@ public class UserRepositoryImplementation implements UserRepository {
 
         try {
             em.getTransaction().begin();
+            System.out.println("3");
             em.persist(user);
+            System.out.println("4");
             em.getTransaction().commit();
             success = true;
+        } catch (RuntimeException e) {
+            success = false;
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -65,12 +69,14 @@ public class UserRepositoryImplementation implements UserRepository {
     }
 
     @Override
-    public boolean update(User user) {
+    public boolean update(User user
+    ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean delete(User user) {
+    public boolean delete(User user
+    ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -81,7 +87,8 @@ public class UserRepositoryImplementation implements UserRepository {
      * @return
      */
     @Override
-    public User getByNameAndPassword(String name, String password) {
+    public User getByNameAndPassword(String name, String password
+    ) {
         EntityManager em = entityManagerFactory.createEntityManager();
         User user = null;
         boolean exists = false;
@@ -115,7 +122,8 @@ public class UserRepositoryImplementation implements UserRepository {
     }
 
     @Override
-    public boolean nameExistsInDB(String name) {
+    public boolean nameExistsInDB(String name
+    ) {
         EntityManager em = entityManagerFactory.createEntityManager();
         boolean exists = false;
 

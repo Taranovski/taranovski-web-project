@@ -42,7 +42,7 @@ public class RegisterController {
      *
      * @param userName
      * @param password
-     * @param userType
+     * @param usertype
      * @param modelAndView
      * @return
      */
@@ -50,23 +50,29 @@ public class RegisterController {
     public ModelAndView register(
             @RequestParam(value = "username") String userName,
             @RequestParam(value = "password") String password,
-            @RequestParam(value = "userType") String userType,
+            @RequestParam(value = "usertype") String usertype,
             ModelAndView modelAndView) {
 
         boolean error = false;
 
-        if (registerService.loginAllowed(userName)) {
-            if (registerService.passwordAllowed(password)) {
-                if (registerService.register(userName, password, userType)) {
-                    modelAndView.addObject(REGISTER_SUCCESS, REGISTER_SUCCESS);
-                } else {
-                    modelAndView.addObject(REGISTER_ERROR, REGISTER_ERROR);
-                }
-            } else {
-                modelAndView.addObject(PASSWORD_ERROR, PASSWORD_ERROR);
-            }
-        } else {
+        if (!registerService.loginAllowed(userName)) {
+            error = true;
             modelAndView.addObject(NAME_ERROR, NAME_ERROR);
+        }
+
+        if (!registerService.passwordAllowed(password)) {
+            error = true;
+            modelAndView.addObject(PASSWORD_ERROR, PASSWORD_ERROR);
+        }
+
+        if (!error) {
+            System.out.println("1");
+            boolean registered = registerService.register(userName, password, usertype);
+            if (registered) {
+                modelAndView.addObject(REGISTER_SUCCESS, REGISTER_SUCCESS);
+            } else {
+                modelAndView.addObject(REGISTER_ERROR, REGISTER_ERROR);
+            }
         }
 
         modelAndView.setViewName("register.jsp");

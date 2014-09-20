@@ -50,9 +50,16 @@ public class LoginController {
             ModelAndView modelAndView
     ) {
 
-        User user = loginService.login(userName, password);
+        boolean error = false;
+        User user = null;
+        if (userName.matches("\\s*") || password.matches("\\s*")) {
+            error = true;
+        } else {
+            user = loginService.login(userName, password);
+            error = loginService.login(userName, password) == null;
+        }
 
-        if (user == null) {
+        if (error) {
             modelAndView.addObject(LOGIN_ERROR, LOGIN_ERROR);
             modelAndView.setViewName("login.jsp");
         } else {

@@ -6,16 +6,18 @@
 package com.epam.training.taranovski.web.project.service.implementation;
 
 import com.epam.training.taranovski.web.project.service.PasswordRequirementService;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Alyx
  */
+@Service
 public class PasswordRequirementServiceImplementation implements PasswordRequirementService {
 
     @Override
     public boolean passwordMeetRequirements(String password) {
-        return true;
+        return !password.matches("\\s*");
     }
 
 }

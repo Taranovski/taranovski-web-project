@@ -16,7 +16,6 @@
         <title><fmt:message key="login.title"/></title>
     </head>
     <body>
-
         <form method="post" action="loginSystem.html">
             <label for="username"><fmt:message key="login.label.username" />:</label>
             <input type="text" id="username" name="username">

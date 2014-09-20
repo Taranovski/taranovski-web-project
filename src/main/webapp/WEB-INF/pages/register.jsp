@@ -23,8 +23,9 @@
             <label for="password"><fmt:message key="register.label.password" />:</label>
             <input type="password" id="password" name="password">
             <br>
-            <input type="radio" name="userType" value="employee" /><fmt:message key="register.label.employee" /><br>
-            <input type="radio" name="userType" value="employer" /><fmt:message key="register.label.employer" /><br>
+            
+            <input type="radio" name="usertype" value="employee" checked="true"/><fmt:message key="register.label.employee" /><br>
+            <input type="radio" name="usertype" value="employer" /><fmt:message key="register.label.employer" /><br>
             <fmt:message key="register.button.submit" var="buttonValue" />
             <input type="submit" name="submit" value="${buttonValue}">
         </form>
@@ -35,19 +36,19 @@
         </form>
 
         <c:if test = "${not empty name_error}">
-            <fmt:message key="register.name.error"/>
+            <fmt:message key="register.name.error"/><br>
             <c:set var="name_error" value="0"/>
         </c:if>
         <c:if test = "${not empty password_error}">
-            <fmt:message key="register.password.error"/>
+            <fmt:message key="register.password.error"/><br>
             <c:set var="password_error" value="0"/>
         </c:if>
         <c:if test = "${not empty register_error}">
-            <fmt:message key="register.error"/>
-            <c:set var="register_success" value="0"/>
+            <fmt:message key="register.error"/><br>
+            <c:set var="register_error" value="0"/>
         </c:if>
         <c:if test = "${not empty register_success}">
-            <fmt:message key="register.success"/>
+            <fmt:message key="register.success"/><br>
             <c:set var="register_success" value="0"/>
         </c:if>
 

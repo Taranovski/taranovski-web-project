@@ -13,14 +13,17 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
@@ -29,7 +32,6 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "\"User\"")
-//@MappedSuperclass
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(discriminatorType=DiscriminatorType.STRING, name="\"userType\"", length = 25)
 @NamedQueries({
@@ -46,12 +48,15 @@ public class User implements Serializable {
     @Column(name = "\"password\"")
     private String password;
     @Size(max = 25)
+    @Pattern(regexp = "employee|employer|admin")
     @Column(name = "\"userType\"")
     private String userType;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
     @NotNull
+    @SequenceGenerator(name = "userSequence", sequenceName = "UserSequence", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userSequence")
     @Column(name = "\"userId\"")
     private Integer userId;
 
@@ -122,7 +127,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" + "login=" + login + ", type=" + userType + '}';
+        return "User{" + "login=" + login + ", userType=" + userType + '}';
     }
 
     

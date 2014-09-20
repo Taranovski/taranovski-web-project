@@ -57,8 +57,8 @@ public class Employer extends User implements Serializable {
 //    @Id
 //    @Basic(optional = false)
 //    @NotNull
-    @Column(name = "\"employerId\"")
-    private Integer employerId;
+    @Column(name = "\"employerUserId\"")
+    private Integer employerUserId;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(referencedColumnName = "\"vacancyId\"")
     private Collection<Vacancy> vacancyCollection;
@@ -72,8 +72,8 @@ public class Employer extends User implements Serializable {
     public Employer() {
     }
 
-//    public Employer(Integer employerId) {
-//        this.employerId = employerId;
+//    public Employer(Integer employerUserId) {
+//        this.employerUserId = employerUserId;
 //    }
 
     public String getCompanyName() {
@@ -108,12 +108,12 @@ public class Employer extends User implements Serializable {
         this.telephoneNumber = telephoneNumber;
     }
 
-    public Integer getEmployerId() {
-        return employerId;
+    public Integer getEmployerUserId() {
+        return employerUserId;
     }
 
-    public void setEmployerId(Integer employerId) {
-        this.employerId = employerId;
+    public void setEmployerUserId(Integer employerUserId) {
+        this.employerUserId = employerUserId;
     }
 
     public Collection<Vacancy> getVacancyCollection() {
