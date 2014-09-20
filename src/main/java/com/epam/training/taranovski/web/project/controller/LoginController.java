@@ -59,7 +59,7 @@ public class LoginController {
 
             // manage session here
             modelAndView.addObject("user", user.toString());
-            
+
             String type = user.getUserType();
             switch (type) {
                 case "employee": {

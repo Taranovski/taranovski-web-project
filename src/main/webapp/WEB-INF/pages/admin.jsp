@@ -16,10 +16,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World! admin</h1>
+        <h1>admin page</h1>
         ${user}
-        <form method="post" action="newjsp.html">
-            <input type="submit" value="getAdminById" />
-        </form>
     </body>
 </html>

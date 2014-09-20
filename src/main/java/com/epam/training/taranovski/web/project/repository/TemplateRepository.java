@@ -18,9 +18,9 @@ public interface TemplateRepository<T> {
 
     List<T> getAll();
 
-    boolean create(T admin);
+    boolean create(T something);
 
-    boolean update(T admin);
+    boolean update(T something);
 
-    boolean delete(T admin);
+    boolean delete(T something);
 }

@@ -42,6 +42,10 @@
             <fmt:message key="register.password.error"/>
             <c:set var="password_error" value="0"/>
         </c:if>
+        <c:if test = "${not empty register_error}">
+            <fmt:message key="register.error"/>
+            <c:set var="register_success" value="0"/>
+        </c:if>
         <c:if test = "${not empty register_success}">
             <fmt:message key="register.success"/>
             <c:set var="register_success" value="0"/>

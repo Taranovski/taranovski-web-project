@@ -7,14 +7,9 @@ package com.epam.training.taranovski.web.project.service;
 
 /**
  *
- * @author Oleksandr_Taranovsky
+ * @author Alyx
  */
-public interface RegisterService {
+public interface PasswordRequirementService {
 
-    boolean loginAllowed(String name);
-    
-    boolean passwordAllowed(String password);
-    
-    boolean register(String name, String password, String type);
-
+    boolean passwordMeetRequirements(String password);
 }

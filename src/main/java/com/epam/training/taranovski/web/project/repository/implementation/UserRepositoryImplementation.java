@@ -5,7 +5,6 @@
  */
 package com.epam.training.taranovski.web.project.repository.implementation;
 
-import com.epam.training.taranovski.web.project.domain.Admin;
 import com.epam.training.taranovski.web.project.domain.User;
 import com.epam.training.taranovski.web.project.repository.UserRepository;
 import com.epam.training.taranovski.web.project.service.EncryptionService;
@@ -13,7 +12,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -47,20 +45,41 @@ public class UserRepositoryImplementation implements UserRepository {
     }
 
     @Override
-    public boolean create(User admin) {
+    public boolean create(User user) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        boolean success = false;
+
+        try {
+            em.getTransaction().begin();
+            em.persist(user);
+            em.getTransaction().commit();
+            success = true;
+        } finally {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            em.close();
+        }
+
+        return success;
+    }
+
+    @Override
+    public boolean update(User user) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean update(User admin) {
+    public boolean delete(User user) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public boolean delete(User admin) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    /**
+     *
+     * @param name
+     * @param password
+     * @return
+     */
     @Override
     public User getByNameAndPassword(String name, String password) {
         EntityManager em = entityManagerFactory.createEntityManager();
@@ -70,17 +89,11 @@ public class UserRepositoryImplementation implements UserRepository {
         try {
             em.getTransaction().begin();
 
-            user = em.find(Admin.class, 1);
-            
-//            if (user instanceof Admin) {
-//                user = (Admin) user;
-//            }
-            
-//            TypedQuery<User> query = em.createNamedQuery("User.findByUserLoginAndPassword", User.class);
-//            query.setParameter("name", name);
-//            query.setParameter("password", encryptionService.encrypt(password));
-//
-//            user = query.getSingleResult();
+            TypedQuery<User> query = em.createNamedQuery("User.findByUserLoginAndPassword", User.class);
+            query.setParameter("login", name);
+            query.setParameter("password", encryptionService.encrypt(password));
+
+            user = query.getSingleResult();
 
             em.getTransaction().commit();
             exists = true;
@@ -103,7 +116,29 @@ public class UserRepositoryImplementation implements UserRepository {
 
     @Override
     public boolean nameExistsInDB(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager em = entityManagerFactory.createEntityManager();
+        boolean exists = false;
+
+        try {
+            em.getTransaction().begin();
+
+            TypedQuery<User> query = em.createNamedQuery("User.findByLogin", User.class);
+            query.setParameter("login", name);
+
+            User user = query.getSingleResult();
+
+            em.getTransaction().commit();
+            exists = true;
+        } catch (NoResultException ex) {
+            exists = false;
+        } finally {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            em.close();
+        }
+
+        return exists;
     }
 
 }
