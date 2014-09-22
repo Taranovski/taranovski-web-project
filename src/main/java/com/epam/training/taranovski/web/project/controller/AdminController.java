@@ -9,6 +9,7 @@ import com.epam.training.taranovski.web.project.domain.Admin;
 import com.epam.training.taranovski.web.project.repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,17 +19,17 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Alyx
  */
 @Controller
-@SessionAttributes(types = {Admin.class}, value = {"admin"})
+@SessionAttributes(value = "user")
 public class AdminController {
 
 //    @Autowired
 //    AdminRepository adminRepository;
-
     @RequestMapping("/admin")
-    public ModelAndView getAdminById(ModelAndView modelAndView) {
-
+    public ModelAndView getAdminById(@ModelAttribute(value = "user") Admin admin, ModelAndView modelAndView) {
+        admin.setAdminName("newName");
+        modelAndView.addObject("admin", admin);
         modelAndView.setViewName("admin.jsp");
         return modelAndView;
     }
-
+    
 }

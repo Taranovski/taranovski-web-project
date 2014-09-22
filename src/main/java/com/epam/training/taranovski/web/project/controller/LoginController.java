@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Oleksandr_Taranovsky
  */
 @Controller
+@SessionAttributes(value = "user")
 public class LoginController {
 
     private static final String LOGIN_ERROR = "login_error";
@@ -56,18 +58,16 @@ public class LoginController {
             error = true;
         } else {
             user = loginService.login(userName, password);
-            error = loginService.login(userName, password) == null;
+            error = (user == null);
         }
 
         if (error) {
             modelAndView.addObject(LOGIN_ERROR, LOGIN_ERROR);
             modelAndView.setViewName("login.jsp");
         } else {
-
-            // manage session here
+            String type = user.getUserType();
             modelAndView.addObject("user", user);
 
-            String type = user.getUserType();
             switch (type) {
                 case "employee": {
                     modelAndView.setViewName("employee.jsp");
@@ -87,8 +87,6 @@ public class LoginController {
                 }
             }
         }
-
         return modelAndView;
     }
-
 }
