@@ -8,16 +8,15 @@ package com.epam.training.taranovski.web.project.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -51,9 +50,9 @@ public class Vacancy implements Serializable {
     @NotNull
     @Column(name = "\"vacancyId\"")
     private Integer vacancyId;
-    @OneToOne
-    @JoinColumn(referencedColumnName = "\"checkDocumentId\"")
-    private CheckDocument checkDocumentId;
+//    @OneToOne
+//    @JoinColumn(referencedColumnName = "\"checkDocumentId\"")
+//    private CheckDocument checkDocumentId;
     @OneToMany
     @JoinColumn(referencedColumnName = "\"skillId\"")
     private Collection<Skill> skillCollection;
@@ -97,13 +96,13 @@ public class Vacancy implements Serializable {
         this.vacancyId = vacancyId;
     }
 
-    public CheckDocument getCheckDocumentId() {
-        return checkDocumentId;
-    }
-
-    public void setCheckDocumentId(CheckDocument checkDocumentId) {
-        this.checkDocumentId = checkDocumentId;
-    }
+//    public CheckDocument getCheckDocumentId() {
+//        return checkDocumentId;
+//    }
+//
+//    public void setCheckDocumentId(CheckDocument checkDocumentId) {
+//        this.checkDocumentId = checkDocumentId;
+//    }
 
     public Collection<Skill> getSkillCollection() {
         return skillCollection;
@@ -115,19 +114,29 @@ public class Vacancy implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (vacancyId != null ? vacancyId.hashCode() : 0);
+        int hash = 5;
+        hash = 89 * hash + Objects.hashCode(this.position);
+        hash = 89 * hash + Objects.hashCode(this.salary);
+        hash = 89 * hash + Objects.hashCode(this.description);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Vacancy)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Vacancy other = (Vacancy) object;
-        if ((this.vacancyId == null && other.vacancyId != null) || (this.vacancyId != null && !this.vacancyId.equals(other.vacancyId))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Vacancy other = (Vacancy) obj;
+        if (!Objects.equals(this.position, other.position)) {
+            return false;
+        }
+        if (!Objects.equals(this.salary, other.salary)) {
+            return false;
+        }
+        if (!Objects.equals(this.description, other.description)) {
             return false;
         }
         return true;
@@ -135,7 +144,9 @@ public class Vacancy implements Serializable {
 
     @Override
     public String toString() {
-        return "com.epam.training.taranovski.web.project.domain.Vacancy[ vacancyId=" + vacancyId + " ]";
+        return "Vacancy{" + "position=" + position + ", salary=" + salary + ", description=" + description + '}';
     }
+
+    
 
 }

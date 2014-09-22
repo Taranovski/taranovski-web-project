@@ -3,27 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.epam.training.taranovski.web.project.domain;
 
 import java.io.Serializable;
-//import java.math.Integer;
 import java.util.Collection;
-//import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-//import javax.persistence.Id;
-//import javax.persistence.JoinColumn;
-//import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-//import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -41,6 +34,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Employer.findByAdress", query = "SELECT e FROM Employer e WHERE e.adress = :adress"),
     @NamedQuery(name = "Employer.findByTelephoneNumber", query = "SELECT e FROM Employer e WHERE e.telephoneNumber = :telephoneNumber")})
 public class Employer extends User implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Size(max = 50)
     @Column(name = "\"companyName\"")
@@ -75,7 +69,6 @@ public class Employer extends User implements Serializable {
 //    public Employer(Integer employerUserId) {
 //        this.employerUserId = employerUserId;
 //    }
-
     public String getCompanyName() {
         return companyName;
     }
@@ -127,11 +120,9 @@ public class Employer extends User implements Serializable {
 //    public User getUserId() {
 //        return userId;
 //    }
-
 //    public void setUserId(User userId) {
 //        this.userId = userId;
 //    }
-
     public Collection<CheckDocument> getCheckDocumentCollection() {
         return checkDocumentCollection;
     }
@@ -142,12 +133,12 @@ public class Employer extends User implements Serializable {
 
     @Override
     public String toString() {
-        return "Employer{" + "companyName=" + companyName + ", field=" + field + ", adress=" + adress + ", telephoneNumber=" + telephoneNumber + '}';
+        return super.toString() + "Employer{" + "companyName=" + companyName + ", field=" + field + ", adress=" + adress + ", telephoneNumber=" + telephoneNumber + '}';
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
+        int hash = super.hashCode();
         hash = 59 * hash + (this.companyName != null ? this.companyName.hashCode() : 0);
         hash = 59 * hash + (this.field != null ? this.field.hashCode() : 0);
         hash = 59 * hash + (this.adress != null ? this.adress.hashCode() : 0);
@@ -163,6 +154,10 @@ public class Employer extends User implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
+        if (!super.equals((User) obj)) {
+            return false;
+        }
+
         final Employer other = (Employer) obj;
         if ((this.companyName == null) ? (other.companyName != null) : !this.companyName.equals(other.companyName)) {
             return false;
@@ -179,6 +174,4 @@ public class Employer extends User implements Serializable {
         return true;
     }
 
-    
-    
 }

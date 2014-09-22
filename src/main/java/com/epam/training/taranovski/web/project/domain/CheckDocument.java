@@ -7,16 +7,13 @@ package com.epam.training.taranovski.web.project.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -77,19 +74,25 @@ public class CheckDocument implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (checkDocumentId != null ? checkDocumentId.hashCode() : 0);
+        int hash = 7;
+        hash = 23 * hash + Objects.hashCode(this.commissions);
+        hash = 23 * hash + Objects.hashCode(this.checkDocumentId);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CheckDocument)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        CheckDocument other = (CheckDocument) object;
-        if ((this.checkDocumentId == null && other.checkDocumentId != null) || (this.checkDocumentId != null && !this.checkDocumentId.equals(other.checkDocumentId))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final CheckDocument other = (CheckDocument) obj;
+        if (!Objects.equals(this.commissions, other.commissions)) {
+            return false;
+        }
+        if (!Objects.equals(this.checkDocumentId, other.checkDocumentId)) {
             return false;
         }
         return true;
@@ -97,7 +100,8 @@ public class CheckDocument implements Serializable {
 
     @Override
     public String toString() {
-        return "com.epam.training.taranovski.web.project.domain.CheckDocument[ checkDocumentId=" + checkDocumentId + " ]";
+        return "CheckDocument{" + "commissions=" + commissions + ", checkDocumentId=" + checkDocumentId + '}';
     }
+
     
 }

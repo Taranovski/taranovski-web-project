@@ -6,14 +6,12 @@
 package com.epam.training.taranovski.web.project.domain;
 
 import java.io.Serializable;
-//import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -48,9 +46,6 @@ public class Skill implements Serializable {
     @NotNull
     @Column(name = "\"skillId\"")
     private Integer skillId;
-//    @JoinColumn(name = "\"vacancyId\"", referencedColumnName = "\"vacancyId\"")
-//    @ManyToOne
-//    private Vacancy vacancyId;
 
     public Skill() {
     }
@@ -91,29 +86,31 @@ public class Skill implements Serializable {
         this.skillId = skillId;
     }
 
-//    public Vacancy getVacancyId() {
-//        return vacancyId;
-//    }
-//
-//    public void setVacancyId(Vacancy vacancyId) {
-//        this.vacancyId = vacancyId;
-//    }
-
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (skillId != null ? skillId.hashCode() : 0);
+        int hash = 7;
+        hash = 41 * hash + Objects.hashCode(this.skillName);
+        hash = 41 * hash + Objects.hashCode(this.description);
+        hash = 41 * hash + Objects.hashCode(this.experience);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Skill)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Skill other = (Skill) object;
-        if ((this.skillId == null && other.skillId != null) || (this.skillId != null && !this.skillId.equals(other.skillId))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Skill other = (Skill) obj;
+        if (!Objects.equals(this.skillName, other.skillName)) {
+            return false;
+        }
+        if (!Objects.equals(this.description, other.description)) {
+            return false;
+        }
+        if (!Objects.equals(this.experience, other.experience)) {
             return false;
         }
         return true;
@@ -121,7 +118,9 @@ public class Skill implements Serializable {
 
     @Override
     public String toString() {
-        return "com.epam.training.taranovski.web.project.domain.Skill[ skillId=" + skillId + " ]";
+        return "Skill{" + "skillName=" + skillName + ", description=" + description + ", experience=" + experience + '}';
     }
+
+    
     
 }
