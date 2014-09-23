@@ -31,7 +31,6 @@
             </tbody>
         </table>
 
-
         <fmt:message key="index.hello"/><br>
 
         <form method="post" action="toLoginPage.html">

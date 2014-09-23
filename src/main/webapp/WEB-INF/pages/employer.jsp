@@ -18,5 +18,15 @@
     <body>
         <fmt:message key="employer.greetings"/>${user.login}<br/>
         
+        
+        
+        
+        
+        
+        
+        <form method="post" action="toLoginPage.html">
+            <fmt:message key="login.logout" var="toLoginPage"/>
+            <input type="submit" value="${toLoginPage}" />
+        </form>
     </body>
 </html>

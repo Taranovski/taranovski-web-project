@@ -17,6 +17,23 @@
     </head>
     <body>
         <fmt:message key="employee.greetings"/>${user.login}<br/>
+        <br/>
+        <fmt:message key="employee.name"/>${user.name}<br/>
+        <fmt:message key="employee.surname"/>${user.surname}<br/>
+        <fmt:message key="employee.patronymic"/>${user.patronymic}<br/>
+        <fmt:message key="employee.qualification"/>${user.qualification}<br/>
+        <fmt:message key="employee.occupation"/>${user.occupation}<br/>
+        <br/>
+        <fmt:message key="employee.skills"/>
+        
+        <form method="post" action="editEmployeePersonalInfo.html">
+            <fmt:message key="employee.edit.profile" var="editInfo"/>
+            <input type="submit" value="${editInfo}" />
+        </form>
+        <form method="post" action="toLoginPage.html">
+            <fmt:message key="login.logout" var="toLoginPage"/>
+            <input type="submit" value="${toLoginPage}" />
+        </form>
         
     </body>
 </html>

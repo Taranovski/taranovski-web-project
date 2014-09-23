@@ -10,6 +10,9 @@ import com.epam.training.taranovski.web.project.domain.Employee;
 import com.epam.training.taranovski.web.project.domain.Skill;
 import com.epam.training.taranovski.web.project.repository.EmployeeRepository;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -18,6 +21,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class EmployeeRepositoryImplementation implements EmployeeRepository {
+
+    @Autowired
+    private EntityManagerFactory entityManagerFactory;
 
     @Override
     public Employee getByCredentials(String firstName, String lastName, String patronymic) {
@@ -65,8 +71,26 @@ public class EmployeeRepositoryImplementation implements EmployeeRepository {
     }
 
     @Override
-    public boolean update(Employee admin) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean update(Employee employee) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        boolean success = true;
+        try {
+            em.getTransaction().begin();
+
+            em.merge(employee);
+            em.flush();
+
+            em.getTransaction().commit();
+            success = true;
+        } finally {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+                success = false;
+            }
+            em.close();
+        }
+
+        return success;
     }
 
     @Override

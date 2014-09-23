@@ -6,12 +6,14 @@
 package com.epam.training.taranovski.web.project.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 /**
  *
  * @author Alyx
  */
 @Controller
+@SessionAttributes(value = "user")
 public class EmployerController {
     
 }
