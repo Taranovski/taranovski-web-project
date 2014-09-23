@@ -7,19 +7,17 @@ package com.epam.training.taranovski.web.project.domain;
 
 import java.io.Serializable;
 import java.util.Collection;
-//import javax.persistence.Basic;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-//import javax.persistence.Id;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-//import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -40,34 +38,38 @@ import javax.validation.constraints.Size;
 public class Employee extends User implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Size(max = 50)
     @Column(name = "\"name\"")
     private String name;
+
     @Size(max = 50)
     @Column(name = "\"surname\"")
     private String surname;
+
     @Size(max = 50)
     @Column(name = "\"patronymic\"")
     private String patronymic;
+
     @Size(max = 50)
     @Column(name = "\"qualification\"")
     private String qualification;
+
     @Size(max = 50)
     @Column(name = "\"occupation\"")
     private String occupation;
+
     @Column(name = "\"employeeUserId\"")
     private Integer employeeUserId;
+
     @JoinColumn(referencedColumnName = "\"skillId\"")
     @OneToMany
-    private Collection<Skill> skillCollection;
-    @JoinColumn(name = "\"employeeCheckDocumentId\"", referencedColumnName = "\"checkDocumentId\"")
-    @ManyToOne
-    private CheckDocument employeeCheckDocumentId;
+    @Basic(fetch = FetchType.LAZY)
+    private Collection<UserSkill> skillCollection;
 
     public Employee() {
     }
 
-    
     public String getName() {
         return name;
     }
@@ -115,26 +117,13 @@ public class Employee extends User implements Serializable {
     public void setEmployeeUserId(Integer employeeUserId) {
         this.employeeUserId = employeeUserId;
     }
-    public Collection<Skill> getSkillCollection() {
+
+    public Collection<UserSkill> getSkillCollection() {
         return skillCollection;
     }
 
-    public void setSkillCollection(Collection<Skill> skillCollection) {
+    public void setSkillCollection(Collection<UserSkill> skillCollection) {
         this.skillCollection = skillCollection;
-    }
-
-//    public User getUserId() {
-//        return userId;
-//    }
-//    public void setUserId(User userId) {
-//        this.userId = userId;
-//    }
-    public CheckDocument getEmployeeCheckDocumentId() {
-        return employeeCheckDocumentId;
-    }
-
-    public void setEmployeeCheckDocumentId(CheckDocument employeeCheckDocumentId) {
-        this.employeeCheckDocumentId = employeeCheckDocumentId;
     }
 
     @Override

@@ -5,7 +5,7 @@
  */
 package com.epam.training.taranovski.web.project.repository.implementation;
 
-import com.epam.training.taranovski.web.project.domain.Skill;
+import com.epam.training.taranovski.web.project.domain.UserSkill;
 import com.epam.training.taranovski.web.project.domain.Vacancy;
 import com.epam.training.taranovski.web.project.repository.VacancyRepository;
 import java.util.List;
@@ -19,12 +19,12 @@ import org.springframework.stereotype.Repository;
 public class VacancyRepositoryImplementation implements VacancyRepository {
 
     @Override
-    public boolean addSkill(Vacancy vacancy, Skill skill) {
+    public boolean addSkill(Vacancy vacancy, UserSkill skill) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean removeSkill(Vacancy vacancy, Skill skill) {
+    public boolean removeSkill(Vacancy vacancy, UserSkill skill) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -34,7 +34,7 @@ public class VacancyRepositoryImplementation implements VacancyRepository {
     }
 
     @Override
-    public List<Skill> getSkills(Vacancy vacancy) {
+    public List<UserSkill> getSkills(Vacancy vacancy) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

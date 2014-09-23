@@ -7,7 +7,7 @@ package com.epam.training.taranovski.web.project.repository.implementation;
 
 import com.epam.training.taranovski.web.project.domain.CheckDocument;
 import com.epam.training.taranovski.web.project.domain.Employee;
-import com.epam.training.taranovski.web.project.domain.Skill;
+import com.epam.training.taranovski.web.project.domain.UserSkill;
 import com.epam.training.taranovski.web.project.repository.EmployeeRepository;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -31,12 +31,12 @@ public class EmployeeRepositoryImplementation implements EmployeeRepository {
     }
 
     @Override
-    public boolean addSkill(Employee employee, Skill skill) {
+    public boolean addSkill(Employee employee, UserSkill skill) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean removeSkill(Employee employee, Skill skill) {
+    public boolean removeSkill(Employee employee, UserSkill skill) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -46,7 +46,7 @@ public class EmployeeRepositoryImplementation implements EmployeeRepository {
     }
 
     @Override
-    public List<Skill> getSkills(Employee employee) {
+    public List<UserSkill> getSkills(Employee employee) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

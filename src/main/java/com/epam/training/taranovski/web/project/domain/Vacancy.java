@@ -12,6 +12,7 @@ import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
@@ -54,8 +55,9 @@ public class Vacancy implements Serializable {
 //    @JoinColumn(referencedColumnName = "\"checkDocumentId\"")
 //    private CheckDocument checkDocumentId;
     @OneToMany
+    @Basic(fetch = FetchType.LAZY)
     @JoinColumn(referencedColumnName = "\"skillId\"")
-    private Collection<Skill> skillCollection;
+    private Collection<UserSkill> skillCollection;
 
     public Vacancy() {
     }
@@ -104,11 +106,11 @@ public class Vacancy implements Serializable {
 //        this.checkDocumentId = checkDocumentId;
 //    }
 
-    public Collection<Skill> getSkillCollection() {
+    public Collection<UserSkill> getSkillCollection() {
         return skillCollection;
     }
 
-    public void setSkillCollection(Collection<Skill> skillCollection) {
+    public void setSkillCollection(Collection<UserSkill> skillCollection) {
         this.skillCollection = skillCollection;
     }
 

@@ -12,8 +12,10 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -28,18 +30,26 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "CheckDocument.findByCommissions", query = "SELECT c FROM CheckDocument c WHERE c.commissions = :commissions"),
     @NamedQuery(name = "CheckDocument.findByCheckDocumentId", query = "SELECT c FROM CheckDocument c WHERE c.checkDocumentId = :checkDocumentId")})
 public class CheckDocument implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "\"commissions\"")
-    private BigDecimal commissions;
+
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "\"checkDocumentId\"")
     private Integer checkDocumentId;
-//    @OneToOne//(mappedBy = "vacancyId")
-////    @JoinColumn(name = "", referencedColumnName = "vacancyId")
-//    private Vacancy vacancy;
+
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "\"commissions\"")
+    private BigDecimal commissions;
+
+    @OneToOne
+    @JoinColumn(name = "\"vacancyId\"", referencedColumnName = "\"vacancyId\"")
+    private Vacancy vacancy;
+
+    @OneToOne
+    @JoinColumn(name = "\"employeeId\"", referencedColumnName = "\"employeeUserId\"")
+    private Employee employee;
 
     public CheckDocument() {
     }
@@ -64,19 +74,28 @@ public class CheckDocument implements Serializable {
         this.checkDocumentId = checkDocumentId;
     }
 
-//    public Vacancy getVacancy() {
-//        return vacancy;
-//    }
-//
-//    public void setVacancy(Vacancy vacancy) {
-//        this.vacancy = vacancy;
-//    }
+    public Vacancy getVacancy() {
+        return vacancy;
+    }
+
+    public void setVacancy(Vacancy vacancy) {
+        this.vacancy = vacancy;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 23 * hash + Objects.hashCode(this.commissions);
-        hash = 23 * hash + Objects.hashCode(this.checkDocumentId);
+        int hash = 5;
+        hash = 29 * hash + Objects.hashCode(this.commissions);
+        hash = 29 * hash + Objects.hashCode(this.vacancy);
+        hash = 29 * hash + Objects.hashCode(this.employee);
         return hash;
     }
 
@@ -92,7 +111,10 @@ public class CheckDocument implements Serializable {
         if (!Objects.equals(this.commissions, other.commissions)) {
             return false;
         }
-        if (!Objects.equals(this.checkDocumentId, other.checkDocumentId)) {
+        if (!Objects.equals(this.vacancy, other.vacancy)) {
+            return false;
+        }
+        if (!Objects.equals(this.employee, other.employee)) {
             return false;
         }
         return true;
@@ -100,8 +122,7 @@ public class CheckDocument implements Serializable {
 
     @Override
     public String toString() {
-        return "CheckDocument{" + "commissions=" + commissions + ", checkDocumentId=" + checkDocumentId + '}';
+        return "CheckDocument{" + "commissions=" + commissions + ", vacancy=" + vacancy + ", employee=" + employee + '}';
     }
 
-    
 }

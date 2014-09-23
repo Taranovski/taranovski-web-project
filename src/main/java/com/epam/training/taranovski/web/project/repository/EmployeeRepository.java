@@ -7,7 +7,7 @@ package com.epam.training.taranovski.web.project.repository;
 
 import com.epam.training.taranovski.web.project.domain.CheckDocument;
 import com.epam.training.taranovski.web.project.domain.Employee;
-import com.epam.training.taranovski.web.project.domain.Skill;
+import com.epam.training.taranovski.web.project.domain.UserSkill;
 import java.util.List;
 
 /**
@@ -18,13 +18,13 @@ public interface EmployeeRepository extends TemplateRepository<Employee> {
 
     Employee getByCredentials(String firstName, String lastName, String patronymic);
 
-    boolean addSkill(Employee employee, Skill skill);
+    boolean addSkill(Employee employee, UserSkill skill);
 
-    boolean removeSkill(Employee employee, Skill skill);
+    boolean removeSkill(Employee employee, UserSkill skill);
 
     boolean clearSkills(Employee employee);
 
-    List<Skill> getSkills(Employee employee);
+    List<UserSkill> getSkills(Employee employee);
 
     CheckDocument getCheckDocument(Employee employee);
 }

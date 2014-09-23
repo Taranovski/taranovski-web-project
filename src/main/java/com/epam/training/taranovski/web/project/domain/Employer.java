@@ -7,10 +7,12 @@ package com.epam.training.taranovski.web.project.domain;
 
 import java.io.Serializable;
 import java.util.Collection;
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -55,13 +57,14 @@ public class Employer extends User implements Serializable {
     private Integer employerUserId;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(referencedColumnName = "\"vacancyId\"")
+    @Basic(fetch = FetchType.LAZY)
     private Collection<Vacancy> vacancyCollection;
 //    @JoinColumn(name = "userId", referencedColumnName = "USER_ID")
 //    @ManyToOne(optional = false)
 //    private User userId;
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(referencedColumnName = "\"checkDocumentId\"")
-    private Collection<CheckDocument> checkDocumentCollection;
+//    @OneToMany(cascade = CascadeType.ALL)
+//    @JoinColumn(referencedColumnName = "\"checkDocumentId\"")
+//    private Collection<CheckDocument> checkDocumentCollection;
 
     public Employer() {
     }
@@ -123,13 +126,13 @@ public class Employer extends User implements Serializable {
 //    public void setUserId(User userId) {
 //        this.userId = userId;
 //    }
-    public Collection<CheckDocument> getCheckDocumentCollection() {
-        return checkDocumentCollection;
-    }
-
-    public void setCheckDocumentCollection(Collection<CheckDocument> checkDocumentCollection) {
-        this.checkDocumentCollection = checkDocumentCollection;
-    }
+//    public Collection<CheckDocument> getCheckDocumentCollection() {
+//        return checkDocumentCollection;
+//    }
+//
+//    public void setCheckDocumentCollection(Collection<CheckDocument> checkDocumentCollection) {
+//        this.checkDocumentCollection = checkDocumentCollection;
+//    }
 
     @Override
     public String toString() {

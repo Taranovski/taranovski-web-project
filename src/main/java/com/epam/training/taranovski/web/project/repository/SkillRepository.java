@@ -5,12 +5,12 @@
  */
 package com.epam.training.taranovski.web.project.repository;
 
-import com.epam.training.taranovski.web.project.domain.Skill;
+import com.epam.training.taranovski.web.project.domain.UserSkill;
 
 /**
  *
  * @author Oleksandr_Taranovsky
  */
-public interface SkillRepository extends TemplateRepository<Skill> {
+public interface SkillRepository extends TemplateRepository<UserSkill> {
 
 }
