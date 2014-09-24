@@ -44,7 +44,34 @@ public class EmployeeRepositoryImplementation implements EmployeeRepository {
 
     @Override
     public boolean clearSkills(Employee employee) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager em = entityManagerFactory.createEntityManager();
+        List<UserSkill> list = new LinkedList<>();
+        boolean success = true;
+        try {
+            em.getTransaction().begin();
+            
+            TypedQuery<UserSkill> query = em.createNamedQuery("UserSkill.findByEmployee", UserSkill.class);
+            query.setParameter("employee", employee);
+            list = query.getResultList();
+            
+            for (UserSkill userSkill : list) {
+                em.remove(userSkill);
+            }
+            
+            em.getTransaction().commit();
+            success = true;
+        } catch (RuntimeException e) {
+            System.out.println(e);
+            success = false;
+        } finally {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+                success = false;
+            }
+            em.close();
+        }
+
+        return success;
     }
 
     @Override
@@ -53,18 +80,14 @@ public class EmployeeRepositoryImplementation implements EmployeeRepository {
         List<UserSkill> list = new LinkedList<>();
         try {
             em.getTransaction().begin();
-            System.out.println("1");
-            TypedQuery<UserSkill> query = em.createNamedQuery("UserSkill.findByEmployeeId", UserSkill.class);
-            System.out.println("2");
-            query.setParameter("employeeId", employee);
-            System.out.println("3");
             
+            TypedQuery<UserSkill> query = em.createNamedQuery("UserSkill.findByEmployee", UserSkill.class);
+            query.setParameter("employee", employee);
             list = query.getResultList();
-            System.out.println(list);
+            
             em.getTransaction().commit();
         } catch (RuntimeException e) {
             System.out.println(e);
-//            list = null;
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();

@@ -6,11 +6,15 @@
 package com.epam.training.taranovski.web.project.repository;
 
 import com.epam.training.taranovski.web.project.domain.BasicSkill;
+import com.epam.training.taranovski.web.project.domain.Employee;
+import java.util.List;
 
 /**
  *
  * @author Alyx
  */
 public interface BasicSkillRepository extends TemplateRepository<BasicSkill>{
+
+    public List<BasicSkill> getSkillsNotInEmployee(Employee employee);
     
 }

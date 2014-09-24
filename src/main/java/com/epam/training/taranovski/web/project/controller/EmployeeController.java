@@ -20,18 +20,22 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Alyx
  */
 @Controller
-@SessionAttributes(value = "user")
+@SessionAttributes(value = {"user", "skills"})
 public class EmployeeController {
-    
+
+    private static final String UPDATE_ERROR = "update_error";
+    private static final String DELETE_ERROR = "delete_error";
+    private static final String ADD_ERROR = "add_error";
+
     @Autowired
     EmployeeService employeeService;
-     
+
     @RequestMapping("/editEmployeePersonalInfo")
     public ModelAndView editEmployeePersonalInfo(ModelAndView modelAndView) {
         modelAndView.setViewName("employeeEditInformation.jsp");
         return modelAndView;
     }
-    
+
     @RequestMapping("/dontSaveEmployeePersonalInfo")
     public ModelAndView dontSaveEmployeePersonalInfo(ModelAndView modelAndView) {
         modelAndView.setViewName("employee.jsp");
@@ -53,17 +57,131 @@ public class EmployeeController {
         employee.setPatronymic(patronymic);
         employee.setQualification(qualification);
         employee.setOccupation(occupation);
-        
+
         employeeService.save(employee);
-        
+
         modelAndView.addObject("user", employee);
         modelAndView.setViewName("employee.jsp");
 
         return modelAndView;
     }
-    
+
     @RequestMapping("/editEmployeeSkills")
-    public ModelAndView toEditSkillsPage(ModelAndView modelAndView) {
+    public ModelAndView toEditSkillsPage(
+            @ModelAttribute(value = "user") Employee employee,
+            ModelAndView modelAndView) {
+
+        modelAndView.addObject("skillsToAdd", employeeService.getSkillsToAddList(employee));
+        modelAndView.setViewName("employeeEditSkills.jsp");
+        return modelAndView;
+    }
+
+    @RequestMapping("/updateExperience")
+    public ModelAndView updateSkill(
+            @ModelAttribute(value = "user") Employee employee,
+            @RequestParam(value = "skillId") int skillId,
+            @RequestParam(value = "experience") String experience,
+            ModelAndView modelAndView) {
+
+        boolean error = false;
+        int exp = 0;
+
+        try {
+            exp = Integer.parseInt(experience);
+        } catch (NumberFormatException ex) {
+            error = true;
+        }
+        
+        if (exp < 0) {
+            error = true;
+        }
+
+        if (!error) {
+            error = !employeeService.updateSkill(skillId, exp);
+        }
+        if (error) {
+            modelAndView.addObject(UPDATE_ERROR, UPDATE_ERROR);
+        }
+
+        modelAndView.addObject("skills", employeeService.getSkillList(employee));
+        modelAndView.addObject("skillsToAdd", employeeService.getSkillsToAddList(employee));
+        modelAndView.setViewName("employeeEditSkills.jsp");
+        return modelAndView;
+    }
+
+    @RequestMapping("/deleteSkill")
+    public ModelAndView deleteSkill(
+            @ModelAttribute(value = "user") Employee employee,
+            @RequestParam(value = "skillId") int skillId,
+            ModelAndView modelAndView) {
+
+        boolean error = false;
+
+        if (!error) {
+            error = !employeeService.deleteSkill(skillId);
+        }
+        if (error) {
+            modelAndView.addObject(DELETE_ERROR, DELETE_ERROR);
+        }
+
+        modelAndView.addObject("skills", employeeService.getSkillList(employee));
+        modelAndView.addObject("skillsToAdd", employeeService.getSkillsToAddList(employee));
+        modelAndView.setViewName("employeeEditSkills.jsp");
+        return modelAndView;
+    }
+
+    @RequestMapping("/deleteAllSkills")
+    public ModelAndView deleteAllSkills(
+            @ModelAttribute(value = "user") Employee employee,
+            ModelAndView modelAndView) {
+
+        boolean error = false;
+
+        if (!error) {
+            error = !employeeService.deleteAllSkills(employee);
+        }
+        if (error) {
+            modelAndView.addObject(DELETE_ERROR, DELETE_ERROR);
+        }
+
+        modelAndView.addObject("skills", employeeService.getSkillList(employee));
+        modelAndView.addObject("skillsToAdd", employeeService.getSkillsToAddList(employee));
+        modelAndView.setViewName("employeeEditSkills.jsp");
+        return modelAndView;
+    }
+
+    @RequestMapping("/addSkill")
+    public ModelAndView addSkill(
+            @ModelAttribute(value = "user") Employee employee,
+            @RequestParam(value = "skillsToAddList") String skillId,
+            @RequestParam(value = "experience") String experience,
+            ModelAndView modelAndView) {
+
+        boolean error = false;
+
+        int skill = 0;
+        int exp = 0;
+
+        try {
+            skill = Integer.parseInt(skillId);
+            exp = Integer.parseInt(experience);
+        } catch (NumberFormatException ex) {
+            error = true;
+        }
+        
+        if (skill < 0 || exp <0) {
+            error = true;
+        }
+
+        if (!error) {
+            error = !employeeService.addSkill(employee, skill, exp);
+        }
+        if (error) {
+            modelAndView.addObject(ADD_ERROR, ADD_ERROR);
+        }
+
+        modelAndView.addObject("skills", employeeService.getSkillList(employee));
+        modelAndView.addObject("skillsToAdd", employeeService.getSkillsToAddList(employee));
         modelAndView.setViewName("employeeEditSkills.jsp");
         return modelAndView;
     }

@@ -9,13 +9,15 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -29,7 +31,7 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "UserSkill.findAll", query = "SELECT u FROM UserSkill u"),
     @NamedQuery(name = "UserSkill.findByExperience", query = "SELECT u FROM UserSkill u WHERE u.experience = :experience"),
     @NamedQuery(name = "UserSkill.findBySkillId", query = "SELECT u FROM UserSkill u WHERE u.skillId = :skillId"),
-    @NamedQuery(name = "UserSkill.findByEmployeeId", query = "SELECT u FROM UserSkill u WHERE u.employeeId = :employeeId")})
+    @NamedQuery(name = "UserSkill.findByEmployee", query = "SELECT u FROM UserSkill u WHERE u.employee = :employee")})
 public class UserSkill implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,6 +39,9 @@ public class UserSkill implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
+    @SequenceGenerator(name = "userSkillSequence", sequenceName = "\"UserSkillSequence\"", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userSkillSequence")
+    
     @Column(name = "\"skillId\"")
     private Integer skillId;
 
@@ -51,7 +56,7 @@ public class UserSkill implements Serializable {
 //    @Column
     @JoinColumn(name = "\"employeeId\"", referencedColumnName = "\"employeeUserId\"")
     @ManyToOne
-    private Employee employeeId;
+    private Employee employee;
 
     public UserSkill() {
     }
@@ -84,12 +89,12 @@ public class UserSkill implements Serializable {
         this.skill = skill;
     }
 
-    public Employee getEmployeeId() {
-        return employeeId;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setEmployeeId(Employee employeeid) {
-        this.employeeId = employeeid;
+    public void setEmployee(Employee employeeid) {
+        this.employee = employeeid;
     }
 
 }

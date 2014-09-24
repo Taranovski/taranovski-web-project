@@ -23,8 +23,13 @@
         <fmt:message key="employee.patronymic"/>${user.patronymic}<br/>
         <fmt:message key="employee.qualification"/>${user.qualification}<br/>
         <fmt:message key="employee.occupation"/>${user.occupation}<br/>
+        
+        <form method="post" action="editEmployeePersonalInfo.html">
+            <fmt:message key="employee.edit.profile" var="editInfo"/>
+            <input type="submit" value="${editInfo}" />
+        </form>
         <br/>
-        <fmt:message key="employee.skills"/>
+        <fmt:message key="employee.skills"/><br>
 
         <c:if test="${not empty skills}">
             <table border="1">
@@ -51,11 +56,6 @@
             <fmt:message key="employee.no.skills"/>
         </c:if>
 
-        <form method="post" action="editEmployeePersonalInfo.html">
-            <fmt:message key="employee.edit.profile" var="editInfo"/>
-            <input type="submit" value="${editInfo}" />
-        </form>
-        
         <form method="post" action="editEmployeeSkills.html">
             <fmt:message key="employee.edit.skills" var="editSkills"/>
             <input type="submit" value="${editSkills}" />

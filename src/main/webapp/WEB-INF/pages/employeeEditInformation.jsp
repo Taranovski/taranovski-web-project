@@ -13,10 +13,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title><fmt:message key="employee.edit.profile"/></title>
+        <title><fmt:message key="employee.edit.profile.title"/></title>
     </head>
     <body>
-        ${user.login}
+        <fmt:message key="employee.current.information"/>${user.login}
         <form method="post" action="saveEmployeePersonalInfo.html">
             <fmt:message key="employee.name"/>${user.name}<input type="text" name="name" value="${user.name}" /><br>
             <fmt:message key="employee.surname"/>${user.surname}<input type="text" name="surname" value="${user.surname}" /><br>
