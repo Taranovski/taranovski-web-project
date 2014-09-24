@@ -6,16 +6,11 @@
 package com.epam.training.taranovski.web.project.domain;
 
 import java.io.Serializable;
-import java.util.Collection;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
@@ -62,10 +57,10 @@ public class Employee extends User implements Serializable {
     @Column(name = "\"employeeUserId\"")
     private Integer employeeUserId;
 
-    @JoinColumn(referencedColumnName = "\"skillId\"")
-    @OneToMany
-    @Basic(fetch = FetchType.LAZY)
-    private Collection<UserSkill> skillCollection;
+//    @OneToMany//(mappedBy = "\"employeeId\"")
+//    @JoinColumn (name = "\"EMPLOYEEID\"")
+//    //@Basic(fetch = FetchType.LAZY)
+//    private Collection<UserSkill> skillCollection;
 
     public Employee() {
     }
@@ -118,13 +113,13 @@ public class Employee extends User implements Serializable {
         this.employeeUserId = employeeUserId;
     }
 
-    public Collection<UserSkill> getSkillCollection() {
-        return skillCollection;
-    }
-
-    public void setSkillCollection(Collection<UserSkill> skillCollection) {
-        this.skillCollection = skillCollection;
-    }
+//    public Collection<UserSkill> getSkillCollection() {
+//        return skillCollection;
+//    }
+//
+//    public void setSkillCollection(Collection<UserSkill> skillCollection) {
+//        this.skillCollection = skillCollection;
+//    }
 
     @Override
     public int hashCode() {

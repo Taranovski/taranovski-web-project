@@ -21,14 +21,14 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "\"AllSkills\"")
-public class Skill implements Serializable {
+public class BasicSkill implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "\"allSkillId\"")
+    @Column(name = "\"allSkillsId\"")
     private Integer skillId;
 
     @Size(max = 50)
@@ -39,10 +39,10 @@ public class Skill implements Serializable {
     @Column(name = "\"description\"")
     private String description;
 
-    public Skill() {
+    public BasicSkill() {
     }
 
-    public Skill(Integer skillId) {
+    public BasicSkill(Integer skillId) {
         this.skillId = skillId;
     }
 
@@ -86,7 +86,7 @@ public class Skill implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Skill other = (Skill) obj;
+        final BasicSkill other = (BasicSkill) obj;
         if (!Objects.equals(this.skillName, other.skillName)) {
             return false;
         }

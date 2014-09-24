@@ -6,7 +6,6 @@
 package com.epam.training.taranovski.web.project.controller;
 
 import com.epam.training.taranovski.web.project.domain.Employee;
-import com.epam.training.taranovski.web.project.repository.EmployeeRepository;
 import com.epam.training.taranovski.web.project.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -60,6 +59,12 @@ public class EmployeeController {
         modelAndView.addObject("user", employee);
         modelAndView.setViewName("employee.jsp");
 
+        return modelAndView;
+    }
+    
+    @RequestMapping("/editEmployeeSkills")
+    public ModelAndView toEditSkillsPage(ModelAndView modelAndView) {
+        modelAndView.setViewName("employeeEditSkills.jsp");
         return modelAndView;
     }
 }

@@ -6,7 +6,7 @@
 package com.epam.training.taranovski.web.project.repository.implementation;
 
 import com.epam.training.taranovski.web.project.domain.UserSkill;
-import com.epam.training.taranovski.web.project.repository.SkillRepository;
+import com.epam.training.taranovski.web.project.repository.UserSkillRepository;
 import java.util.List;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
  * @author Alyx
  */
 @Repository
-public class SkillRepositoryImplementation implements SkillRepository {
+public class UserSkillRepositoryImplementation implements UserSkillRepository {
 
     @Override
     public UserSkill getById(int id) {

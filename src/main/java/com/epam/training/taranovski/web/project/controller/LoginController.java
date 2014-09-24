@@ -5,7 +5,10 @@
  */
 package com.epam.training.taranovski.web.project.controller;
 
+import com.epam.training.taranovski.web.project.domain.Employee;
 import com.epam.training.taranovski.web.project.domain.User;
+import com.epam.training.taranovski.web.project.service.EmployeeService;
+import com.epam.training.taranovski.web.project.service.EmployerService;
 import com.epam.training.taranovski.web.project.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,13 +22,19 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Oleksandr_Taranovsky
  */
 @Controller
-@SessionAttributes(value = "user")
+@SessionAttributes(value = {"user", "skills", "vacancies"})
 public class LoginController {
 
     private static final String LOGIN_ERROR = "login_error";
 
     @Autowired
-    LoginService loginService;
+    private LoginService loginService;
+
+    @Autowired
+    private EmployeeService employeeService;
+
+    @Autowired
+    private EmployerService employerService;
 
     /**
      *
@@ -70,10 +79,12 @@ public class LoginController {
 
             switch (type) {
                 case "employee": {
+                    modelAndView.addObject("skills", employeeService.getSkillList((Employee) user));
                     modelAndView.setViewName("employee.jsp");
                     break;
                 }
                 case "employer": {
+//                    modelAndView.addObject("skills", employerService.getVacancyList(user));
                     modelAndView.setViewName("employer.jsp");
                     break;
                 }

@@ -11,6 +11,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -24,12 +26,13 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "\"UserSkill\"")
 @NamedQueries({
-    @NamedQuery(name = "Skill.findAll", query = "SELECT s FROM Skill s"),
-    @NamedQuery(name = "Skill.findBySkillName", query = "SELECT s FROM Skill s WHERE s.skillName = :skillName"),
-    @NamedQuery(name = "Skill.findByDescription", query = "SELECT s FROM Skill s WHERE s.description = :description"),
-    @NamedQuery(name = "Skill.findByExperience", query = "SELECT s FROM Skill s WHERE s.experience = :experience"),
-    @NamedQuery(name = "Skill.findBySkillId", query = "SELECT s FROM Skill s WHERE s.skillId = :skillId")})
+    @NamedQuery(name = "UserSkill.findAll", query = "SELECT u FROM UserSkill u"),
+    @NamedQuery(name = "UserSkill.findByExperience", query = "SELECT u FROM UserSkill u WHERE u.experience = :experience"),
+    @NamedQuery(name = "UserSkill.findBySkillId", query = "SELECT u FROM UserSkill u WHERE u.skillId = :skillId"),
+    @NamedQuery(name = "UserSkill.findByEmployeeId", query = "SELECT u FROM UserSkill u WHERE u.employeeId = :employeeId")})
 public class UserSkill implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @Basic(optional = false)
@@ -37,14 +40,18 @@ public class UserSkill implements Serializable {
     @Column(name = "\"skillId\"")
     private Integer skillId;
 
+    @Column(name = "\"experience\"")
+    private Integer experience;
+
+//    @Column()
     @OneToOne
     @JoinColumn(name = "\"allSkillsId\"", referencedColumnName = "\"allSkillsId\"")
-    private Skill skill;
+    private BasicSkill skill;
 
-    @Column(name = "\"experience\"")
-    @Basic
-    private Integer experience;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+//    @Column
+    @JoinColumn(name = "\"employeeId\"", referencedColumnName = "\"employeeUserId\"")
+    @ManyToOne
+    private Employee employeeId;
 
     public UserSkill() {
     }
@@ -69,12 +76,20 @@ public class UserSkill implements Serializable {
         this.skillId = skillId;
     }
 
-    public Skill getSkill() {
+    public BasicSkill getSkill() {
         return skill;
     }
 
-    public void setSkill(Skill skill) {
+    public void setSkill(BasicSkill skill) {
         this.skill = skill;
+    }
+
+    public Employee getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(Employee employeeid) {
+        this.employeeId = employeeid;
     }
 
 }

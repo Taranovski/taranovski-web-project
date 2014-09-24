@@ -11,6 +11,6 @@ import com.epam.training.taranovski.web.project.domain.UserSkill;
  *
  * @author Oleksandr_Taranovsky
  */
-public interface SkillRepository extends TemplateRepository<UserSkill> {
+public interface UserSkillRepository extends TemplateRepository<UserSkill> {
 
 }

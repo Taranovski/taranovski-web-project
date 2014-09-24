@@ -5,17 +5,15 @@
  */
 package com.epam.training.taranovski.web.project.service;
 
-import com.epam.training.taranovski.web.project.domain.Employee;
-import com.epam.training.taranovski.web.project.domain.UserSkill;
+import com.epam.training.taranovski.web.project.domain.Vacancy;
 import java.util.List;
 
 /**
  *
  * @author Alyx
  */
-public interface EmployeeService {
+public interface EmployerService {
 
-    boolean save(Employee employee);
-
-    public List<UserSkill> getSkillList(Employee employee);
+    public List<Vacancy> getVacancyList(Integer userId);
+    
 }
