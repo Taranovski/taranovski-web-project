@@ -5,6 +5,7 @@
  */
 package com.epam.training.taranovski.web.project.service;
 
+import com.epam.training.taranovski.web.project.domain.Employer;
 import com.epam.training.taranovski.web.project.domain.Vacancy;
 import java.util.List;
 
@@ -14,6 +15,6 @@ import java.util.List;
  */
 public interface EmployerService {
 
-    public List<Vacancy> getVacancyList(Integer userId);
+    public List<Vacancy> getVacancyList(Employer employer);
     
 }

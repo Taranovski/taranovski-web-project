@@ -7,6 +7,7 @@ package com.epam.training.taranovski.web.project.controller;
 
 import com.epam.training.taranovski.web.project.domain.Employee;
 import com.epam.training.taranovski.web.project.service.EmployeeService;
+import com.epam.training.taranovski.web.project.service.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,6 +30,9 @@ public class EmployeeController {
 
     @Autowired
     EmployeeService employeeService;
+    
+    @Autowired
+    private ValidationService validationService;
 
     @RequestMapping("/editEmployeePersonalInfo")
     public ModelAndView editEmployeePersonalInfo(ModelAndView modelAndView) {

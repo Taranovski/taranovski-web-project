@@ -13,11 +13,15 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -33,24 +37,38 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Vacancy.findByPosition", query = "SELECT v FROM Vacancy v WHERE v.position = :position"),
     @NamedQuery(name = "Vacancy.findBySalary", query = "SELECT v FROM Vacancy v WHERE v.salary = :salary"),
     @NamedQuery(name = "Vacancy.findByDescription", query = "SELECT v FROM Vacancy v WHERE v.description = :description"),
-    @NamedQuery(name = "Vacancy.findByVacancyId", query = "SELECT v FROM Vacancy v WHERE v.vacancyId = :vacancyId")})
+    @NamedQuery(name = "Vacancy.findByVacancyId", query = "SELECT v FROM Vacancy v WHERE v.vacancyId = :vacancyId"),
+    @NamedQuery(name = "Vacancy.findByEmployer", query = "SELECT v FROM Vacancy v WHERE v.employer = :employer")
+})
 public class Vacancy implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Size(max = 50)
     @Column(name = "\"position\"")
     private String position;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+
     @Column(name = "\"salary\"")
     private BigDecimal salary;
+
     @Size(max = 100)
     @Column(name = "\"description\"")
     private String description;
+
     @Id
     @Basic(optional = false)
     @NotNull
+    @SequenceGenerator(name = "vacancySequence", sequenceName = "\"VacancySequence\"", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vacancySequence")
+
     @Column(name = "\"vacancyId\"")
     private Integer vacancyId;
+
+    @JoinColumn(name = "\"employerId\"", referencedColumnName = "\"employerUserId\"")
+    @ManyToOne
+    private Employer employer;
+
 //    @OneToOne
 //    @JoinColumn(referencedColumnName = "\"checkDocumentId\"")
 //    private CheckDocument checkDocumentId;
@@ -105,13 +123,20 @@ public class Vacancy implements Serializable {
 //    public void setCheckDocumentId(CheckDocument checkDocumentId) {
 //        this.checkDocumentId = checkDocumentId;
 //    }
-
     public Collection<UserSkill> getSkillCollection() {
         return skillCollection;
     }
 
     public void setSkillCollection(Collection<UserSkill> skillCollection) {
         this.skillCollection = skillCollection;
+    }
+
+    public Employer getEmployer() {
+        return employer;
+    }
+
+    public void setEmployer(Employer employer) {
+        this.employer = employer;
     }
 
     @Override
@@ -148,7 +173,5 @@ public class Vacancy implements Serializable {
     public String toString() {
         return "Vacancy{" + "position=" + position + ", salary=" + salary + ", description=" + description + '}';
     }
-
-    
 
 }

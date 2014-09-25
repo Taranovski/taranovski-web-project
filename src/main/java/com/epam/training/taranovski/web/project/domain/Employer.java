@@ -38,15 +38,19 @@ import javax.validation.constraints.Size;
 public class Employer extends User implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Size(max = 50)
     @Column(name = "\"companyName\"")
     private String companyName;
+
     @Size(max = 50)
     @Column(name = "\"field\"")
     private String field;
+
     @Size(max = 256)
     @Column(name = "\"adress\"")
     private String adress;
+
     @Column(name = "\"telephoneNumber\"")
     private Long telephoneNumber;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -55,10 +59,10 @@ public class Employer extends User implements Serializable {
 //    @NotNull
     @Column(name = "\"employerUserId\"")
     private Integer employerUserId;
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(referencedColumnName = "\"vacancyId\"")
-    @Basic(fetch = FetchType.LAZY)
-    private Collection<Vacancy> vacancyCollection;
+//    @OneToMany(cascade = CascadeType.ALL)
+//    @JoinColumn(referencedColumnName = "\"vacancyId\"")
+//    @Basic(fetch = FetchType.LAZY)
+//    private Collection<Vacancy> vacancyCollection;
 //    @JoinColumn(name = "userId", referencedColumnName = "USER_ID")
 //    @ManyToOne(optional = false)
 //    private User userId;
@@ -112,14 +116,13 @@ public class Employer extends User implements Serializable {
         this.employerUserId = employerUserId;
     }
 
-    public Collection<Vacancy> getVacancyCollection() {
-        return vacancyCollection;
-    }
-
-    public void setVacancyCollection(Collection<Vacancy> vacancyCollection) {
-        this.vacancyCollection = vacancyCollection;
-    }
-
+//    public Collection<Vacancy> getVacancyCollection() {
+//        return vacancyCollection;
+//    }
+//
+//    public void setVacancyCollection(Collection<Vacancy> vacancyCollection) {
+//        this.vacancyCollection = vacancyCollection;
+//    }
 //    public User getUserId() {
 //        return userId;
 //    }
@@ -133,7 +136,6 @@ public class Employer extends User implements Serializable {
 //    public void setCheckDocumentCollection(Collection<CheckDocument> checkDocumentCollection) {
 //        this.checkDocumentCollection = checkDocumentCollection;
 //    }
-
     @Override
     public String toString() {
         return super.toString() + "Employer{" + "companyName=" + companyName + ", field=" + field + ", adress=" + adress + ", telephoneNumber=" + telephoneNumber + '}';

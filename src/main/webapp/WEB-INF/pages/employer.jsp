@@ -17,13 +17,56 @@
     </head>
     <body>
         <fmt:message key="employer.greetings"/>${user.login}<br/>
-        
-        
-        
-        
-        
-        
-        
+
+        <br/>
+        <fmt:message key="employer.company.name"/>${user.companyName}<br/>
+        <fmt:message key="employer.field"/>${user.field}<br/>
+        <fmt:message key="employer.adress"/>${user.adress}<br/>
+        <fmt:message key="employer.telephone.number"/>${user.telephoneNumber}<br/>
+
+        <form method="post" action="editEmployerInfo.html">
+            <fmt:message key="employer.edit.profile" var="editInfo"/>
+            <input type="submit" value="${editInfo}" />
+        </form>
+        <br/>
+        <fmt:message key="employer.vacancies"/><br>
+
+        <c:if test="${not empty vacancies}">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th><fmt:message key="vacancy.position"/></th>
+                        <th><fmt:message key="vacancy.description"/></th>
+                        <th><fmt:message key="vacancy.salary"/></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="vacancy" items="${vacancies}">
+                        <tr>
+                            <td>${vacancy.position}</td>
+                            <td>${vacancy.description}</td>
+                            <td>${vacancy.salary}</td>
+                            <td>
+                                <form method="post" action="editEmployerVacancy.html">
+                                    <fmt:message key="employer.edit.vacancy" var="editSkills"/>
+                                    <input type="submit" value="${editSkills}" />
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </c:if>
+
+        <c:if test="${empty vacancies}">
+            <fmt:message key="employer.no.vacancies"/>
+        </c:if>
+
+        <form method="post" action="addEmployerVacancy.html">
+            <fmt:message key="employer.add.vacancy" var="toLoginPage"/>
+            <input type="submit" value="${toLoginPage}" />
+        </form>
+
         <form method="post" action="toLoginPage.html">
             <fmt:message key="login.logout" var="toLoginPage"/>
             <input type="submit" value="${toLoginPage}" />

@@ -9,7 +9,8 @@ package com.epam.training.taranovski.web.project.service;
  *
  * @author Alyx
  */
-public interface PasswordRequirementService {
+public interface ValidationService {
 
-    boolean passwordMeetRequirements(String password);
+    boolean passwordIsValid(String password);
+    boolean userNameIsValid(String userName);
 }

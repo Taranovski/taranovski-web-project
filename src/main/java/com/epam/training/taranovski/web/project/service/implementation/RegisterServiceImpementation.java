@@ -10,7 +10,7 @@ import com.epam.training.taranovski.web.project.domain.Employer;
 import com.epam.training.taranovski.web.project.domain.User;
 import com.epam.training.taranovski.web.project.repository.UserRepository;
 import com.epam.training.taranovski.web.project.service.EncryptionService;
-import com.epam.training.taranovski.web.project.service.PasswordRequirementService;
+import com.epam.training.taranovski.web.project.service.ValidationService;
 import com.epam.training.taranovski.web.project.service.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ public class RegisterServiceImpementation implements RegisterService {
     private UserRepository userRepository;
 
     @Autowired
-    private PasswordRequirementService passwordRequirementService;
+    private ValidationService passwordRequirementService;
 
     @Autowired
     private EncryptionService encryptionService;
@@ -78,7 +78,7 @@ public class RegisterServiceImpementation implements RegisterService {
 
     @Override
     public boolean passwordAllowed(String password) {
-        return passwordRequirementService.passwordMeetRequirements(password);
+        return passwordRequirementService.passwordIsValid(password);
     }
 
 }

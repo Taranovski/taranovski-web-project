@@ -9,7 +9,12 @@ import com.epam.training.taranovski.web.project.domain.CheckDocument;
 import com.epam.training.taranovski.web.project.domain.Employer;
 import com.epam.training.taranovski.web.project.domain.Vacancy;
 import com.epam.training.taranovski.web.project.repository.EmployerRepository;
+import java.util.LinkedList;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -18,6 +23,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class EmployerRepositoryImplementation implements EmployerRepository {
+
+    @Autowired
+    private EntityManagerFactory entityManagerFactory;
 
     @Override
     public boolean addVacancy(Employer employer, Vacancy vacancy) {
@@ -36,7 +44,26 @@ public class EmployerRepositoryImplementation implements EmployerRepository {
 
     @Override
     public List<Vacancy> getVacancys(Employer employer) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager em = entityManagerFactory.createEntityManager();
+        List<Vacancy> list = new LinkedList<>();
+        try {
+            em.getTransaction().begin();
+            
+            TypedQuery<Vacancy> query = em.createNamedQuery("Vacancy.findByEmployer", Vacancy.class);
+            query.setParameter("employer", employer);
+            list = query.getResultList();
+            
+            em.getTransaction().commit();
+        } catch (RuntimeException e) {
+            System.out.println(e);
+        } finally {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            em.close();
+        }
+
+        return list;
     }
 
     @Override

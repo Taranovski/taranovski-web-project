@@ -5,9 +5,12 @@
  */
 package com.epam.training.taranovski.web.project.service.implementation;
 
+import com.epam.training.taranovski.web.project.domain.Employer;
 import com.epam.training.taranovski.web.project.domain.Vacancy;
+import com.epam.training.taranovski.web.project.repository.EmployerRepository;
 import com.epam.training.taranovski.web.project.service.EmployerService;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,11 +18,14 @@ import org.springframework.stereotype.Service;
  * @author Alyx
  */
 @Service
-public class EmployerServiceImplementation implements EmployerService{
+public class EmployerServiceImplementation implements EmployerService {
+
+    @Autowired
+    private EmployerRepository employerRepository;
 
     @Override
-    public List<Vacancy> getVacancyList(Integer userId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Vacancy> getVacancyList(Employer employer) {
+        return employerRepository.getVacancys(employer);
     }
-    
+
 }

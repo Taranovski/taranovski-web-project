@@ -6,10 +6,12 @@
 package com.epam.training.taranovski.web.project.controller;
 
 import com.epam.training.taranovski.web.project.domain.Employee;
+import com.epam.training.taranovski.web.project.domain.Employer;
 import com.epam.training.taranovski.web.project.domain.User;
 import com.epam.training.taranovski.web.project.service.EmployeeService;
 import com.epam.training.taranovski.web.project.service.EmployerService;
 import com.epam.training.taranovski.web.project.service.LoginService;
+import com.epam.training.taranovski.web.project.service.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +31,9 @@ public class LoginController {
 
     @Autowired
     private LoginService loginService;
+    
+    @Autowired
+    private ValidationService validationService;
 
     @Autowired
     private EmployeeService employeeService;
@@ -63,7 +68,10 @@ public class LoginController {
 
         boolean error = false;
         User user = null;
-        if (userName.matches("\\s*") || password.matches("\\s*")) {
+        if (
+                !validationService.userNameIsValid(userName) || 
+                !validationService.passwordIsValid(password)) 
+        {
             error = true;
         } else {
             user = loginService.login(userName, password);
@@ -84,7 +92,7 @@ public class LoginController {
                     break;
                 }
                 case "employer": {
-//                    modelAndView.addObject("skills", employerService.getVacancyList(user));
+                    modelAndView.addObject("vacancies", employerService.getVacancyList((Employer) user));
                     modelAndView.setViewName("employer.jsp");
                     break;
                 }
