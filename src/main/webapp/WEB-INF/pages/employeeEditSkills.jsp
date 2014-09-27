@@ -7,6 +7,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:if test="${empty language}">
+    <jsp:forward page="/index.jsp" />
+</c:if>
+<c:if test="${empty user}">
+    <jsp:forward page="/index.jsp" />
+</c:if>
 <fmt:setLocale value="${sessionScope['language']}" />
 <fmt:setBundle basename="${sessionScope['bundle']}" />
 <!DOCTYPE html>
@@ -59,31 +65,33 @@
     <fmt:message key="employee.skills.update.error"/>
 </c:if>
 
-<form action="addSkill.html" method="POST">
-    <table border="0">
-        <tbody>
-            <tr>
-                <td><fmt:message key="employee.skills.add.message"/></td>
-                <td>
-                    <select name="skillsToAddList">
-                        <c:forEach var="basicSkill" items="${skillsToAdd}">
-                            <option value="${basicSkill.skillId}">${basicSkill.skillName}</option>
-                        </c:forEach>
-                    </select>
-                </td>
-                <td><input type="text" name="experience" value="0" /></td>
-                <td>
-                    <fmt:message key="employee.skills.add.button" var="dontSaveInfo"/>
-                    <input type="submit" value="${dontSaveInfo}" />
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<c:if test="${not empty skillsToAdd}">
+    <form action="addSkill.html" method="POST">
+        <table border="0">
+            <tbody>
+                <tr>
+                    <td><fmt:message key="employee.skills.add.message"/></td>
+                    <td>
+                        <select name="skillsToAddList">
+                            <c:forEach var="basicSkill" items="${skillsToAdd}">
+                                <option value="${basicSkill.skillId}">${basicSkill.skillName}</option>
+                            </c:forEach>
+                        </select>
+                    </td>
+                    <td><input type="text" name="experience" value="0" /></td>
+                    <td>
+                        <fmt:message key="employee.skills.add.button" var="dontSaveInfo"/>
+                        <input type="submit" value="${dontSaveInfo}" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</c:if>
 
-
-
-
-</form>
+    <c:if test="${empty skillsToAdd}">
+        <fmt:message key="employee.no.skills.left.to.add.message"/>
+    </c:if>
 
 <c:if test="${not empty add_error}">
     <fmt:message key="employee.skills.add.error"/>

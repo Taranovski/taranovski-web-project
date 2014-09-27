@@ -28,4 +28,9 @@ public class EmployerServiceImplementation implements EmployerService {
         return employerRepository.getVacancys(employer);
     }
 
+    @Override
+    public boolean save(Employer employer) {
+        return employerRepository.update(employer);
+    }
+
 }

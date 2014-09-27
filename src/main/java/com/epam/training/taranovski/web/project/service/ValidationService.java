@@ -13,4 +13,6 @@ public interface ValidationService {
 
     boolean passwordIsValid(String password);
     boolean userNameIsValid(String userName);
+
+    public boolean telephoneNumberIsValid(String telephoneNumber);
 }

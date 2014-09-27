@@ -102,8 +102,26 @@ public class EmployerRepositoryImplementation implements EmployerRepository {
     }
 
     @Override
-    public boolean update(Employer admin) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean update(Employer employer) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        boolean success = true;
+        try {
+            em.getTransaction().begin();
+
+            em.merge(employer);
+            em.flush();
+
+            em.getTransaction().commit();
+            success = true;
+        } finally {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+                success = false;
+            }
+            em.close();
+        }
+
+        return success;
     }
 
     @Override

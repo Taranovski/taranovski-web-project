@@ -7,6 +7,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:if test="${empty language}">
+    <jsp:forward page="/index.jsp" />
+</c:if>
+<c:if test="${empty user}">
+    <jsp:forward page="/index.jsp" />
+</c:if>
 <fmt:setLocale value="${sessionScope['language']}" />
 <fmt:setBundle basename="${sessionScope['bundle']}" />
 <!DOCTYPE html>
@@ -18,11 +24,11 @@
     <body>
         <fmt:message key="employee.current.information"/>${user.login}
         <form method="post" action="saveEmployeePersonalInfo.html">
-            <fmt:message key="employee.name"/>${user.name}<input type="text" name="name" value="${user.name}" /><br>
-            <fmt:message key="employee.surname"/>${user.surname}<input type="text" name="surname" value="${user.surname}" /><br>
-            <fmt:message key="employee.patronymic"/>${user.patronymic}<input type="text" name="patronymic" value="${user.patronymic}" /><br>
-            <fmt:message key="employee.qualification"/>${user.qualification}<input type="text" name="qualification" value="${user.qualification}" /><br>
-            <fmt:message key="employee.occupation"/>${user.occupation}<input type="text" name="occupation" value="${user.occupation}" /><br>
+            <fmt:message key="employee.name"/><input type="text" name="name" value="${user.name}" /><br>
+            <fmt:message key="employee.surname"/><input type="text" name="surname" value="${user.surname}" /><br>
+            <fmt:message key="employee.patronymic"/><input type="text" name="patronymic" value="${user.patronymic}" /><br>
+            <fmt:message key="employee.qualification"/><input type="text" name="qualification" value="${user.qualification}" /><br>
+            <fmt:message key="employee.occupation"/><input type="text" name="occupation" value="${user.occupation}" /><br>
 
             <fmt:message key="employee.save.profile" var="saveInfo"/>
             <input type="submit" value="${saveInfo}" />

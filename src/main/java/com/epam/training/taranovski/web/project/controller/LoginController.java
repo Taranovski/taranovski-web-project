@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -44,10 +45,12 @@ public class LoginController {
     /**
      *
      * @param modelAndView
+     * @param sessionStatus
      * @return
      */
     @RequestMapping("/toLoginPage")
-    public ModelAndView toLoginPage(ModelAndView modelAndView) {
+    public ModelAndView logout(ModelAndView modelAndView, SessionStatus sessionStatus) {
+        sessionStatus.setComplete();
         modelAndView.setViewName("login.jsp");
         return modelAndView;
     }
@@ -61,8 +64,8 @@ public class LoginController {
      */
     @RequestMapping("/loginSystem")
     public ModelAndView login(
-            @RequestParam(value = "username") String userName,
-            @RequestParam(value = "password") String password,
+            @RequestParam(required = false, value = "username") String userName,
+            @RequestParam(required = false, value = "password") String password,
             ModelAndView modelAndView
     ) {
 

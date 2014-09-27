@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ValidationServiceImplementation implements ValidationService {
 
+    private static final int TELEPHONE_NUMBER_LENGTH = 12;
+
     @Override
     public boolean passwordIsValid(String password) {
         return password == null ? false : !password.matches("\\s*");
@@ -23,6 +25,15 @@ public class ValidationServiceImplementation implements ValidationService {
     @Override
     public boolean userNameIsValid(String userName) {
         return userName == null ? false : !userName.matches("\\s*");
+    }
+
+    @Override
+    public boolean telephoneNumberIsValid(String telephoneNumber) {
+        boolean valid = true;
+        if (telephoneNumber.length() != TELEPHONE_NUMBER_LENGTH || !telephoneNumber.matches("\\d{12}")) {
+            valid = false;
+        }
+        return valid;
     }
 
 }

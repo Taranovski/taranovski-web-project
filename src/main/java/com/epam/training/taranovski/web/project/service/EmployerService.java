@@ -16,5 +16,7 @@ import java.util.List;
 public interface EmployerService {
 
     public List<Vacancy> getVacancyList(Employer employer);
+
+    public boolean save(Employer employer);
     
 }
