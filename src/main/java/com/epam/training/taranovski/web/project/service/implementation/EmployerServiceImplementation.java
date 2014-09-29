@@ -30,10 +30,10 @@ public class EmployerServiceImplementation implements EmployerService {
 
     @Autowired
     private VacancyRepository vacancyRepository;
-    
+
     @Autowired
     private BasicSkillRepository basicSkillRepository;
-    
+
     @Autowired
     private VacancySkillRepository vacancySkillRepository;
 
@@ -98,6 +98,18 @@ public class EmployerServiceImplementation implements EmployerService {
         vacancySkill.setSkill(basicSkill);
         vacancySkill.setExperience(exp);
         return vacancySkillRepository.create(vacancySkill);
+    }
+
+    @Override
+    public boolean deleteVacancy(Vacancy vacancy) {
+        boolean deleteSkills = vacancyRepository.clearSkills(vacancy);
+        boolean deleteVacancy = vacancyRepository.delete(vacancy);
+        return deleteSkills & deleteVacancy;
+    }
+
+    @Override
+    public boolean createVacancy(Vacancy vacancy) {
+        return vacancyRepository.create(vacancy);
     }
 
 }

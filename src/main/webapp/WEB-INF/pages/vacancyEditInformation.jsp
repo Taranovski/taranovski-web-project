@@ -39,6 +39,10 @@
         <c:if test="${not empty salary_error}">
             <fmt:message key="vacancy.salary.error"/><br>
         </c:if>
+            
+        <c:if test="${not empty save_success}">
+            <fmt:message key="vacancy.save.success"/><br>
+        </c:if>
 
         <form method="post" action="editEmployerVacancy.html">
             <input type="hidden" name="vacancyId" value="${vacancy.vacancyId}"/>

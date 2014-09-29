@@ -38,5 +38,9 @@ public interface EmployerService {
     public List<BasicSkill> getSkillsToAddList(Vacancy vacancy);
 
     public boolean addSkill(Vacancy vacancy, int skill, int exp);
+
+    public boolean deleteVacancy(Vacancy vacancy);
+
+    public boolean createVacancy(Vacancy vacancy);
     
 }

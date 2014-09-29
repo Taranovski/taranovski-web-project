@@ -116,8 +116,23 @@ public class VacancyRepositoryImplementation implements VacancyRepository {
     }
 
     @Override
-    public boolean create(Vacancy admin) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean create(Vacancy vacancy) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        boolean success = true;
+        try {
+            em.getTransaction().begin();
+            em.persist(vacancy);
+            em.getTransaction().commit();
+            success = true;
+        } finally {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+                success = false;
+            }
+            em.close();
+        }
+
+        return success;
     }
 
     @Override
@@ -141,8 +156,26 @@ public class VacancyRepositoryImplementation implements VacancyRepository {
     }
 
     @Override
-    public boolean delete(Vacancy admin) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean delete(Vacancy vacancy) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        boolean success = true;
+        Vacancy managedVacancy = null;
+        try {
+            em.getTransaction().begin();
+            managedVacancy = em.merge(vacancy);
+            em.remove(managedVacancy);
+            em.getTransaction().commit();
+
+            success = true;
+        } finally {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+                success = false;
+            }
+            em.close();
+        }
+
+        return success;
     }
 
 }

@@ -59,6 +59,13 @@
                                     <input type="submit" value="${editSkills}" />
                                 </form>
                             </td>
+                            <td>
+                                <form method="post" action="deleteEmployerVacancy.html">
+                                    <input type="hidden" name="vacancyId" value="${vacancy.vacancyId}"/> 
+                                    <fmt:message key="employer.delete.vacancy" var="editSkills"/>
+                                    <input type="submit" value="${editSkills}" />
+                                </form>
+                            </td>
                         </tr>
                     </c:forEach>
                 </tbody>
@@ -68,8 +75,12 @@
         <c:if test="${empty vacancies}">
             <fmt:message key="employer.no.vacancies"/>
         </c:if>
+        
+        <c:if test="${not empty vacancy_delete_error}">
+            <fmt:message key="employer.vacancy.delete.error"/>
+        </c:if>
 
-        <form method="post" action="addEmployerVacancy.html">
+        <form method="post" action="toAddEmployerVacancy.html">
             <fmt:message key="employer.add.vacancy" var="toLoginPage"/>
             <input type="submit" value="${toLoginPage}" />
         </form>
