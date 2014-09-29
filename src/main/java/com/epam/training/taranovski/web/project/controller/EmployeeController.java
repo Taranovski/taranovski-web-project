@@ -30,7 +30,7 @@ public class EmployeeController {
 
     @Autowired
     EmployeeService employeeService;
-    
+
     @Autowired
     private ValidationService validationService;
 
@@ -87,18 +87,8 @@ public class EmployeeController {
             @RequestParam(value = "experience") String experience,
             ModelAndView modelAndView) {
 
-        boolean error = false;
-        int exp = 0;
-
-        try {
-            exp = Integer.parseInt(experience);
-        } catch (NumberFormatException ex) {
-            error = true;
-        }
-        
-        if (exp < 0) {
-            error = true;
-        }
+        boolean error = !validationService.experienceIsValid(experience);
+        int exp = Integer.parseInt(experience);
 
         if (!error) {
             error = !employeeService.updateSkill(skillId, exp);
@@ -157,25 +147,14 @@ public class EmployeeController {
     @RequestMapping("/addSkill")
     public ModelAndView addSkill(
             @ModelAttribute(value = "user") Employee employee,
-            @RequestParam(value = "skillsToAddList") String skillId,
+            @RequestParam(value = "skillsToAddList") int skillId,
             @RequestParam(value = "experience") String experience,
             ModelAndView modelAndView) {
 
-        boolean error = false;
+        boolean error = !validationService.experienceIsValid(experience);
 
-        int skill = 0;
-        int exp = 0;
-
-        try {
-            skill = Integer.parseInt(skillId);
-            exp = Integer.parseInt(experience);
-        } catch (NumberFormatException ex) {
-            error = true;
-        }
-        
-        if (skill < 0 || exp <0) {
-            error = true;
-        }
+        int skill = skillId;
+        int exp = Integer.parseInt(experience);
 
         if (!error) {
             error = !employeeService.addSkill(employee, skill, exp);

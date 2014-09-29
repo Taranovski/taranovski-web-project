@@ -7,6 +7,7 @@ package com.epam.training.taranovski.web.project.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -94,7 +95,10 @@ public class Vacancy implements Serializable {
     }
 
     public void setSalary(BigDecimal salary) {
-        this.salary = salary;
+//        System.out.println(salary);
+//        System.out.println(salary.precision());
+//        System.out.println(salary.scale());
+        this.salary = salary.setScale(2, RoundingMode.HALF_EVEN);
     }
 
     public String getDescription() {

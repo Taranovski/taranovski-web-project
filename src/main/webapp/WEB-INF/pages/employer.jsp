@@ -54,6 +54,7 @@
                             <td>${vacancy.salary}</td>
                             <td>
                                 <form method="post" action="editEmployerVacancy.html">
+                                    <input type="hidden" name="vacancyId" value="${vacancy.vacancyId}"/> 
                                     <fmt:message key="employer.edit.vacancy" var="editSkills"/>
                                     <input type="submit" value="${editSkills}" />
                                 </form>

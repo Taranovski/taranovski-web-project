@@ -24,11 +24,11 @@
     <body>
         <fmt:message key="employee.current.information"/>${user.login}
         <form method="post" action="saveEmployeePersonalInfo.html">
-            <fmt:message key="employee.name"/><input type="text" name="name" value="${user.name}" /><br>
-            <fmt:message key="employee.surname"/><input type="text" name="surname" value="${user.surname}" /><br>
-            <fmt:message key="employee.patronymic"/><input type="text" name="patronymic" value="${user.patronymic}" /><br>
-            <fmt:message key="employee.qualification"/><input type="text" name="qualification" value="${user.qualification}" /><br>
-            <fmt:message key="employee.occupation"/><input type="text" name="occupation" value="${user.occupation}" /><br>
+            <fmt:message key="employee.name"/><input type="text" name="name" value="${user.name}" maxlength="50"/><br>
+            <fmt:message key="employee.surname"/><input type="text" name="surname" value="${user.surname}" maxlength="50"/><br>
+            <fmt:message key="employee.patronymic"/><input type="text" name="patronymic" value="${user.patronymic}" maxlength="50"/><br>
+            <fmt:message key="employee.qualification"/><input type="text" name="qualification" value="${user.qualification}" maxlength="50"/><br>
+            <fmt:message key="employee.occupation"/><input type="text" name="occupation" value="${user.occupation}" maxlength="50"/><br>
 
             <fmt:message key="employee.save.profile" var="saveInfo"/>
             <input type="submit" value="${saveInfo}" />

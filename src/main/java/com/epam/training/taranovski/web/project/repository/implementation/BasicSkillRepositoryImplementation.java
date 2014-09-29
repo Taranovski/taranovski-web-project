@@ -7,6 +7,7 @@ package com.epam.training.taranovski.web.project.repository.implementation;
 
 import com.epam.training.taranovski.web.project.domain.BasicSkill;
 import com.epam.training.taranovski.web.project.domain.Employee;
+import com.epam.training.taranovski.web.project.domain.Vacancy;
 import com.epam.training.taranovski.web.project.repository.BasicSkillRepository;
 import java.util.LinkedList;
 import java.util.List;
@@ -75,6 +76,30 @@ public class BasicSkillRepositoryImplementation implements BasicSkillRepository 
             
             TypedQuery<BasicSkill> query = em.createNamedQuery("BasicSkill.findSkillsNotInEmployee", BasicSkill.class);
             query.setParameter("employee", employee);
+            list = query.getResultList();
+            
+            em.getTransaction().commit();
+        } catch (RuntimeException e) {
+            System.out.println(e);
+        } finally {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            em.close();
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<BasicSkill> getSkillsNotInVacancy(Vacancy vacancy) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        List<BasicSkill> list = new LinkedList<>();
+        try {
+            em.getTransaction().begin();
+            
+            TypedQuery<BasicSkill> query = em.createNamedQuery("BasicSkill.findSkillsNotInVacancy", BasicSkill.class);
+            query.setParameter("vacancy", vacancy);
             list = query.getResultList();
             
             em.getTransaction().commit();

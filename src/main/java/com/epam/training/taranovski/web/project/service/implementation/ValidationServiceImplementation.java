@@ -30,10 +30,47 @@ public class ValidationServiceImplementation implements ValidationService {
     @Override
     public boolean telephoneNumberIsValid(String telephoneNumber) {
         boolean valid = true;
-        if (telephoneNumber.length() != TELEPHONE_NUMBER_LENGTH || !telephoneNumber.matches("\\d{12}")) {
+        if (telephoneNumber == null || telephoneNumber.length() != TELEPHONE_NUMBER_LENGTH || !telephoneNumber.matches("\\d{12}")) {
             valid = false;
         }
         return valid;
+    }
+
+    @Override
+    public boolean salaryIsValid(String salary) {
+        boolean valid = true;
+
+        Double d = null;
+        try {
+            d = Double.valueOf(salary);
+            if (d < 0) {
+                valid = false;
+            }
+        } catch (NumberFormatException e) {
+            valid = false;
+        }
+
+        return valid;
+    }
+
+    @Override
+    public boolean experienceIsValid(String experience) {
+        int exp = 0;
+        boolean success = true;
+        if (experience == null) {
+            return false;
+        }
+
+        try {
+            exp = Integer.parseInt(experience);
+        } catch (NumberFormatException ex) {
+            success = false;
+        }
+
+        if (exp < 0) {
+            success = false;
+        }
+        return success;
     }
 
 }

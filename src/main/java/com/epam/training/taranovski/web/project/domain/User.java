@@ -31,7 +31,7 @@ import javax.validation.constraints.Size;
  * @author Alyx
  */
 @Entity
-@Table(name = "\"User1\"")
+@Table(name = "\"User\"")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(discriminatorType=DiscriminatorType.STRING, name="\"userType\"", length = 25)
 @NamedQueries({

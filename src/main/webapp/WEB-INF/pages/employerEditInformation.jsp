@@ -24,10 +24,10 @@
     <body>
         <fmt:message key="employer.current.information"/>${user.login}
         <form method="post" action="saveEmployerInfo.html">
-            <fmt:message key="employer.company.name"/><input type="text" name="companyName" value="${user.companyName}"/><br/>
-            <fmt:message key="employer.field"/><input type="text" name="field" value="${user.field}"/><br/>
-            <fmt:message key="employer.adress"/><input type="text" name="adress" value="${user.adress}"/><br/>
-            <fmt:message key="employer.telephone.number"/><input type="text" name="telephoneNumber" value="${user.telephoneNumber}"/><br/>
+            <fmt:message key="employer.company.name"/><input type="text" name="companyName" value="${user.companyName}" maxlength="50"/><br/>
+            <fmt:message key="employer.field"/><input type="text" name="field" value="${user.field}" maxlength="50"/><br/>
+            <fmt:message key="employer.adress"/><input type="text" name="adress" value="${user.adress}" maxlength="256"/><br/>
+            <fmt:message key="employer.telephone.number"/><input type="text" name="telephoneNumber" value="${user.telephoneNumber}" maxlength="12"/><br/>
 
             <fmt:message key="employer.save.profile" var="saveInfo"/>
             <input type="submit" value="${saveInfo}" />

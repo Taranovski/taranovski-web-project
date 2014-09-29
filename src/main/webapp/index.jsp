@@ -21,7 +21,7 @@
                     <td><fmt:message key="index.language"/></td>
                     <td>
                         <form method="post" action="./index.jsp">
-                            <select id="language" name="language" onchange="submit()">
+                            <select id="language" name="language"  onchange="submit()">
                                 <option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
                                 <option value="ru" ${language == 'ru' ? 'selected' : ''}>Русский</option>
                             </select>

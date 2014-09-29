@@ -5,7 +5,7 @@
  */
 package com.epam.training.taranovski.web.project.repository;
 
-import com.epam.training.taranovski.web.project.domain.UserSkill;
+import com.epam.training.taranovski.web.project.domain.VacancySkill;
 import com.epam.training.taranovski.web.project.domain.Vacancy;
 import java.util.List;
 
@@ -15,11 +15,11 @@ import java.util.List;
  */
 public interface VacancyRepository extends TemplateRepository<Vacancy> {
 
-    boolean addSkill(Vacancy vacancy, UserSkill skill);
+    boolean addSkill(Vacancy vacancy, VacancySkill skill);
 
-    boolean removeSkill(Vacancy vacancy, UserSkill skill);
+    boolean removeSkill(Vacancy vacancy, VacancySkill skill);
 
     boolean clearSkills(Vacancy vacancy);
 
-    List<UserSkill> getSkills(Vacancy vacancy);
+    List<VacancySkill> getSkills(Vacancy vacancy);
 }

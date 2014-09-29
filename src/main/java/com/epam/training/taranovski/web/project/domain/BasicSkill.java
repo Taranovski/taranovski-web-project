@@ -27,8 +27,10 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "\"AllSkills\"")
 @NamedQueries({
-    @NamedQuery(name = "BasicSkill.findSkillsNotInEmployee", 
-            query = "select b from BasicSkill b where b not in (SELECT u.skill FROM UserSkill u where u.employee = :employee)")
+    @NamedQuery(name = "BasicSkill.findSkillsNotInEmployee",
+            query = "select b from BasicSkill b where b not in (SELECT u.skill FROM UserSkill u where u.employee = :employee)"),
+    @NamedQuery(name = "BasicSkill.findSkillsNotInVacancy",
+            query = "select b from BasicSkill b where b not in (SELECT u.skill FROM VacancySkill u where u.vacancy = :vacancy)")
 })
 public class BasicSkill implements Serializable {
 
@@ -39,14 +41,14 @@ public class BasicSkill implements Serializable {
     @NotNull
     @SequenceGenerator(name = "allSkillsSequence", sequenceName = "\"AllSkillsSequence\"", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "allSkillsSequence")
-    
+
     @Column(name = "\"allSkillsId\"")
     private Integer skillId;
 
     @Size(max = 50)
     @Column(name = "\"skillName\"")
     private String skillName;
-    
+
     @Size(max = 100)
     @Column(name = "\"description\"")
     private String description;

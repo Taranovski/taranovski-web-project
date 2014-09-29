@@ -21,10 +21,10 @@
     <body>
         <form method="post" action="register.html">
             <label for="username"><fmt:message key="register.label.username" />:</label>
-            <input type="text" id="username" name="username">
+            <input type="text" id="username" name="username" maxlength="25">
             <br>
             <label for="password"><fmt:message key="register.label.password" />:</label>
-            <input type="password" id="password" name="password">
+            <input type="password" id="password" name="password" maxlength="25">
             <br>
             
             <input type="radio" name="usertype" value="employee" checked="true"/><fmt:message key="register.label.employee" /><br>

@@ -7,6 +7,7 @@ package com.epam.training.taranovski.web.project.repository;
 
 import com.epam.training.taranovski.web.project.domain.BasicSkill;
 import com.epam.training.taranovski.web.project.domain.Employee;
+import com.epam.training.taranovski.web.project.domain.Vacancy;
 import java.util.List;
 
 /**
@@ -16,5 +17,7 @@ import java.util.List;
 public interface BasicSkillRepository extends TemplateRepository<BasicSkill>{
 
     public List<BasicSkill> getSkillsNotInEmployee(Employee employee);
+
+    public List<BasicSkill> getSkillsNotInVacancy(Vacancy vacancy);
     
 }

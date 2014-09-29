@@ -31,7 +31,7 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "VacancySkill.findAll", query = "SELECT u FROM VacancySkill u"),
     @NamedQuery(name = "VacancySkill.findByExperience", query = "SELECT u FROM VacancySkill u WHERE u.experience = :experience"),
     @NamedQuery(name = "VacancySkill.findBySkillId", query = "SELECT u FROM VacancySkill u WHERE u.skillId = :skillId"),
-    @NamedQuery(name = "VacancySkill.findByEmployer", query = "SELECT u FROM VacancySkill u WHERE u.employer = :employer")})
+    @NamedQuery(name = "VacancySkill.findByVacancy", query = "SELECT u FROM VacancySkill u WHERE u.vacancy = :vacancy")})
 
 public class VacancySkill implements Serializable {
 
@@ -54,9 +54,9 @@ public class VacancySkill implements Serializable {
     private BasicSkill skill;
 
 //    @Column
-    @JoinColumn(name = "\"employerId\"", referencedColumnName = "\"employerUserId\"")
+    @JoinColumn(name = "\"vacancyId\"", referencedColumnName = "\"vacancyId\"")
     @ManyToOne
-    private Employer employer;
+    private Vacancy vacancy;
 
     public VacancySkill() {
     }
@@ -89,12 +89,14 @@ public class VacancySkill implements Serializable {
         this.skill = skill;
     }
 
-    public Employer getEmployer() {
-        return employer;
+    public Vacancy getVacancy() {
+        return vacancy;
     }
 
-    public void setEmployer(Employer employerid) {
-        this.employer = employerid;
+    public void setVacancy(Vacancy vacancy) {
+        this.vacancy = vacancy;
     }
+
+    
 
 }

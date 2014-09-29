@@ -15,4 +15,8 @@ public interface ValidationService {
     boolean userNameIsValid(String userName);
 
     public boolean telephoneNumberIsValid(String telephoneNumber);
+
+    public boolean salaryIsValid(String salary);
+
+    public boolean experienceIsValid(String experience);
 }

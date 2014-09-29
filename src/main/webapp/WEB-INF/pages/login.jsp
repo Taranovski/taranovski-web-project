@@ -21,10 +21,10 @@
     <body>
         <form method="post" action="loginSystem.html">
             <label for="username"><fmt:message key="login.label.username" />:</label>
-            <input type="text" id="username" name="username">
+            <input type="text" id="username" name="username" maxlength="25">
             <br>
             <label for="password"><fmt:message key="login.label.password" />:</label>
-            <input type="password" id="password" name="password">
+            <input type="password" id="password" name="password" maxlength="25">
             <br>
             <fmt:message key="login.button.submit" var="buttonValue" />
             <input type="submit" name="submit" value="${buttonValue}">
