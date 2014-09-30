@@ -8,6 +8,7 @@ package com.epam.training.taranovski.web.project.controller;
 import com.epam.training.taranovski.web.project.domain.Employee;
 import com.epam.training.taranovski.web.project.domain.Employer;
 import com.epam.training.taranovski.web.project.domain.User;
+import com.epam.training.taranovski.web.project.service.BusinessService;
 import com.epam.training.taranovski.web.project.service.EmployeeService;
 import com.epam.training.taranovski.web.project.service.EmployerService;
 import com.epam.training.taranovski.web.project.service.LoginService;
@@ -32,7 +33,7 @@ public class LoginController {
 
     @Autowired
     private LoginService loginService;
-    
+
     @Autowired
     private ValidationService validationService;
 
@@ -41,6 +42,9 @@ public class LoginController {
 
     @Autowired
     private EmployerService employerService;
+
+    @Autowired
+    private BusinessService businessService;
 
     /**
      *
@@ -71,10 +75,8 @@ public class LoginController {
 
         boolean error = false;
         User user = null;
-        if (
-                !validationService.userNameIsValid(userName) || 
-                !validationService.passwordIsValid(password)) 
-        {
+        if (!validationService.userNameIsValid(userName)
+                || !validationService.passwordIsValid(password)) {
             error = true;
         } else {
             user = loginService.login(userName, password);
@@ -90,6 +92,7 @@ public class LoginController {
 
             switch (type) {
                 case "employee": {
+                    modelAndView.addObject("vacancies", businessService.getAvailableVacancies((Employee) user));
                     modelAndView.addObject("skills", employeeService.getSkillList((Employee) user));
                     modelAndView.setViewName("employee.jsp");
                     break;

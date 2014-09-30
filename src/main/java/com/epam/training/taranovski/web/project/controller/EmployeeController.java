@@ -6,6 +6,7 @@
 package com.epam.training.taranovski.web.project.controller;
 
 import com.epam.training.taranovski.web.project.domain.Employee;
+import com.epam.training.taranovski.web.project.service.BusinessService;
 import com.epam.training.taranovski.web.project.service.EmployeeService;
 import com.epam.training.taranovski.web.project.service.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +30,13 @@ public class EmployeeController {
     private static final String ADD_ERROR = "add_error";
 
     @Autowired
-    EmployeeService employeeService;
+    private EmployeeService employeeService;
 
     @Autowired
     private ValidationService validationService;
+    
+    @Autowired
+    private BusinessService businessService;
 
     @RequestMapping("/editEmployeePersonalInfo")
     public ModelAndView editEmployeePersonalInfo(ModelAndView modelAndView) {
@@ -41,8 +45,11 @@ public class EmployeeController {
     }
 
     @RequestMapping("/dontSaveEmployeePersonalInfo")
-    public ModelAndView dontSaveEmployeePersonalInfo(ModelAndView modelAndView) {
+    public ModelAndView dontSaveEmployeePersonalInfo(
+            @ModelAttribute(value = "user") Employee employee,
+            ModelAndView modelAndView) {
         modelAndView.setViewName("employee.jsp");
+        modelAndView.addObject("vacancies", businessService.getAvailableVacancies(employee));
         return modelAndView;
     }
 

@@ -6,9 +6,11 @@
 package com.epam.training.taranovski.web.project.controller;
 
 import com.epam.training.taranovski.web.project.domain.BasicSkill;
+import com.epam.training.taranovski.web.project.domain.Employee;
 import com.epam.training.taranovski.web.project.domain.Employer;
 import com.epam.training.taranovski.web.project.domain.Vacancy;
 import com.epam.training.taranovski.web.project.domain.VacancySkill;
+import com.epam.training.taranovski.web.project.service.BusinessService;
 import com.epam.training.taranovski.web.project.service.EmployerService;
 import com.epam.training.taranovski.web.project.service.ValidationService;
 import java.math.BigDecimal;
@@ -44,6 +46,9 @@ public class EmployerController {
 
     @Autowired
     private ValidationService validationService;
+    
+    @Autowired
+    private BusinessService businessService;
 
     @RequestMapping("/editEmployerInfo")
     public ModelAndView editEmployerPersonalInfo(ModelAndView modelAndView) {
@@ -98,6 +103,7 @@ public class EmployerController {
         Vacancy vacancy = employerService.getVacancyById(Integer.parseInt(vacancyId));
         modelAndView.addObject("vacancy", vacancy);
         modelAndView.addObject("skills", employerService.getVacancySkills(vacancy));
+        modelAndView.addObject("employees", businessService.getAvailableEmployees(vacancy));
         modelAndView.setViewName("employerEditVacancy.jsp");
         return modelAndView;
     }
@@ -107,7 +113,10 @@ public class EmployerController {
             @RequestParam(value = "vacancyId") String vacancyId,
             ModelAndView modelAndView) {
         Vacancy vacancy = employerService.getVacancyById(Integer.parseInt(vacancyId));
+        List<Employee> employees = businessService.getAvailableEmployees(vacancy);
+        
         modelAndView.addObject("vacancy", vacancy);
+        modelAndView.addObject("employees", employees);
         modelAndView.setViewName("vacancyEditInformation.jsp");
         return modelAndView;
     }

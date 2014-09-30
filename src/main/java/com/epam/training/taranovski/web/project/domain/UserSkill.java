@@ -6,6 +6,7 @@
 package com.epam.training.taranovski.web.project.domain;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -97,4 +98,36 @@ public class UserSkill implements Serializable {
         this.employee = employeeid;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + Objects.hashCode(this.experience);
+        hash = 29 * hash + Objects.hashCode(this.skill);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final UserSkill other = (UserSkill) obj;
+        if (!Objects.equals(this.experience, other.experience)) {
+            return false;
+        }
+        if (!Objects.equals(this.skill, other.skill)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "UserSkill{" + "experience=" + experience + ", skill=" + skill + '}';
+    }
+
+    
 }

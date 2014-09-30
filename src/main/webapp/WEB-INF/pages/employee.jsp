@@ -24,11 +24,11 @@
     <body>
         <fmt:message key="employee.greetings"/>${user.login}<br/>
         <br/>
-        <fmt:message key="employee.name"/>${user.name}<br/>
-        <fmt:message key="employee.surname"/>${user.surname}<br/>
-        <fmt:message key="employee.patronymic"/>${user.patronymic}<br/>
-        <fmt:message key="employee.qualification"/>${user.qualification}<br/>
-        <fmt:message key="employee.occupation"/>${user.occupation}<br/>
+        <fmt:message key="employee.name"/>           ${user.name}          <br/>
+        <fmt:message key="employee.surname"/>        ${user.surname}       <br/>
+        <fmt:message key="employee.patronymic"/>     ${user.patronymic}    <br/>
+        <fmt:message key="employee.qualification"/>  ${user.qualification} <br/>
+        <fmt:message key="employee.occupation"/>     ${user.occupation}    <br/>
         
         <form method="post" action="editEmployeePersonalInfo.html">
             <fmt:message key="employee.edit.profile" var="editInfo"/>
@@ -66,6 +66,41 @@
             <fmt:message key="employee.edit.skills" var="editSkills"/>
             <input type="submit" value="${editSkills}" />
         </form>
+        
+        
+        
+        <c:if test="${not empty vacancies}">
+            <br><fmt:message key="employee.available.vacancies"/>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th><fmt:message key="vacancy.position"/></th>
+                        <th><fmt:message key="vacancy.description"/></th>
+                        <th><fmt:message key="vacancy.salary"/></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="vacancy" items="${vacancies}">
+                        <tr>
+                            <td>${vacancy.position}</td>
+                            <td>${vacancy.description}</td>
+                            <td>${vacancy.salary}</td>
+                            <td>
+                                <form method="post" action="employeeAskVacancy.html">
+                                    <input type="hidden" name="vacancyId" value="${vacancy.vacancyId}"/> 
+                                    <fmt:message key="employee.ask.for.vacancy" var="editSkills"/>
+                                    <input type="submit" value="${editSkills}" />
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </c:if>
+
+        <c:if test="${empty vacancies}">
+            <fmt:message key="employee.no.available.vacancies"/>
+        </c:if>
         
         <form method="post" action="toLoginPage.html">
             <fmt:message key="login.logout" var="toLoginPage"/>

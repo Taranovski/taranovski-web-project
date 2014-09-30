@@ -110,7 +110,25 @@ public class EmployeeRepositoryImplementation implements EmployeeRepository {
 
     @Override
     public List<Employee> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager em = entityManagerFactory.createEntityManager();
+        List<Employee> list = new LinkedList<>();
+        try {
+            em.getTransaction().begin();
+            
+            TypedQuery<Employee> query = em.createNamedQuery("Employee.findAll", Employee.class);
+            list = query.getResultList();
+            
+            em.getTransaction().commit();
+        } catch (RuntimeException e) {
+            System.out.println(e);
+        } finally {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            em.close();
+        }
+
+        return list;
     }
 
     @Override

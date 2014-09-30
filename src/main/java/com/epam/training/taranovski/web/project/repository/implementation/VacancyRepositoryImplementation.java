@@ -112,7 +112,25 @@ public class VacancyRepositoryImplementation implements VacancyRepository {
 
     @Override
     public List<Vacancy> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager em = entityManagerFactory.createEntityManager();
+        List<Vacancy> list = new LinkedList<>();
+        try {
+            em.getTransaction().begin();
+            
+            TypedQuery<Vacancy> query = em.createNamedQuery("Vacancy.findAll", Vacancy.class);
+            list = query.getResultList();
+            
+            em.getTransaction().commit();
+        } catch (RuntimeException e) {
+            System.out.println(e);
+        } finally {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            em.close();
+        }
+
+        return list;
     }
 
     @Override
