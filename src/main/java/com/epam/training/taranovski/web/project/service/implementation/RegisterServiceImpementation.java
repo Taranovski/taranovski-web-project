@@ -34,14 +34,16 @@ public class RegisterServiceImpementation implements RegisterService {
     @Override
     public boolean register(String name, String password, String type) {
 
-        System.out.println("21");
         boolean error = false;
         User user = null;
-
+        System.out.println("");
         if (null != type) {
             switch (type) {
                 case "employee": {
-                    user = new Employee();
+                    Employee employee = new Employee();
+                    employee.setStatus("free");
+                    user = employee;
+                    
                     break;
                 }
                 case "employer": {
@@ -55,7 +57,6 @@ public class RegisterServiceImpementation implements RegisterService {
             }
         }
 
-        System.out.println("2");
         if (!error) {
             user.setLogin(name);
             user.setPassword(encryptionService.encrypt(password));

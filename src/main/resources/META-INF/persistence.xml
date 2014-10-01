@@ -12,6 +12,7 @@
     <class>com.epam.training.taranovski.web.project.domain.UserSkill</class>
     <class>com.epam.training.taranovski.web.project.domain.VacancySkill</class>
     <class>com.epam.training.taranovski.web.project.domain.BasicSkill</class>
+    <class>com.epam.training.taranovski.web.project.domain.OfferBid</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:oracle:oci:@localhost:1521:orcl"/>
       <property name="javax.persistence.jdbc.password" value="Scourge12345678"/>

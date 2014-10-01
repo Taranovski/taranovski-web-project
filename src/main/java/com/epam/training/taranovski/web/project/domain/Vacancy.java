@@ -36,7 +36,10 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Vacancy.findBySalary", query = "SELECT v FROM Vacancy v WHERE v.salary = :salary"),
     @NamedQuery(name = "Vacancy.findByDescription", query = "SELECT v FROM Vacancy v WHERE v.description = :description"),
     @NamedQuery(name = "Vacancy.findByVacancyId", query = "SELECT v FROM Vacancy v WHERE v.vacancyId = :vacancyId"),
-    @NamedQuery(name = "Vacancy.findByEmployer", query = "SELECT v FROM Vacancy v WHERE v.employer = :employer")
+    @NamedQuery(name = "Vacancy.findActiveByEmployer", query = "SELECT v FROM Vacancy v WHERE v.status = 'active' and v.employer = :employer"),
+    @NamedQuery(name = "Vacancy.findByEmployer", query = "SELECT v FROM Vacancy v WHERE v.employer = :employer"),
+    @NamedQuery(name = "Vacancy.findForEmployee", query = "SELECT v FROM Vacancy v WHERE v.employer = :employer"),
+    @NamedQuery(name = "Vacancy.findByIds", query = "SELECT v FROM Vacancy v WHERE v.vacancyId in :vacancyIdList")
 })
 public class Vacancy implements Serializable {
 
@@ -67,6 +70,10 @@ public class Vacancy implements Serializable {
     @ManyToOne
     private Employer employer;
 
+    @Size(max = 20)
+    @Column(name = "\"status\"")
+    private String status;
+
 //    @OneToOne
 //    @JoinColumn(referencedColumnName = "\"checkDocumentId\"")
 //    private CheckDocument checkDocumentId;
@@ -74,7 +81,6 @@ public class Vacancy implements Serializable {
 //    @Basic(fetch = FetchType.LAZY)
 //    @JoinColumn(referencedColumnName = "\"skillId\"")
 //    private Collection<UserSkill> skillCollection;
-
     public Vacancy() {
     }
 
@@ -131,13 +137,20 @@ public class Vacancy implements Serializable {
 //    public void setSkillCollection(Collection<UserSkill> skillCollection) {
 //        this.skillCollection = skillCollection;
 //    }
-
     public Employer getEmployer() {
         return employer;
     }
 
     public void setEmployer(Employer employer) {
         this.employer = employer;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override

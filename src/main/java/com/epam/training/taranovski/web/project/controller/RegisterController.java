@@ -66,7 +66,6 @@ public class RegisterController {
         }
 
         if (!error) {
-            System.out.println("1");
             boolean registered = registerService.register(userName, password, usertype);
             if (registered) {
                 modelAndView.addObject(REGISTER_SUCCESS, REGISTER_SUCCESS);

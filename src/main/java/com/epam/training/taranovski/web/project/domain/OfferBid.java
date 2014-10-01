@@ -5,20 +5,70 @@
  */
 package com.epam.training.taranovski.web.project.domain;
 
+import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
  * @author Alyx
  */
-public class OfferBid {
+@Entity
+@Table(name = "\"OfferBid\"")
+@NamedQueries({
+    @NamedQuery(name = "OfferBid.findAll", query = "SELECT o FROM OfferBid o"),
+    @NamedQuery(name = "OfferBid.findByOfferBidId", query = "SELECT o FROM OfferBid o WHERE o.offerBidId = :offerBidId"),
+    @NamedQuery(name = "OfferBid.findByEmployeeSigned", query = "SELECT o FROM OfferBid o WHERE o.employeeSigned = :employeeSigned"),
+    @NamedQuery(name = "OfferBid.findByEmployerSigned", query = "SELECT o FROM OfferBid o WHERE o.employerSigned = :employerSigned"),
+    @NamedQuery(name = "OfferBid.findByEmployee", query = "SELECT o FROM OfferBid o WHERE o.employee = :employee"),
+    @NamedQuery(name = "OfferBid.findByVacancy", query = "SELECT o FROM OfferBid o WHERE o.vacancy = :vacancy")})
+public class OfferBid implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @SequenceGenerator(name = "offerBidSequence", sequenceName = "\"OfferBidSequence\"", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "offerBidSequence")
+
+    @Column(name = "\"offerBidId\"")
     private Integer offerBidId;
-
-    private Boolean employeeSigned;
-    private Boolean employerSigned;
-    private Employee employee;
+    @Size(max = 20)
+    @Column(name = "\"employeeSigned\"")
+    private String employeeSigned;
+    @Size(max = 20)
+    @Column(name = "\"employerSigned\"")
+    private String employerSigned;
+    @JoinColumn(name = "\"vacancyId\"", referencedColumnName = "\"vacancyId\"")
+    @ManyToOne
     private Vacancy vacancy;
+    @JoinColumn(name = "\"offerEmployerId\"", referencedColumnName = "\"employerUserId\"")
+    @ManyToOne
+    private Employer employer;
+    @JoinColumn(name = "\"bidEmployeeId\"", referencedColumnName = "\"employeeUserId\"")
+    @ManyToOne
+    private Employee employee;
+
+    public OfferBid() {
+    }
+
+    public OfferBid(Integer offerBidId) {
+        this.offerBidId = offerBidId;
+    }
 
     public Integer getOfferBidId() {
         return offerBidId;
@@ -28,28 +78,20 @@ public class OfferBid {
         this.offerBidId = offerBidId;
     }
 
-    public Boolean getEmployeeSigned() {
+    public String getEmployeeSigned() {
         return employeeSigned;
     }
 
-    public void setEmployeeSigned(Boolean employeeSigned) {
+    public void setEmployeeSigned(String employeeSigned) {
         this.employeeSigned = employeeSigned;
     }
 
-    public Boolean getEmployerSigned() {
+    public String getEmployerSigned() {
         return employerSigned;
     }
 
-    public void setEmployerSigned(Boolean employerSigned) {
+    public void setEmployerSigned(String employerSigned) {
         this.employerSigned = employerSigned;
-    }
-
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
     }
 
     public Vacancy getVacancy() {
@@ -60,13 +102,28 @@ public class OfferBid {
         this.vacancy = vacancy;
     }
 
+    public Employer getEmployer() {
+        return employer;
+    }
+
+    public void setEmployer(Employer employer) {
+        this.employer = employer;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 53 * hash + Objects.hashCode(this.employeeSigned);
-        hash = 53 * hash + Objects.hashCode(this.employerSigned);
-        hash = 53 * hash + Objects.hashCode(this.employee);
-        hash = 53 * hash + Objects.hashCode(this.vacancy);
+        hash = 71 * hash + Objects.hashCode(this.vacancy);
+        hash = 71 * hash + Objects.hashCode(this.employer);
+        hash = 71 * hash + Objects.hashCode(this.employee);
         return hash;
     }
 
@@ -79,16 +136,13 @@ public class OfferBid {
             return false;
         }
         final OfferBid other = (OfferBid) obj;
-        if (!Objects.equals(this.employeeSigned, other.employeeSigned)) {
+        if (!Objects.equals(this.vacancy, other.vacancy)) {
             return false;
         }
-        if (!Objects.equals(this.employerSigned, other.employerSigned)) {
+        if (!Objects.equals(this.employer, other.employer)) {
             return false;
         }
         if (!Objects.equals(this.employee, other.employee)) {
-            return false;
-        }
-        if (!Objects.equals(this.vacancy, other.vacancy)) {
             return false;
         }
         return true;
@@ -96,7 +150,7 @@ public class OfferBid {
 
     @Override
     public String toString() {
-        return "OfferBid{" + "employeeSigned=" + employeeSigned + ", employerSigned=" + employerSigned + ", employee=" + employee + ", vacancy=" + vacancy + '}';
+        return "OfferBid{" + "employeeSigned=" + employeeSigned + ", employerSigned=" + employerSigned + ", vacancy=" + vacancy + ", employer=" + employer + ", employee=" + employee + '}';
     }
 
 }

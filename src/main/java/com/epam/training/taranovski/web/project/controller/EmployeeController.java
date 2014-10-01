@@ -6,8 +6,10 @@
 package com.epam.training.taranovski.web.project.controller;
 
 import com.epam.training.taranovski.web.project.domain.Employee;
+import com.epam.training.taranovski.web.project.domain.Vacancy;
 import com.epam.training.taranovski.web.project.service.BusinessService;
 import com.epam.training.taranovski.web.project.service.EmployeeService;
+import com.epam.training.taranovski.web.project.service.VacancyService;
 import com.epam.training.taranovski.web.project.service.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,9 +36,12 @@ public class EmployeeController {
 
     @Autowired
     private ValidationService validationService;
-    
+
     @Autowired
     private BusinessService businessService;
+
+    @Autowired
+    private VacancyService vacancyService;
 
     @RequestMapping("/editEmployeePersonalInfo")
     public ModelAndView editEmployeePersonalInfo(ModelAndView modelAndView) {
@@ -173,6 +178,25 @@ public class EmployeeController {
         modelAndView.addObject("skills", employeeService.getSkillList(employee));
         modelAndView.addObject("skillsToAdd", employeeService.getSkillsToAddList(employee));
         modelAndView.setViewName("employeeEditSkills.jsp");
+        return modelAndView;
+    }
+
+    @RequestMapping("/employeeAskVacancy")
+    public ModelAndView employeeAskVacancy(
+            @ModelAttribute(value = "user") Employee employee,
+            @RequestParam(value = "vacancyId") int vacancyId,
+            ModelAndView modelAndView) {
+
+        Vacancy vacancy = vacancyService.getVacancyById(vacancyId);
+
+        boolean success = businessService.bidForVacancy(employee, vacancy);
+
+        if (success) {
+
+        } else {
+
+        }
+        modelAndView.setViewName("employee.jsp");
         return modelAndView;
     }
 }

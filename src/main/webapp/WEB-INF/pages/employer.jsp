@@ -44,6 +44,7 @@
                         <th><fmt:message key="vacancy.position"/></th>
                         <th><fmt:message key="vacancy.description"/></th>
                         <th><fmt:message key="vacancy.salary"/></th>
+                        <th><fmt:message key="vacancy.status"/></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,6 +53,7 @@
                             <td>${vacancy.position}</td>
                             <td>${vacancy.description}</td>
                             <td>${vacancy.salary}</td>
+                            <td>${vacancy.status}</td>
                             <td>
                                 <form method="post" action="editEmployerVacancy.html">
                                     <input type="hidden" name="vacancyId" value="${vacancy.vacancyId}"/> 

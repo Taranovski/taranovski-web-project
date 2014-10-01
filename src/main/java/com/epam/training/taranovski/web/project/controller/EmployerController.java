@@ -12,9 +12,9 @@ import com.epam.training.taranovski.web.project.domain.Vacancy;
 import com.epam.training.taranovski.web.project.domain.VacancySkill;
 import com.epam.training.taranovski.web.project.service.BusinessService;
 import com.epam.training.taranovski.web.project.service.EmployerService;
+import com.epam.training.taranovski.web.project.service.VacancyService;
 import com.epam.training.taranovski.web.project.service.ValidationService;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,6 +49,9 @@ public class EmployerController {
     
     @Autowired
     private BusinessService businessService;
+    
+    @Autowired
+    private VacancyService vacancyService;
 
     @RequestMapping("/editEmployerInfo")
     public ModelAndView editEmployerPersonalInfo(ModelAndView modelAndView) {
@@ -100,9 +103,9 @@ public class EmployerController {
     public ModelAndView editEmployerVacancy(
             @RequestParam(value = "vacancyId") String vacancyId,
             ModelAndView modelAndView) {
-        Vacancy vacancy = employerService.getVacancyById(Integer.parseInt(vacancyId));
+        Vacancy vacancy = vacancyService.getVacancyById(Integer.parseInt(vacancyId));
         modelAndView.addObject("vacancy", vacancy);
-        modelAndView.addObject("skills", employerService.getVacancySkills(vacancy));
+        modelAndView.addObject("skills", vacancyService.getVacancySkills(vacancy));
         modelAndView.addObject("employees", businessService.getAvailableEmployees(vacancy));
         modelAndView.setViewName("employerEditVacancy.jsp");
         return modelAndView;
@@ -112,7 +115,7 @@ public class EmployerController {
     public ModelAndView editEmployervacancyInfo(
             @RequestParam(value = "vacancyId") String vacancyId,
             ModelAndView modelAndView) {
-        Vacancy vacancy = employerService.getVacancyById(Integer.parseInt(vacancyId));
+        Vacancy vacancy = vacancyService.getVacancyById(Integer.parseInt(vacancyId));
         List<Employee> employees = businessService.getAvailableEmployees(vacancy);
         
         modelAndView.addObject("vacancy", vacancy);
@@ -129,7 +132,7 @@ public class EmployerController {
             @RequestParam(value = "description") String description,
             @RequestParam(value = "salary") String salary,
             ModelAndView modelAndView) {
-        Vacancy vacancy = employerService.getVacancyById(Integer.parseInt(vacancyId));
+        Vacancy vacancy = vacancyService.getVacancyById(Integer.parseInt(vacancyId));
 
         boolean success = validationService.salaryIsValid(salary);
 
@@ -146,7 +149,7 @@ public class EmployerController {
         } else {
             modelAndView.addObject(SAVE_SUCCESS, SAVE_SUCCESS);
             modelAndView.addObject("vacancy", vacancy);
-            modelAndView.addObject("vacancies", employerService.getVacancyList(employer));
+            modelAndView.addObject("vacancies", vacancyService.getVacancyList(employer));
         }
 
         modelAndView.setViewName("vacancyEditInformation.jsp");
@@ -157,9 +160,9 @@ public class EmployerController {
     public ModelAndView editEmployerVacancySkills(
             @RequestParam(value = "vacancyId") String vacancyId,
             ModelAndView modelAndView) {
-        Vacancy vacancy = employerService.getVacancyById(Integer.parseInt(vacancyId));
-        List<VacancySkill> list = employerService.getVacancySkills(vacancy);
-        List<BasicSkill> skillsToAdd = employerService.getVacancySkillsToAdd(vacancy);
+        Vacancy vacancy = vacancyService.getVacancyById(Integer.parseInt(vacancyId));
+        List<VacancySkill> list = vacancyService.getVacancySkills(vacancy);
+        List<BasicSkill> skillsToAdd = vacancyService.getVacancySkillsToAdd(vacancy);
 
         modelAndView.addObject("skillsToAdd", skillsToAdd);
         modelAndView.addObject("vacancy", vacancy);
@@ -177,7 +180,7 @@ public class EmployerController {
 
         boolean error = !validationService.experienceIsValid(experience);
         int exp = Integer.parseInt(experience);
-        Vacancy vacancy = employerService.getVacancyById(vacancyId);
+        Vacancy vacancy = vacancyService.getVacancyById(vacancyId);
 
         if (!error) {
             error = !employerService.updateVacancySkill(skillId, exp);
@@ -188,8 +191,8 @@ public class EmployerController {
 
         modelAndView.addObject("vacancy", vacancy);
 
-        modelAndView.addObject("skills", employerService.getVacancySkills(vacancy));
-        modelAndView.addObject("skillsToAdd", employerService.getVacancySkillsToAdd(vacancy));
+        modelAndView.addObject("skills", vacancyService.getVacancySkills(vacancy));
+        modelAndView.addObject("skillsToAdd", vacancyService.getVacancySkillsToAdd(vacancy));
         modelAndView.setViewName("vacancyEditSkills.jsp");
         return modelAndView;
     }
@@ -201,7 +204,7 @@ public class EmployerController {
             ModelAndView modelAndView) {
 
         boolean error = false;
-        Vacancy vacancy = employerService.getVacancyById(vacancyId);
+        Vacancy vacancy = vacancyService.getVacancyById(vacancyId);
 
         if (!error) {
             error = !employerService.deleteVacancySkill(skillId);
@@ -211,8 +214,8 @@ public class EmployerController {
         }
 
         modelAndView.addObject("vacancy", vacancy);
-        modelAndView.addObject("skills", employerService.getVacancySkills(vacancy));
-        modelAndView.addObject("skillsToAdd", employerService.getVacancySkillsToAdd(vacancy));
+        modelAndView.addObject("skills", vacancyService.getVacancySkills(vacancy));
+        modelAndView.addObject("skillsToAdd", vacancyService.getVacancySkillsToAdd(vacancy));
         modelAndView.setViewName("vacancyEditSkills.jsp");
         return modelAndView;
     }
@@ -223,7 +226,7 @@ public class EmployerController {
             ModelAndView modelAndView) {
 
         boolean error = false;
-        Vacancy vacancy = employerService.getVacancyById(vacancyId);
+        Vacancy vacancy = vacancyService.getVacancyById(vacancyId);
 
         if (!error) {
             error = !employerService.deleteAllVacancySkills(vacancy);
@@ -233,8 +236,8 @@ public class EmployerController {
         }
 
         modelAndView.addObject("vacancy", vacancy);
-        modelAndView.addObject("skills", employerService.getVacancySkills(vacancy));
-        modelAndView.addObject("skillsToAdd", employerService.getVacancySkillsToAdd(vacancy));
+        modelAndView.addObject("skills", vacancyService.getVacancySkills(vacancy));
+        modelAndView.addObject("skillsToAdd", vacancyService.getVacancySkillsToAdd(vacancy));
         modelAndView.setViewName("vacancyEditSkills.jsp");
         return modelAndView;
     }
@@ -250,7 +253,7 @@ public class EmployerController {
 
         int skill = skillId;
         int exp = Integer.parseInt(experience);
-        Vacancy vacancy = employerService.getVacancyById(vacancyId);
+        Vacancy vacancy = vacancyService.getVacancyById(vacancyId);
 
         if (!error) {
             error = !employerService.addSkill(vacancy, skill, exp);
@@ -260,8 +263,8 @@ public class EmployerController {
         }
 
         modelAndView.addObject("vacancy", vacancy);
-        modelAndView.addObject("skills", employerService.getVacancySkills(vacancy));
-        modelAndView.addObject("skillsToAdd", employerService.getVacancySkillsToAdd(vacancy));
+        modelAndView.addObject("skills", vacancyService.getVacancySkills(vacancy));
+        modelAndView.addObject("skillsToAdd", vacancyService.getVacancySkillsToAdd(vacancy));
         modelAndView.setViewName("vacancyEditSkills.jsp");
         return modelAndView;
     }
@@ -271,11 +274,11 @@ public class EmployerController {
             @ModelAttribute(value = "user") Employer employer,
             @RequestParam(value = "vacancyId") int vacancyId,
             ModelAndView modelAndView) {
-        Vacancy vacancy = employerService.getVacancyById(vacancyId);
+        Vacancy vacancy = vacancyService.getVacancyById(vacancyId);
         boolean success = employerService.deleteVacancy(vacancy);
 
         if (success) {
-            modelAndView.addObject("vacancies", employerService.getVacancyList(employer));
+            modelAndView.addObject("vacancies", vacancyService.getVacancyList(employer));
         } else {
             modelAndView.addObject(VACANCY_DELETE_ERROR, VACANCY_DELETE_ERROR);
         }
@@ -306,11 +309,12 @@ public class EmployerController {
             vacancy.setPosition(position);
             vacancy.setSalary(new BigDecimal(salary));
             vacancy.setEmployer(employer);
+            vacancy.setStatus("active");
             success = employerService.createVacancy(vacancy);
         }
 
         if (success) {
-            modelAndView.addObject("vacancies", employerService.getVacancyList(employer));
+            modelAndView.addObject("vacancies", vacancyService.getVacancyList(employer));
             modelAndView.setViewName("employer.jsp");
         } else {
             modelAndView.addObject(SALARY_ERROR, SALARY_ERROR);

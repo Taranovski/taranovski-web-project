@@ -22,7 +22,7 @@ public interface EmployerRepository extends TemplateRepository<Employer> {
 
     boolean clearVacancies(Employer employer);
 
-    List<Vacancy> getVacancys(Employer employer);
+    List<Vacancy> getActiveVacancys(Employer employer);
 
     boolean addCheckDocument(Employer employer, CheckDocument checkDocument);
 

@@ -43,13 +43,13 @@ public class EmployerRepositoryImplementation implements EmployerRepository {
     }
 
     @Override
-    public List<Vacancy> getVacancys(Employer employer) {
+    public List<Vacancy> getActiveVacancys(Employer employer) {
         EntityManager em = entityManagerFactory.createEntityManager();
         List<Vacancy> list = new LinkedList<>();
         try {
             em.getTransaction().begin();
             
-            TypedQuery<Vacancy> query = em.createNamedQuery("Vacancy.findByEmployer", Vacancy.class);
+            TypedQuery<Vacancy> query = em.createNamedQuery("Vacancy.findActiveByEmployer", Vacancy.class);
             query.setParameter("employer", employer);
             list = query.getResultList();
             

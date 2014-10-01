@@ -6,6 +6,8 @@
 package com.epam.training.taranovski.web.project.repository;
 
 import com.epam.training.taranovski.web.project.domain.CheckDocument;
+import com.epam.training.taranovski.web.project.domain.Employee;
+import com.epam.training.taranovski.web.project.domain.Vacancy;
 
 /**
  *
@@ -13,4 +15,7 @@ import com.epam.training.taranovski.web.project.domain.CheckDocument;
  */
 public interface CheckDocumentRepository extends TemplateRepository<CheckDocument> {
 
+    public CheckDocument findByEmployee(Employee employee);
+
+    public CheckDocument findByVacancy(Vacancy vacancy);
 }

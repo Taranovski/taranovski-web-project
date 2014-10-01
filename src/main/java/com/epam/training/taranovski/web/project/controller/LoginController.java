@@ -12,6 +12,7 @@ import com.epam.training.taranovski.web.project.service.BusinessService;
 import com.epam.training.taranovski.web.project.service.EmployeeService;
 import com.epam.training.taranovski.web.project.service.EmployerService;
 import com.epam.training.taranovski.web.project.service.LoginService;
+import com.epam.training.taranovski.web.project.service.VacancyService;
 import com.epam.training.taranovski.web.project.service.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,6 +46,9 @@ public class LoginController {
 
     @Autowired
     private BusinessService businessService;
+    
+    @Autowired
+    private VacancyService vacancyService;
 
     /**
      *
@@ -92,13 +96,21 @@ public class LoginController {
 
             switch (type) {
                 case "employee": {
-                    modelAndView.addObject("vacancies", businessService.getAvailableVacancies((Employee) user));
-                    modelAndView.addObject("skills", employeeService.getSkillList((Employee) user));
-                    modelAndView.setViewName("employee.jsp");
+
+                    if (((Employee) user).getStatus().equals("free")) {
+                        modelAndView.addObject("vacancies", businessService.getAvailableVacancies((Employee) user));
+                        modelAndView.addObject("offers", businessService.getOffers((Employee) user));
+                        modelAndView.addObject("skills", employeeService.getSkillList((Employee) user));
+                        modelAndView.setViewName("employee.jsp");
+                    } else if (((Employee) user).getStatus().equals("hired")){
+                        modelAndView.addObject("checkDocument", businessService.getJobCheckDocument((Employee) user));
+                        modelAndView.setViewName("employeeHired.jsp");
+                    }
+
                     break;
                 }
                 case "employer": {
-                    modelAndView.addObject("vacancies", employerService.getVacancyList((Employer) user));
+                    modelAndView.addObject("vacancies", vacancyService.getVacancyList((Employer) user));
                     modelAndView.setViewName("employer.jsp");
                     break;
                 }

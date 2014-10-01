@@ -51,9 +51,7 @@ public class UserRepositoryImplementation implements UserRepository {
 
         try {
             em.getTransaction().begin();
-            System.out.println("3");
             em.persist(user);
-            System.out.println("4");
             em.getTransaction().commit();
             success = true;
         } catch (RuntimeException e) {

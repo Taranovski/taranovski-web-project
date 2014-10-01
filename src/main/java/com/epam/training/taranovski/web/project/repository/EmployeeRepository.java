@@ -5,9 +5,9 @@
  */
 package com.epam.training.taranovski.web.project.repository;
 
-import com.epam.training.taranovski.web.project.domain.CheckDocument;
 import com.epam.training.taranovski.web.project.domain.Employee;
 import com.epam.training.taranovski.web.project.domain.UserSkill;
+import com.epam.training.taranovski.web.project.domain.Vacancy;
 import java.util.List;
 
 /**
@@ -26,5 +26,7 @@ public interface EmployeeRepository extends TemplateRepository<Employee> {
 
     List<UserSkill> getSkills(Employee employee);
 
-    CheckDocument getCheckDocument(Employee employee);
+    public List<Employee> getAllFreeEmployees();
+
+    public List<Vacancy> getAvailableVacancies(Employee employee);
 }

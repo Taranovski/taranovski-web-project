@@ -11,11 +11,14 @@ import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -28,6 +31,8 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
     @NamedQuery(name = "CheckDocument.findAll", query = "SELECT c FROM CheckDocument c"),
     @NamedQuery(name = "CheckDocument.findByCommissions", query = "SELECT c FROM CheckDocument c WHERE c.commissions = :commissions"),
+    @NamedQuery(name = "CheckDocument.findByEmployee", query = "SELECT c FROM CheckDocument c WHERE c.employee = :employee"),
+    @NamedQuery(name = "CheckDocument.findByVacancy", query = "SELECT c FROM CheckDocument c WHERE c.vacancy = :vacancy"),
     @NamedQuery(name = "CheckDocument.findByCheckDocumentId", query = "SELECT c FROM CheckDocument c WHERE c.checkDocumentId = :checkDocumentId")})
 public class CheckDocument implements Serializable {
 
@@ -36,6 +41,9 @@ public class CheckDocument implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
+    @SequenceGenerator(name = "checkDocumentSequence", sequenceName = "\"CheckDocumentSequence\"", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "checkDocumentSequence")
+
     @Column(name = "\"checkDocumentId\"")
     private Integer checkDocumentId;
 

@@ -15,22 +15,14 @@ import java.util.List;
  *
  * @author Alyx
  */
-public interface EmployerService {
+public interface VacancyService {
 
-    public boolean save(Employer employer);
-    
-    public boolean updateVacancyInformation(Vacancy vacancy);
+    public List<Vacancy> getVacancyList(Employer employer);
 
-    public boolean updateVacancySkill(int skillId, int exp);
-    
-    public boolean deleteVacancySkill(int skillId);
+    public Vacancy getVacancyById(int id);
 
-    public boolean deleteAllVacancySkills(Vacancy vacancy);
+    public List<VacancySkill> getVacancySkills(Vacancy vacancy);
 
-    public boolean addSkill(Vacancy vacancy, int skill, int exp);
+    public List<BasicSkill> getVacancySkillsToAdd(Vacancy vacancy);
 
-    public boolean deleteVacancy(Vacancy vacancy);
-
-    public boolean createVacancy(Vacancy vacancy);
-    
 }

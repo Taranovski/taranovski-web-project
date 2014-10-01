@@ -25,11 +25,14 @@ import javax.validation.constraints.Size;
 @PrimaryKeyJoinColumn(name = "\"employeeUserId\"", referencedColumnName = "\"userId\"")
 @NamedQueries({
     @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e"),
+    @NamedQuery(name = "Employee.findAllFreeEmployees", query = "SELECT e FROM Employee e where e.status = 'free'"),
     @NamedQuery(name = "Employee.findByName", query = "SELECT e FROM Employee e WHERE e.name = :name"),
     @NamedQuery(name = "Employee.findBySurname", query = "SELECT e FROM Employee e WHERE e.surname = :surname"),
     @NamedQuery(name = "Employee.findByPatronymic", query = "SELECT e FROM Employee e WHERE e.patronymic = :patronymic"),
     @NamedQuery(name = "Employee.findByQualification", query = "SELECT e FROM Employee e WHERE e.qualification = :qualification"),
-    @NamedQuery(name = "Employee.findByOccupation", query = "SELECT e FROM Employee e WHERE e.occupation = :occupation")})
+    @NamedQuery(name = "Employee.findByOccupation", query = "SELECT e FROM Employee e WHERE e.occupation = :occupation"),
+    @NamedQuery(name = "Employee.findByIds", query = "SELECT e FROM Employee e WHERE e.employeeUserId in :employeeUserIdList")
+})
 public class Employee extends User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,6 +57,10 @@ public class Employee extends User implements Serializable {
     @Column(name = "\"occupation\"")
     private String occupation;
 
+    @Size(max = 20)
+    @Column(name = "\"status\"")
+    private String status;
+
     @Column(name = "\"employeeUserId\"")
     private Integer employeeUserId;
 
@@ -61,7 +68,6 @@ public class Employee extends User implements Serializable {
 //    @JoinColumn (name = "\"EMPLOYEEID\"")
 //    //@Basic(fetch = FetchType.LAZY)
 //    private Collection<UserSkill> skillCollection;
-
     public Employee() {
     }
 
@@ -113,6 +119,14 @@ public class Employee extends User implements Serializable {
         this.employeeUserId = employeeUserId;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
 //    public Collection<UserSkill> getSkillCollection() {
 //        return skillCollection;
 //    }
@@ -120,7 +134,6 @@ public class Employee extends User implements Serializable {
 //    public void setSkillCollection(Collection<UserSkill> skillCollection) {
 //        this.skillCollection = skillCollection;
 //    }
-
     @Override
     public int hashCode() {
         int hash = super.hashCode();

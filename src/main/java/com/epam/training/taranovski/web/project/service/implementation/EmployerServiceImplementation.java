@@ -37,10 +37,7 @@ public class EmployerServiceImplementation implements EmployerService {
     @Autowired
     private VacancySkillRepository vacancySkillRepository;
 
-    @Override
-    public List<Vacancy> getVacancyList(Employer employer) {
-        return employerRepository.getVacancys(employer);
-    }
+    
 
     @Override
     public boolean save(Employer employer) {
@@ -48,24 +45,10 @@ public class EmployerServiceImplementation implements EmployerService {
     }
 
     @Override
-    public Vacancy getVacancyById(int id) {
-        return vacancyRepository.getById(id);
-    }
-
-    @Override
-    public List<VacancySkill> getVacancySkills(Vacancy vacancy) {
-        return vacancyRepository.getSkills(vacancy);
-    }
-
-    @Override
     public boolean updateVacancyInformation(Vacancy vacancy) {
         return vacancyRepository.update(vacancy);
     }
 
-    @Override
-    public List<BasicSkill> getVacancySkillsToAdd(Vacancy vacancy) {
-        return basicSkillRepository.getSkillsNotInVacancy(vacancy);
-    }
 
     @Override
     public boolean updateVacancySkill(int skillId, int exp) {
@@ -85,10 +68,6 @@ public class EmployerServiceImplementation implements EmployerService {
         return vacancyRepository.clearSkills(vacancy);
     }
 
-    @Override
-    public List<BasicSkill> getSkillsToAddList(Vacancy vacancy) {
-        return basicSkillRepository.getSkillsNotInVacancy(vacancy);
-    }
 
     @Override
     public boolean addSkill(Vacancy vacancy, int skill, int exp) {

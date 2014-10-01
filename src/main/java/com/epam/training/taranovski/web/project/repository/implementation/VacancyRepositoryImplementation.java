@@ -5,6 +5,7 @@
  */
 package com.epam.training.taranovski.web.project.repository.implementation;
 
+import com.epam.training.taranovski.web.project.domain.Employee;
 import com.epam.training.taranovski.web.project.domain.VacancySkill;
 import com.epam.training.taranovski.web.project.domain.Vacancy;
 import com.epam.training.taranovski.web.project.repository.VacancyRepository;
@@ -12,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -194,6 +196,34 @@ public class VacancyRepositoryImplementation implements VacancyRepository {
         }
 
         return success;
+    }
+
+    @Override
+    public List<Employee> getAppropriateEmployees(Vacancy vacancy) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        List<Integer> list = new LinkedList<>();
+        List<Employee> list1 = new LinkedList<>();
+
+        try {
+            em.getTransaction().begin();
+
+            Query query = em.createNativeQuery("select \"employeeId\" from (select  \"employeeId\", count(*) as cou from (select \"UserSkill\".\"employeeId\", \"VacancySkill\".\"vacancyId\", \"UserSkill\".\"experience\", \"VacancySkill\".\"experience\" from \"UserSkill\" join \"VacancySkill\" on \"UserSkill\".\"allSkillsId\" = \"VacancySkill\".\"allSkillsId\" where \"UserSkill\".\"experience\" >= \"VacancySkill\".\"experience\" and \"VacancySkill\".\"vacancyId\" = '2') group by \"employeeId\", \"vacancyId\") where cou = (select count(*) from \"VacancySkill\" where \"VacancySkill\".\"vacancyId\" = '2')");
+            list = query.getResultList();
+            TypedQuery<Employee> query1 = em.createNamedQuery("Employee.findByIds", Employee.class);
+            query1.setParameter("employeeUserIdList", list);
+            list1 = query1.getResultList();
+
+            em.getTransaction().commit();
+        } catch (RuntimeException e) {
+            System.out.println(e);
+        } finally {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            em.close();
+        }
+
+        return list1;
     }
 
 }

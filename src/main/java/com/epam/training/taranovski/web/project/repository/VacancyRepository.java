@@ -5,6 +5,7 @@
  */
 package com.epam.training.taranovski.web.project.repository;
 
+import com.epam.training.taranovski.web.project.domain.Employee;
 import com.epam.training.taranovski.web.project.domain.VacancySkill;
 import com.epam.training.taranovski.web.project.domain.Vacancy;
 import java.util.List;
@@ -22,4 +23,6 @@ public interface VacancyRepository extends TemplateRepository<Vacancy> {
     boolean clearSkills(Vacancy vacancy);
 
     List<VacancySkill> getSkills(Vacancy vacancy);
+    
+    List<Employee> getAppropriateEmployees(Vacancy vacancy);
 }
