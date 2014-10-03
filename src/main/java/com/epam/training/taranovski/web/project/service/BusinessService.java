@@ -21,18 +21,28 @@ public interface BusinessService {
 
     List<Employee> getAvailableEmployees(Vacancy vacancy);
 
-    public CheckDocument getJobCheckDocument(Employee employee);
+    CheckDocument getJobCheckDocument(Employee employee);
 
-    public boolean bidForVacancy(Employee employee, Vacancy vacancy);
-    
-    public boolean offerVacancy(Employee employee, Vacancy vacancy);
-    
-    public boolean acceptBid(OfferBid offerBid);
-    
-    public boolean acceptOffer(OfferBid offerBid);
+    boolean bidForVacancy(Employee employee, Vacancy vacancy);
 
-    public List<OfferBid> getOffers(Employee employee);
-    
-    public List<OfferBid> getBids(Vacancy vacancy);
+    boolean offerVacancy(Employee employee, Vacancy vacancy);
+
+    boolean acceptBid(OfferBid offerBid);
+
+    boolean acceptOffer(OfferBid offerBid);
+
+    List<Vacancy> getOffersForEmployee(Employee employee);
+
+    List<Vacancy> getBidsForEmployee(Employee employee);
+
+    List<Employee> getBidsForVacancy(Vacancy vacancy);
+
+    List<Employee> getOffersForVacancy(Vacancy vacancy);
+
+    OfferBid getOffer(Employee employee, Vacancy vacancy);
+
+    OfferBid getBid(Employee employee, Vacancy vacancy);
+
+    public boolean deleteBid(OfferBid offerBid);
 
 }

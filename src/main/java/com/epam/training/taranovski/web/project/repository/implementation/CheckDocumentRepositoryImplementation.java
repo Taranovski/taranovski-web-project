@@ -38,8 +38,25 @@ public class CheckDocumentRepositoryImplementation implements CheckDocumentRepos
     }
 
     @Override
-    public boolean create(CheckDocument admin) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean create(CheckDocument something) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        boolean success = false;
+
+        try {
+            em.getTransaction().begin();
+            em.persist(something);
+            em.getTransaction().commit();
+            success = true;
+        } catch (RuntimeException e) {
+            success = false;
+        } finally {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            em.close();
+        }
+
+        return success;
     }
 
     @Override

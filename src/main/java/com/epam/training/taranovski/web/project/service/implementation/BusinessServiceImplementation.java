@@ -8,15 +8,13 @@ package com.epam.training.taranovski.web.project.service.implementation;
 import com.epam.training.taranovski.web.project.domain.CheckDocument;
 import com.epam.training.taranovski.web.project.domain.Employee;
 import com.epam.training.taranovski.web.project.domain.OfferBid;
-import com.epam.training.taranovski.web.project.domain.UserSkill;
 import com.epam.training.taranovski.web.project.domain.Vacancy;
-import com.epam.training.taranovski.web.project.domain.VacancySkill;
 import com.epam.training.taranovski.web.project.repository.CheckDocumentRepository;
 import com.epam.training.taranovski.web.project.repository.EmployeeRepository;
 import com.epam.training.taranovski.web.project.repository.OfferBidRepository;
 import com.epam.training.taranovski.web.project.repository.VacancyRepository;
 import com.epam.training.taranovski.web.project.service.BusinessService;
-import java.util.LinkedList;
+import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +25,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class BusinessServiceImplementation implements BusinessService {
+
+    private static final BigDecimal COMMISSION_RATE = new BigDecimal(0.5);
 
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -43,65 +43,12 @@ public class BusinessServiceImplementation implements BusinessService {
     @Override
     public List<Vacancy> getAvailableVacancies(Employee employee) {
         return employeeRepository.getAvailableVacancies(employee);
-
-//        List<UserSkill> userSkills = employeeRepository.getSkills(employee);
-//        List<Vacancy> vacancys = vacancyRepository.getAll();
-//        List<Vacancy> result = new LinkedList<>();
-//
-//        List<VacancySkill> vacancySkills = null;
-//
-//        for (Vacancy vacancy : vacancys) {
-//            vacancySkills = vacancyRepository.getSkills(vacancy);
-//            if (skillsMatch(vacancySkills, userSkills)) {
-//                result.add(vacancy);
-//            }
-//        }
-//        return result;
     }
 
     @Override
     public List<Employee> getAvailableEmployees(Vacancy vacancy) {
         return vacancyRepository.getAppropriateEmployees(vacancy);
-
-//        List<VacancySkill> vacancySkills = vacancyRepository.getSkills(vacancy);
-//        List<Employee> employees = employeeRepository.getAllFreeEmployees();
-//
-//        List<Employee> result = new LinkedList<>();
-//        List<UserSkill> userSkills = null;
-//
-//        for (Employee employee : employees) {
-//            userSkills = employeeRepository.getSkills(employee);
-//            if (skillsMatch(vacancySkills, userSkills)) {
-//                result.add(employee);
-//            }
-//        }
-//        return result;
     }
-
-//    private boolean skillsMatch(List<VacancySkill> vacancySkills, List<UserSkill> userSkills) {
-//        boolean success = true;
-//
-//        for (VacancySkill vacancySkill : vacancySkills) {
-//            success = success & skillIsPresentAndHigher(vacancySkill, userSkills);
-//            if (!success) {
-//                break;
-//            }
-//        }
-//        return success;
-//    }
-//
-//    private boolean skillIsPresentAndHigher(VacancySkill vacancySkill, List<UserSkill> userSkills) {
-//        boolean success = false;
-//        for (UserSkill userSkill : userSkills) {
-//            if (vacancySkill.getSkill().equals(userSkill.getSkill())) {
-//                if (vacancySkill.getExperience() <= userSkill.getExperience()) {
-//                    success = true;
-//                    break;
-//                }
-//            }
-//        }
-//        return success;
-//    }
 
     @Override
     public CheckDocument getJobCheckDocument(Employee employee) {
@@ -110,6 +57,10 @@ public class BusinessServiceImplementation implements BusinessService {
 
     @Override
     public boolean bidForVacancy(Employee employee, Vacancy vacancy) {
+
+        boolean offerBidDoNotExistsInDB = offerBidRepository.getBidByEmployeeAndVacancy(employee, vacancy) != null;
+        System.out.println(offerBidDoNotExistsInDB);
+        if (!offerBidDoNotExistsInDB){
         OfferBid offerBid = new OfferBid();
         offerBid.setEmployee(employee);
         offerBid.setVacancy(vacancy);
@@ -117,6 +68,9 @@ public class BusinessServiceImplementation implements BusinessService {
         offerBid.setEmployeeSigned("signed");
 
         return offerBidRepository.create(offerBid);
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -131,22 +85,97 @@ public class BusinessServiceImplementation implements BusinessService {
     }
 
     @Override
-    public List<OfferBid> getOffers(Employee employee) {
-        return offerBidRepository.getOffersForEmployee(employee);
-    }
-
-    @Override
-    public List<OfferBid> getBids(Vacancy vacancy) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public boolean acceptBid(OfferBid offerBid) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean success = false;
+        if (offerBid == null) {
+            return false;
+        }
+        offerBid.setEmployerSigned("signed");
+        if ("signed".equals(offerBid.getEmployeeSigned()) && "signed".equals(offerBid.getEmployerSigned())) {
+            Employee employee = offerBid.getEmployee();
+            employee.setStatus("hired");
+            Vacancy vacancy = offerBid.getVacancy();
+            vacancy.setStatus("closed");
+
+            CheckDocument checkDocument = new CheckDocument();
+            checkDocument.setEmployee(employee);
+            checkDocument.setVacancy(vacancy);
+            checkDocument.setCommissions(vacancy.getSalary().multiply(COMMISSION_RATE));
+
+            boolean error = !employeeRepository.update(employee);
+            error = error & !offerBidRepository.update(offerBid);
+            error = error & !vacancyRepository.update(vacancy);
+            error = error & !checkDocumentRepository.create(checkDocument);
+
+            if (!error) {
+                success = true;
+            }
+        }
+        return success;
     }
 
     @Override
     public boolean acceptOffer(OfferBid offerBid) {
+        boolean success = false;
+        if (offerBid == null) {
+            return false;
+        }
+        offerBid.setEmployeeSigned("signed");
+        if ("signed".equals(offerBid.getEmployeeSigned()) && "signed".equals(offerBid.getEmployerSigned())) {
+            Employee employee = offerBid.getEmployee();
+            employee.setStatus("hired");
+            Vacancy vacancy = offerBid.getVacancy();
+            vacancy.setStatus("closed");
+
+            CheckDocument checkDocument = new CheckDocument();
+            checkDocument.setEmployee(employee);
+            checkDocument.setVacancy(vacancy);
+            checkDocument.setCommissions(vacancy.getSalary().multiply(COMMISSION_RATE));
+
+            boolean error = !employeeRepository.update(employee);
+            error = error & !offerBidRepository.update(offerBid);
+            error = error & !vacancyRepository.update(vacancy);
+            error = error & !checkDocumentRepository.create(checkDocument);
+
+            if (!error) {
+                success = true;
+            }
+        }
+        return success;
+    }
+
+    @Override
+    public List<Vacancy> getOffersForEmployee(Employee employee) {
+        return offerBidRepository.getOffersForEmployee(employee);
+    }
+
+    @Override
+    public List<Vacancy> getBidsForEmployee(Employee employee) {
+        return offerBidRepository.getBidsForEmployee(employee);
+    }
+
+    @Override
+    public List<Employee> getBidsForVacancy(Vacancy vacancy) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Employee> getOffersForVacancy(Vacancy vacancy) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public OfferBid getOffer(Employee employee, Vacancy vacancy) {
+        return offerBidRepository.getOfferByEmployeeAndVacancy(employee, vacancy);
+    }
+
+    @Override
+    public OfferBid getBid(Employee employee, Vacancy vacancy) {
+        return offerBidRepository.getBidByEmployeeAndVacancy(employee, vacancy);
+    }
+
+    @Override
+    public boolean deleteBid(OfferBid offerBid) {
+        return offerBidRepository.delete(offerBid);
     }
 }

@@ -33,8 +33,14 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "OfferBid.findByOfferBidId", query = "SELECT o FROM OfferBid o WHERE o.offerBidId = :offerBidId"),
     @NamedQuery(name = "OfferBid.findByEmployeeSigned", query = "SELECT o FROM OfferBid o WHERE o.employeeSigned = :employeeSigned"),
     @NamedQuery(name = "OfferBid.findByEmployerSigned", query = "SELECT o FROM OfferBid o WHERE o.employerSigned = :employerSigned"),
-    @NamedQuery(name = "OfferBid.findByEmployee", query = "SELECT o FROM OfferBid o WHERE o.employee = :employee"),
-    @NamedQuery(name = "OfferBid.findByVacancy", query = "SELECT o FROM OfferBid o WHERE o.vacancy = :vacancy")})
+    @NamedQuery(name = "OfferBid.findVacancyOffersForEmployee", query = "SELECT o.vacancy FROM OfferBid o WHERE o.employee = :employee and o.employerSigned = 'signed'"),
+    @NamedQuery(name = "OfferBid.findVacancyBidsForEmployee", query = "SELECT o.vacancy FROM OfferBid o WHERE o.employee = :employee and o.employeeSigned = 'signed'"),
+    @NamedQuery(name = "OfferBid.findByVacancy", query = "SELECT o FROM OfferBid o WHERE o.vacancy = :vacancy"),
+    @NamedQuery(name = "OfferBid.findOfferByEmployeeAndVacancy", query = "SELECT o FROM OfferBid o WHERE o.employee = :employee and o.vacancy = :vacancy and o.employerSigned = 'signed'"),
+    @NamedQuery(name = "OfferBid.findBidByEmployeeAndVacancy", query = "SELECT o FROM OfferBid o WHERE o.employee = :employee and o.vacancy = :vacancy and o.employeeSigned = 'signed'")
+
+
+})
 public class OfferBid implements Serializable {
 
     private static final long serialVersionUID = 1L;

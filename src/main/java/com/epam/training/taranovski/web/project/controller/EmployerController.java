@@ -46,10 +46,10 @@ public class EmployerController {
 
     @Autowired
     private ValidationService validationService;
-    
+
     @Autowired
     private BusinessService businessService;
-    
+
     @Autowired
     private VacancyService vacancyService;
 
@@ -61,7 +61,9 @@ public class EmployerController {
 
     @RequestMapping("/dontSaveEmployerInfo")
     public ModelAndView dontSaveEmployerInfo(
+            @ModelAttribute(value = "user") Employer employer,
             ModelAndView modelAndView) {
+        modelAndView.addObject("vacancies", vacancyService.getVacancyList(employer));
         modelAndView.setViewName("employer.jsp");
         return modelAndView;
     }
@@ -117,7 +119,7 @@ public class EmployerController {
             ModelAndView modelAndView) {
         Vacancy vacancy = vacancyService.getVacancyById(Integer.parseInt(vacancyId));
         List<Employee> employees = businessService.getAvailableEmployees(vacancy);
-        
+
         modelAndView.addObject("vacancy", vacancy);
         modelAndView.addObject("employees", employees);
         modelAndView.setViewName("vacancyEditInformation.jsp");

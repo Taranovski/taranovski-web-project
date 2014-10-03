@@ -7,6 +7,7 @@ package com.epam.training.taranovski.web.project.repository;
 
 import com.epam.training.taranovski.web.project.domain.Employee;
 import com.epam.training.taranovski.web.project.domain.OfferBid;
+import com.epam.training.taranovski.web.project.domain.Vacancy;
 import java.util.List;
 
 /**
@@ -15,6 +16,13 @@ import java.util.List;
  */
 public interface OfferBidRepository extends TemplateRepository<OfferBid>{
 
-    public List<OfferBid> getOffersForEmployee(Employee employee);
+    public List<Vacancy> getOffersForEmployee(Employee employee);
+    
+    public List<Vacancy> getBidsForEmployee(Employee employee);
+
+    public OfferBid getOfferByEmployeeAndVacancy(Employee employee, Vacancy vacancy);
+
+    public OfferBid getBidByEmployeeAndVacancy(Employee employee, Vacancy vacancy);
+
     
 }

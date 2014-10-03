@@ -8,11 +8,7 @@ package com.epam.training.taranovski.web.project.controller;
 import com.epam.training.taranovski.web.project.domain.Employee;
 import com.epam.training.taranovski.web.project.domain.Employer;
 import com.epam.training.taranovski.web.project.domain.User;
-import com.epam.training.taranovski.web.project.service.BusinessService;
-import com.epam.training.taranovski.web.project.service.EmployeeService;
-import com.epam.training.taranovski.web.project.service.EmployerService;
 import com.epam.training.taranovski.web.project.service.LoginService;
-import com.epam.training.taranovski.web.project.service.VacancyService;
 import com.epam.training.taranovski.web.project.service.ValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,16 +35,10 @@ public class LoginController {
     private ValidationService validationService;
 
     @Autowired
-    private EmployeeService employeeService;
+    private EmployeeController employeeController;
 
     @Autowired
-    private EmployerService employerService;
-
-    @Autowired
-    private BusinessService businessService;
-    
-    @Autowired
-    private VacancyService vacancyService;
+    private EmployerController employerController;
 
     /**
      *
@@ -96,23 +86,10 @@ public class LoginController {
 
             switch (type) {
                 case "employee": {
-
-                    if (((Employee) user).getStatus().equals("free")) {
-                        modelAndView.addObject("vacancies", businessService.getAvailableVacancies((Employee) user));
-                        modelAndView.addObject("offers", businessService.getOffers((Employee) user));
-                        modelAndView.addObject("skills", employeeService.getSkillList((Employee) user));
-                        modelAndView.setViewName("employee.jsp");
-                    } else if (((Employee) user).getStatus().equals("hired")){
-                        modelAndView.addObject("checkDocument", businessService.getJobCheckDocument((Employee) user));
-                        modelAndView.setViewName("employeeHired.jsp");
-                    }
-
-                    break;
+                    return employeeController.toEmployeePage((Employee) user, modelAndView);
                 }
                 case "employer": {
-                    modelAndView.addObject("vacancies", vacancyService.getVacancyList((Employer) user));
-                    modelAndView.setViewName("employer.jsp");
-                    break;
+                    return employerController.dontSaveEmployerInfo((Employer) user, modelAndView);
                 }
                 case "admin": {
                     modelAndView.setViewName("admin.jsp");

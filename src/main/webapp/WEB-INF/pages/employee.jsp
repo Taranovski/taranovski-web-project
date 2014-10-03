@@ -34,8 +34,7 @@
             <fmt:message key="employee.edit.profile" var="editInfo"/>
             <input type="submit" value="${editInfo}" />
         </form>
-        <br/>
-        <fmt:message key="employee.skills"/><br>
+        <br/><fmt:message key="employee.skills"/><br>
 
         <c:if test="${not empty skills}">
             <table border="1">
@@ -59,7 +58,7 @@
         </c:if>
 
         <c:if test="${empty skills}">
-            <fmt:message key="employee.no.skills"/>
+            <br><fmt:message key="employee.no.skills"/>
         </c:if>
 
         <form method="post" action="editEmployeeSkills.html">
@@ -98,7 +97,11 @@
         </c:if>
 
         <c:if test="${empty vacancies}">
-            <fmt:message key="employee.no.available.vacancies"/>
+            <br><fmt:message key="employee.no.available.vacancies"/>
+        </c:if>
+
+        <c:if test="${not empty vacancy_ask_error}">
+            <br><fmt:message key="employee.vacancy.ask.error"/>
         </c:if>
 
         <c:if test="${not empty offers}">
@@ -112,16 +115,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
-                    //////////////////////////////////////////////////////
-                    <c:forEach var="offer" items="${offers}">
+                    <c:forEach var="vacancy" items="${offers}">
                         <tr>
                             <td>${vacancy.position}</td>
                             <td>${vacancy.description}</td>
                             <td>${vacancy.salary}</td>
                             <td>
                                 <form method="post" action="employeeAcceptVacancy.html">
-                                    <input type="hidden" name="Id" value="${vacancy.vacancyId}"/> 
+                                    <input type="hidden" name="vacancyId" value="${vacancy.vacancyId}"/> 
                                     <fmt:message key="employee.accept.vacancy" var="editSkills"/>
                                     <input type="submit" value="${editSkills}" />
                                 </form>
@@ -132,9 +133,51 @@
             </table>
         </c:if>
 
-        <c:if test="${empty offers}">
-            <fmt:message key="employee.no.offers"/>
+        <c:if test="${not empty accept_offer_error}">
+            <br><fmt:message key="employee.accept.offer.error"/>
         </c:if>
+
+        <c:if test="${empty offers}">
+            <br><fmt:message key="employee.no.offers"/>
+        </c:if>
+
+        <c:if test="${not empty bids}">
+            <br><fmt:message key="employee.bids.vacancies"/>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th><fmt:message key="vacancy.position"/></th>
+                        <th><fmt:message key="vacancy.description"/></th>
+                        <th><fmt:message key="vacancy.salary"/></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="vacancy" items="${bids}">
+                        <tr>
+                            <td>${vacancy.position}</td>
+                            <td>${vacancy.description}</td>
+                            <td>${vacancy.salary}</td>
+                            <td>
+                                <form method="post" action="employeeDeleteBid.html">
+                                    <input type="hidden" name="vacancyId" value="${vacancy.vacancyId}"/> 
+                                    <fmt:message key="employee.delete.bid" var="editSkills"/>
+                                    <input type="submit" value="${editSkills}" />
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </c:if>
+
+        <c:if test="${empty bids}">
+            <br><fmt:message key="employee.no.bids"/>
+        </c:if>
+
+        <c:if test="${not empty delete_bid_error}">
+            <br><fmt:message key="employee.delete.bid.error"/>
+        </c:if>
+
 
         <form method="post" action="toLoginPage.html">
             <fmt:message key="login.logout" var="toLoginPage"/>
