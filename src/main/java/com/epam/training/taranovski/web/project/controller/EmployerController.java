@@ -8,9 +8,11 @@ package com.epam.training.taranovski.web.project.controller;
 import com.epam.training.taranovski.web.project.domain.BasicSkill;
 import com.epam.training.taranovski.web.project.domain.Employee;
 import com.epam.training.taranovski.web.project.domain.Employer;
+import com.epam.training.taranovski.web.project.domain.OfferBid;
 import com.epam.training.taranovski.web.project.domain.Vacancy;
 import com.epam.training.taranovski.web.project.domain.VacancySkill;
 import com.epam.training.taranovski.web.project.service.BusinessService;
+import com.epam.training.taranovski.web.project.service.EmployeeService;
 import com.epam.training.taranovski.web.project.service.EmployerService;
 import com.epam.training.taranovski.web.project.service.VacancyService;
 import com.epam.training.taranovski.web.project.service.ValidationService;
@@ -29,11 +31,10 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Alyx
  */
 @Controller
-@SessionAttributes(value = {"user", "vacancies", "vacancy"})
+@SessionAttributes(value = {"user", "vacancies"})
 public class EmployerController {
 
     private static final String TELEPHONE_NUMBER_ERROR = "tel_error";
-    private static final int TWENTY = 20;
     private static final String SALARY_ERROR = "salary_error";
     private static final String UPDATE_ERROR = "update_error";
     private static final String DELETE_ERROR = "delete_error";
@@ -41,8 +42,15 @@ public class EmployerController {
     private static final String VACANCY_DELETE_ERROR = "vacancy_delete_error";
     private static final String SAVE_SUCCESS = "save_success";
 
+    private static final String VACANCY_OFFER_ERROR = "vacancy_offer_error";
+    private static final String VACANCY_OFFER_DELETE_ERROR = "vacancy_delete_error";
+    private static final String VACANCY_ACCEPT_BID_ERROR = "vacancy_accept_error";
+
     @Autowired
     private EmployerService employerService;
+
+    @Autowired
+    private EmployeeService employeeService;
 
     @Autowired
     private ValidationService validationService;
@@ -63,7 +71,7 @@ public class EmployerController {
     public ModelAndView dontSaveEmployerInfo(
             @ModelAttribute(value = "user") Employer employer,
             ModelAndView modelAndView) {
-        modelAndView.addObject("vacancies", vacancyService.getVacancyList(employer));
+        modelAndView.addObject("vacancies", vacancyService.getActiveVacancyList(employer));
         modelAndView.setViewName("employer.jsp");
         return modelAndView;
     }
@@ -106,9 +114,13 @@ public class EmployerController {
             @RequestParam(value = "vacancyId") String vacancyId,
             ModelAndView modelAndView) {
         Vacancy vacancy = vacancyService.getVacancyById(Integer.parseInt(vacancyId));
+
         modelAndView.addObject("vacancy", vacancy);
         modelAndView.addObject("skills", vacancyService.getVacancySkills(vacancy));
         modelAndView.addObject("employees", businessService.getAvailableEmployees(vacancy));
+        modelAndView.addObject("offers", businessService.getOffersForVacancy(vacancy));
+        modelAndView.addObject("bids", businessService.getBidsForVacancy(vacancy));
+
         modelAndView.setViewName("employerEditVacancy.jsp");
         return modelAndView;
     }
@@ -122,6 +134,7 @@ public class EmployerController {
 
         modelAndView.addObject("vacancy", vacancy);
         modelAndView.addObject("employees", employees);
+
         modelAndView.setViewName("vacancyEditInformation.jsp");
         return modelAndView;
     }
@@ -151,7 +164,7 @@ public class EmployerController {
         } else {
             modelAndView.addObject(SAVE_SUCCESS, SAVE_SUCCESS);
             modelAndView.addObject("vacancy", vacancy);
-            modelAndView.addObject("vacancies", vacancyService.getVacancyList(employer));
+            modelAndView.addObject("vacancies", vacancyService.getActiveVacancyList(employer));
         }
 
         modelAndView.setViewName("vacancyEditInformation.jsp");
@@ -280,7 +293,7 @@ public class EmployerController {
         boolean success = employerService.deleteVacancy(vacancy);
 
         if (success) {
-            modelAndView.addObject("vacancies", vacancyService.getVacancyList(employer));
+            modelAndView.addObject("vacancies", vacancyService.getActiveVacancyList(employer));
         } else {
             modelAndView.addObject(VACANCY_DELETE_ERROR, VACANCY_DELETE_ERROR);
         }
@@ -316,11 +329,94 @@ public class EmployerController {
         }
 
         if (success) {
-            modelAndView.addObject("vacancies", vacancyService.getVacancyList(employer));
+            modelAndView.addObject("vacancies", vacancyService.getActiveVacancyList(employer));
             modelAndView.setViewName("employer.jsp");
         } else {
             modelAndView.addObject(SALARY_ERROR, SALARY_ERROR);
             modelAndView.setViewName("employerAddVacancy.jsp");
+        }
+
+        return modelAndView;
+    }
+
+    @RequestMapping("/employerOfferVacancy")
+    public ModelAndView employerOfferVacancy(
+            @RequestParam(value = "vacancyId") int vacancyId,
+            @RequestParam(value = "employeeId") int employeeId,
+            ModelAndView modelAndView) {
+
+        Vacancy vacancy = vacancyService.getVacancyById(vacancyId);
+        Employee employee = employeeService.getEmployeeById(employeeId);
+
+        boolean success = businessService.offerVacancy(employee, vacancy);
+        if (!success) {
+            modelAndView.addObject(VACANCY_OFFER_ERROR, VACANCY_OFFER_ERROR);
+        }
+
+        modelAndView.addObject("vacancy", vacancy);
+        modelAndView.addObject("skills", vacancyService.getVacancySkills(vacancy));
+        modelAndView.addObject("employees", businessService.getAvailableEmployees(vacancy));
+        modelAndView.addObject("offers", businessService.getOffersForVacancy(vacancy));
+        modelAndView.addObject("bids", businessService.getBidsForVacancy(vacancy));
+
+        modelAndView.setViewName("employerEditVacancy.jsp");
+
+        return modelAndView;
+    }
+
+    @RequestMapping("/employerDeleteOfferVacancy")
+    public ModelAndView employerDeleteOfferVacancy(
+            @RequestParam(value = "vacancyId") int vacancyId,
+            @RequestParam(value = "employeeId") int employeeId,
+            ModelAndView modelAndView) {
+
+        Vacancy vacancy = vacancyService.getVacancyById(vacancyId);
+        Employee employee = employeeService.getEmployeeById(employeeId);
+
+        OfferBid offerBid = businessService.getOffer(employee, vacancy);
+
+        boolean success = businessService.deleteOfferBid(offerBid);
+
+        if (!success) {
+            modelAndView.addObject(VACANCY_OFFER_DELETE_ERROR, VACANCY_OFFER_DELETE_ERROR);
+        }
+
+        modelAndView.addObject("vacancy", vacancy);
+        modelAndView.addObject("skills", vacancyService.getVacancySkills(vacancy));
+        modelAndView.addObject("employees", businessService.getAvailableEmployees(vacancy));
+        modelAndView.addObject("offers", businessService.getOffersForVacancy(vacancy));
+        modelAndView.addObject("bids", businessService.getBidsForVacancy(vacancy));
+
+        modelAndView.setViewName("employerEditVacancy.jsp");
+
+        return modelAndView;
+    }
+
+    @RequestMapping("/employerAcceptBidVacancy")
+    public ModelAndView employerAcceptBidVacancy(
+            @RequestParam(value = "vacancyId") int vacancyId,
+            @RequestParam(value = "employeeId") int employeeId,
+            ModelAndView modelAndView) {
+
+        Vacancy vacancy = vacancyService.getVacancyById(vacancyId);
+        Employee employee = employeeService.getEmployeeById(employeeId);
+
+        OfferBid offerBid = businessService.getBid(employee, vacancy);
+        boolean success = businessService.acceptBid(offerBid);
+
+        if (success) {
+            modelAndView.addObject("checkDocument", businessService.getJobCheckDocument(employee));
+            modelAndView.setViewName("employerVacancyClosed.jsp");
+        } else {
+            modelAndView.addObject(VACANCY_ACCEPT_BID_ERROR, VACANCY_ACCEPT_BID_ERROR);
+
+            modelAndView.addObject("vacancy", vacancy);
+            modelAndView.addObject("skills", vacancyService.getVacancySkills(vacancy));
+            modelAndView.addObject("employees", businessService.getAvailableEmployees(vacancy));
+            modelAndView.addObject("offers", businessService.getOffersForVacancy(vacancy));
+            modelAndView.addObject("bids", businessService.getBidsForVacancy(vacancy));
+
+            modelAndView.setViewName("employerEditVacancy.jsp");
         }
 
         return modelAndView;

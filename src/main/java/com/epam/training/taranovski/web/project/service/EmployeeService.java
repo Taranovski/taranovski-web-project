@@ -29,4 +29,6 @@ public interface EmployeeService {
     public List<BasicSkill> getSkillsToAddList(Employee employee);
 
     public boolean addSkill(Employee employee, int skill, int exp);
+
+    public Employee getEmployeeById(int employeeId);
 }

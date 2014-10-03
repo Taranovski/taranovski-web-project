@@ -204,7 +204,6 @@ public class EmployeeController {
         Vacancy vacancy = vacancyService.getVacancyById(vacancyId);
         boolean success = businessService.bidForVacancy(employee, vacancy);
         if (!success) {
-            System.out.println("2");
             modelAndView.addObject(VACANCY_ASK_ERROR, VACANCY_ASK_ERROR);
         }
 
@@ -243,17 +242,15 @@ public class EmployeeController {
 
         Vacancy vacancy = vacancyService.getVacancyById(vacancyId);
         OfferBid offerBid = businessService.getBid(employee, vacancy);
-        
-        boolean success = businessService.deleteBid(offerBid);
 
-        if (success) {
-            modelAndView.addObject("bids", businessService.getBidsForEmployee(employee));
-            modelAndView.setViewName("employee.jsp");
-        } else {
+        boolean success = businessService.deleteOfferBid(offerBid);
+
+        if (!success) {
             modelAndView.addObject(DELETE_BID_ERROR, DELETE_BID_ERROR);
-            modelAndView.setViewName("employee.jsp");
         }
 
+        modelAndView.addObject("bids", businessService.getBidsForEmployee(employee));
+        modelAndView.setViewName("employee.jsp");
         return modelAndView;
     }
 

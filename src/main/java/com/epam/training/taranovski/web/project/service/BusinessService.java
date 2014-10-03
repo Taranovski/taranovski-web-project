@@ -43,6 +43,6 @@ public interface BusinessService {
 
     OfferBid getBid(Employee employee, Vacancy vacancy);
 
-    public boolean deleteBid(OfferBid offerBid);
+    public boolean deleteOfferBid(OfferBid offerBid);
 
 }

@@ -202,4 +202,52 @@ public class OfferBidRepositoryImplementation implements OfferBidRepository {
         return offer;
     }
 
+    @Override
+    public List<Employee> getBidsForVacancy(Vacancy vacancy) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        List<Employee> list = new LinkedList<>();
+        try {
+            em.getTransaction().begin();
+
+            TypedQuery<Employee> query = em.createNamedQuery("OfferBid.findEmployeeBidsForVacancy", Employee.class);
+            query.setParameter("vacancy", vacancy);
+            list = query.getResultList();
+
+            em.getTransaction().commit();
+        } catch (RuntimeException e) {
+            System.out.println(e);
+        } finally {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            em.close();
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Employee> getOffersForVacancy(Vacancy vacancy) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        List<Employee> list = new LinkedList<>();
+        try {
+            em.getTransaction().begin();
+
+            TypedQuery<Employee> query = em.createNamedQuery("OfferBid.findEmployeeOffersForVacancy", Employee.class);
+            query.setParameter("vacancy", vacancy);
+            list = query.getResultList();
+
+            em.getTransaction().commit();
+        } catch (RuntimeException e) {
+            System.out.println(e);
+        } finally {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            em.close();
+        }
+
+        return list;
+    }
+
 }

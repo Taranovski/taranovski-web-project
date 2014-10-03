@@ -90,6 +90,7 @@
                             <td>
                                 <form method="post" action="employerOfferVacancy.html">
                                     <input type="hidden" name="vacancyId" value="${vacancy.vacancyId}"/> 
+                                    <input type="hidden" name="employeeId" value="${employee.employeeUserId}"/> 
                                     <fmt:message key="employer.offer.vacancy" var="editSkills"/>
                                     <input type="submit" value="${editSkills}" />
                                 </form>
@@ -101,8 +102,99 @@
 
         </c:if>
 
+        <c:if test="${not empty vacancy_offer_error}">
+            <br><fmt:message key="employer.offer.vacancy.error"/>
+        </c:if>
+
+
         <c:if test="${empty employees}">
-            <fmt:message key="employer.no.employees"/>
+            <br><fmt:message key="employer.no.employees"/>
+        </c:if>
+
+        <c:if test="${not empty offers}">
+            <br><fmt:message key="employer.offer.employees.for.vacancy"/>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th><fmt:message key="employee.name"/></th>
+                        <th><fmt:message key="employee.surname"/></th>
+                        <th><fmt:message key="employee.patronymic"/></th>
+                        <th><fmt:message key="employee.qualification"/></th>
+                        <th><fmt:message key="employee.occupation"/></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="employee" items="${offers}">
+                        <tr>
+                            <td>${employee.name}         </td>
+                            <td>${employee.surname}      </td>
+                            <td>${employee.patronymic}   </td>
+                            <td>${employee.qualification}</td>
+                            <td>${employee.occupation}   </td>
+                            <td>
+                                <form method="post" action="employerDeleteOfferVacancy.html">
+                                    <input type="hidden" name="vacancyId" value="${vacancy.vacancyId}"/> 
+                                    <input type="hidden" name="employeeId" value="${employee.employeeUserId}"/> 
+                                    <fmt:message key="employer.delete.offer.vacancy" var="editSkills"/>
+                                    <input type="submit" value="${editSkills}" />
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+
+        </c:if>
+
+        <c:if test="${not empty vacancy_delete_error}">
+            <br><fmt:message key="employer.delete.vacancy.error"/>
+        </c:if>
+
+        <c:if test="${empty offers}">
+            <br><fmt:message key="employer.no.offer.employees"/>
+        </c:if>
+
+        <c:if test="${not empty bids}">
+            <br><fmt:message key="employer.bid.employees.for.vacancy"/>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th><fmt:message key="employee.name"/></th>
+                        <th><fmt:message key="employee.surname"/></th>
+                        <th><fmt:message key="employee.patronymic"/></th>
+                        <th><fmt:message key="employee.qualification"/></th>
+                        <th><fmt:message key="employee.occupation"/></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="employee" items="${bids}">
+                        <tr>
+                            <td>${employee.name}         </td>
+                            <td>${employee.surname}      </td>
+                            <td>${employee.patronymic}   </td>
+                            <td>${employee.qualification}</td>
+                            <td>${employee.occupation}   </td>
+                            <td>
+                                <form method="post" action="employerAcceptBidVacancy.html">
+                                    <input type="hidden" name="vacancyId" value="${vacancy.vacancyId}"/> 
+                                    <input type="hidden" name="employeeId" value="${employee.employeeUserId}"/> 
+                                    <fmt:message key="employer.accept.bid.vacancy" var="editSkills"/>
+                                    <input type="submit" value="${editSkills}" />
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+
+        </c:if>
+
+        <c:if test="${not empty vacancy_accept_error}">
+            <br><fmt:message key="employer.accept.vacancy.error"/>
+        </c:if>
+
+        <c:if test="${empty bids}">
+            <br><fmt:message key="employer.no.bid.employees"/>
         </c:if>
 
         <form method="post" action="dontSaveEmployerInfo.html">

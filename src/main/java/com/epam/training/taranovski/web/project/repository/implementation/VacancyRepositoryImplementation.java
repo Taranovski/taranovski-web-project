@@ -207,10 +207,15 @@ public class VacancyRepositoryImplementation implements VacancyRepository {
         try {
             em.getTransaction().begin();
 
-            Query query = em.createNativeQuery("select \"employeeId\" from (select  \"employeeId\", count(*) as cou from (select \"UserSkill\".\"employeeId\", \"VacancySkill\".\"vacancyId\", \"UserSkill\".\"experience\", \"VacancySkill\".\"experience\" from \"UserSkill\" join \"VacancySkill\" on \"UserSkill\".\"allSkillsId\" = \"VacancySkill\".\"allSkillsId\" where \"UserSkill\".\"experience\" >= \"VacancySkill\".\"experience\" and \"VacancySkill\".\"vacancyId\" = '2') group by \"employeeId\", \"vacancyId\") where cou = (select count(*) from \"VacancySkill\" where \"VacancySkill\".\"vacancyId\" = '2')");
+            Query query = em.createNativeQuery("select \"employeeId\" from (select \"employeeId\", \"vacancyId\" as \"ide\", count(*) as cou from (select \"UserSkill\".\"employeeId\", \"VacancySkill\".\"vacancyId\", \"UserSkill\".\"experience\", \"VacancySkill\".\"experience\" from \"UserSkill\" join \"VacancySkill\" on \"UserSkill\".\"allSkillsId\" = \"VacancySkill\".\"allSkillsId\" where \"UserSkill\".\"experience\" >= \"VacancySkill\".\"experience\" and \"VacancySkill\".\"vacancyId\" = ?) group by \"employeeId\", \"vacancyId\") where cou = (select count(*) from \"VacancySkill\" where \"VacancySkill\".\"vacancyId\" = \"ide\")");
+            query.setParameter(1, vacancy.getVacancyId());
             list = query.getResultList();
+            if (list.isEmpty()) {
+                list.add(0);
+            }
+            
             TypedQuery<Employee> query1 = em.createNamedQuery("Employee.findByIds", Employee.class);
-            query1.setParameter("employeeUserIdList", list);
+            query1.setParameter("employeeIdList", list);
             list1 = query1.getResultList();
 
             em.getTransaction().commit();

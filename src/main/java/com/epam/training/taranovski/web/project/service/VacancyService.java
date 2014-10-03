@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface VacancyService {
 
-    public List<Vacancy> getVacancyList(Employer employer);
+    public List<Vacancy> getActiveVacancyList(Employer employer);
 
     public Vacancy getVacancyById(int id);
 

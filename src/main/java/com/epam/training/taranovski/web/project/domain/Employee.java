@@ -31,7 +31,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Employee.findByPatronymic", query = "SELECT e FROM Employee e WHERE e.patronymic = :patronymic"),
     @NamedQuery(name = "Employee.findByQualification", query = "SELECT e FROM Employee e WHERE e.qualification = :qualification"),
     @NamedQuery(name = "Employee.findByOccupation", query = "SELECT e FROM Employee e WHERE e.occupation = :occupation"),
-    @NamedQuery(name = "Employee.findByIds", query = "SELECT e FROM Employee e WHERE e.employeeUserId in :employeeUserIdList")
+    @NamedQuery(name = "Employee.findByIds", query = "SELECT e FROM Employee e WHERE e.employeeUserId in :employeeIdList")
 })
 public class Employee extends User implements Serializable {
 

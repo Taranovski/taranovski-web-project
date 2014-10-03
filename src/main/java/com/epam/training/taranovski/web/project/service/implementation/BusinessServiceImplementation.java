@@ -59,15 +59,15 @@ public class BusinessServiceImplementation implements BusinessService {
     public boolean bidForVacancy(Employee employee, Vacancy vacancy) {
 
         boolean offerBidDoNotExistsInDB = offerBidRepository.getBidByEmployeeAndVacancy(employee, vacancy) != null;
-        System.out.println(offerBidDoNotExistsInDB);
-        if (!offerBidDoNotExistsInDB){
-        OfferBid offerBid = new OfferBid();
-        offerBid.setEmployee(employee);
-        offerBid.setVacancy(vacancy);
-        offerBid.setEmployer(vacancy.getEmployer());
-        offerBid.setEmployeeSigned("signed");
 
-        return offerBidRepository.create(offerBid);
+        if (!offerBidDoNotExistsInDB) {
+            OfferBid offerBid = new OfferBid();
+            offerBid.setEmployee(employee);
+            offerBid.setVacancy(vacancy);
+            offerBid.setEmployer(vacancy.getEmployer());
+            offerBid.setEmployeeSigned("signed");
+
+            return offerBidRepository.create(offerBid);
         } else {
             return false;
         }
@@ -75,13 +75,19 @@ public class BusinessServiceImplementation implements BusinessService {
 
     @Override
     public boolean offerVacancy(Employee employee, Vacancy vacancy) {
-        OfferBid offerBid = new OfferBid();
-        offerBid.setEmployee(employee);
-        offerBid.setVacancy(vacancy);
-        offerBid.setEmployer(vacancy.getEmployer());
-        offerBid.setEmployerSigned("signed");
+        boolean offerBidDoNotExistsInDB = offerBidRepository.getOfferByEmployeeAndVacancy(employee, vacancy) != null;
 
-        return offerBidRepository.create(offerBid);
+        if (!offerBidDoNotExistsInDB) {
+            OfferBid offerBid = new OfferBid();
+            offerBid.setEmployee(employee);
+            offerBid.setVacancy(vacancy);
+            offerBid.setEmployer(vacancy.getEmployer());
+            offerBid.setEmployerSigned("signed");
+
+            return offerBidRepository.create(offerBid);
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -156,12 +162,12 @@ public class BusinessServiceImplementation implements BusinessService {
 
     @Override
     public List<Employee> getBidsForVacancy(Vacancy vacancy) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return offerBidRepository.getBidsForVacancy(vacancy);
     }
 
     @Override
     public List<Employee> getOffersForVacancy(Vacancy vacancy) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return offerBidRepository.getOffersForVacancy(vacancy);
     }
 
     @Override
@@ -175,7 +181,7 @@ public class BusinessServiceImplementation implements BusinessService {
     }
 
     @Override
-    public boolean deleteBid(OfferBid offerBid) {
+    public boolean deleteOfferBid(OfferBid offerBid) {
         return offerBidRepository.delete(offerBid);
     }
 }

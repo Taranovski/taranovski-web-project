@@ -75,4 +75,9 @@ public class EmployeeServiceImplementation implements EmployeeService {
         return userSkillRepository.create(userSkill);
     }
 
+    @Override
+    public Employee getEmployeeById(int employeeId) {
+        return employeeRepository.getById(employeeId);
+    }
+
 }

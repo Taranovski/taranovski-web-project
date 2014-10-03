@@ -34,11 +34,8 @@ public class VacancyServiceImplementation implements VacancyService {
     @Autowired
     private BasicSkillRepository basicSkillRepository;
 
-    @Autowired
-    private VacancySkillRepository vacancySkillRepository;
-
     @Override
-    public List<Vacancy> getVacancyList(Employer employer) {
+    public List<Vacancy> getActiveVacancyList(Employer employer) {
         return employerRepository.getActiveVacancys(employer);
     }
 

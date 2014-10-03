@@ -24,5 +24,9 @@ public interface OfferBidRepository extends TemplateRepository<OfferBid>{
 
     public OfferBid getBidByEmployeeAndVacancy(Employee employee, Vacancy vacancy);
 
+    public List<Employee> getBidsForVacancy(Vacancy vacancy);
+
+    public List<Employee> getOffersForVacancy(Vacancy vacancy);
+
     
 }

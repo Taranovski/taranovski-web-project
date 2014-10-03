@@ -102,7 +102,22 @@ public class EmployeeRepositoryImplementation implements EmployeeRepository {
 
     @Override
     public Employee getById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager em = entityManagerFactory.createEntityManager();
+        Employee employee = null;
+        try {
+            em.getTransaction().begin();
+            employee = em.find(Employee.class, id);
+            em.getTransaction().commit();
+        } catch (RuntimeException e) {
+            System.out.println(e);
+        } finally {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            em.close();
+        }
+
+        return employee;
     }
 
     @Override
@@ -193,12 +208,17 @@ public class EmployeeRepositoryImplementation implements EmployeeRepository {
         try {
             em.getTransaction().begin();
 
-            Query query = em.createNativeQuery("select \"ide\" from (select \"UserSkill\".\"employeeId\", \"UserSkill\".\"experience\", \"VacancySkill\".\"vacancyId\" as \"ide\", \"VacancySkill\".\"experience\",  \"UserSkill\".\"allSkillsId\" from \"UserSkill\" join \"VacancySkill\" on \"UserSkill\".\"allSkillsId\" = \"VacancySkill\".\"allSkillsId\" where \"UserSkill\".\"employeeId\" = '2' and \"UserSkill\".\"experience\" >= \"VacancySkill\".\"experience\") group by \"employeeId\", \"ide\" having count(\"employeeId\") >= (select count(*) from \"VacancySkill\" where \"VacancySkill\".\"vacancyId\" = \"ide\")");
+            Query query = em.createNativeQuery("select \"ide\" from (select \"UserSkill\".\"employeeId\", \"UserSkill\".\"experience\", \"VacancySkill\".\"vacancyId\" as \"ide\", \"VacancySkill\".\"experience\",  \"UserSkill\".\"allSkillsId\" from \"UserSkill\" join \"VacancySkill\" on \"UserSkill\".\"allSkillsId\" = \"VacancySkill\".\"allSkillsId\" where \"UserSkill\".\"employeeId\" = ? and \"UserSkill\".\"experience\" >= \"VacancySkill\".\"experience\") group by \"employeeId\", \"ide\" having count(\"employeeId\") >= (select count(*) from \"VacancySkill\" where \"VacancySkill\".\"vacancyId\" = \"ide\")");
+            query.setParameter(1, employee.getEmployeeUserId());
             list = query.getResultList();
+            if (list.isEmpty()) {
+                list.add(0);
+            }
+            
             TypedQuery<Vacancy> query1 = em.createNamedQuery("Vacancy.findByIds", Vacancy.class);
             query1.setParameter("vacancyIdList", list);
             list1 = query1.getResultList();
-
+            
             em.getTransaction().commit();
         } catch (RuntimeException e) {
             System.out.println(e);
