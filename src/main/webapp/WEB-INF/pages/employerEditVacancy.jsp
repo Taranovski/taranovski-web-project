@@ -197,6 +197,12 @@
             <br><fmt:message key="employer.no.bid.employees"/>
         </c:if>
 
+        <form method="post" action="editEmployerVacancy.html">
+            <input type="hidden" name="vacancyId" value="${vacancy.vacancyId}"/> 
+            <fmt:message key="employer.page.reflesh" var="editSkills"/>
+            <input type="submit" value="${editSkills}" />
+        </form>
+
         <form method="post" action="dontSaveEmployerInfo.html">
             <fmt:message key="employer.dont.save.profile" var="dontSaveInfo"/>
             <input type="submit" value="${dontSaveInfo}" />

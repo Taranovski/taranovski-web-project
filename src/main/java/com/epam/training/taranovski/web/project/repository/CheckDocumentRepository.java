@@ -7,7 +7,9 @@ package com.epam.training.taranovski.web.project.repository;
 
 import com.epam.training.taranovski.web.project.domain.CheckDocument;
 import com.epam.training.taranovski.web.project.domain.Employee;
+import com.epam.training.taranovski.web.project.domain.Employer;
 import com.epam.training.taranovski.web.project.domain.Vacancy;
+import java.util.List;
 
 /**
  *
@@ -18,4 +20,6 @@ public interface CheckDocumentRepository extends TemplateRepository<CheckDocumen
     public CheckDocument findByEmployee(Employee employee);
 
     public CheckDocument findByVacancy(Vacancy vacancy);
+
+    public List<CheckDocument> findAllForEmployer(Employer employer);
 }

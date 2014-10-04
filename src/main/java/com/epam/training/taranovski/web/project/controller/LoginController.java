@@ -5,6 +5,7 @@
  */
 package com.epam.training.taranovski.web.project.controller;
 
+import com.epam.training.taranovski.web.project.domain.Admin;
 import com.epam.training.taranovski.web.project.domain.Employee;
 import com.epam.training.taranovski.web.project.domain.Employer;
 import com.epam.training.taranovski.web.project.domain.User;
@@ -39,6 +40,9 @@ public class LoginController {
 
     @Autowired
     private EmployerController employerController;
+    
+    @Autowired
+    private AdminController adminController;
 
     /**
      *
@@ -89,11 +93,10 @@ public class LoginController {
                     return employeeController.toEmployeePage((Employee) user, modelAndView);
                 }
                 case "employer": {
-                    return employerController.dontSaveEmployerInfo((Employer) user, modelAndView);
+                    return employerController.toEmployerPage((Employer) user, modelAndView);
                 }
                 case "admin": {
-                    modelAndView.setViewName("admin.jsp");
-                    break;
+                    return adminController.toAdminPage((Admin) user, modelAndView);
                 }
                 default: {
                     modelAndView.addObject(LOGIN_ERROR, LOGIN_ERROR);

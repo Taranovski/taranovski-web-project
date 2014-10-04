@@ -199,7 +199,7 @@ public class VacancyRepositoryImplementation implements VacancyRepository {
     }
 
     @Override
-    public List<Employee> getAppropriateEmployees(Vacancy vacancy) {
+    public List<Employee> getAppropriateAvailableEmployees(Vacancy vacancy) {
         EntityManager em = entityManagerFactory.createEntityManager();
         List<Integer> list = new LinkedList<>();
         List<Employee> list1 = new LinkedList<>();
@@ -214,7 +214,7 @@ public class VacancyRepositoryImplementation implements VacancyRepository {
                 list.add(0);
             }
             
-            TypedQuery<Employee> query1 = em.createNamedQuery("Employee.findByIds", Employee.class);
+            TypedQuery<Employee> query1 = em.createNamedQuery("Employee.findAmongIdsFreeEmployees", Employee.class);
             query1.setParameter("employeeIdList", list);
             list1 = query1.getResultList();
 

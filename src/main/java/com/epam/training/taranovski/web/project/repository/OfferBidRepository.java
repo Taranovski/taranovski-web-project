@@ -14,19 +14,22 @@ import java.util.List;
  *
  * @author Alyx
  */
-public interface OfferBidRepository extends TemplateRepository<OfferBid>{
+public interface OfferBidRepository extends TemplateRepository<OfferBid> {
 
-    public List<Vacancy> getOffersForEmployee(Employee employee);
-    
-    public List<Vacancy> getBidsForEmployee(Employee employee);
+    List<Vacancy> getOffersForEmployee(Employee employee);
 
-    public OfferBid getOfferByEmployeeAndVacancy(Employee employee, Vacancy vacancy);
+    List<Vacancy> getBidsForEmployee(Employee employee);
 
-    public OfferBid getBidByEmployeeAndVacancy(Employee employee, Vacancy vacancy);
+    OfferBid getOfferByEmployeeAndVacancy(Employee employee, Vacancy vacancy);
 
-    public List<Employee> getBidsForVacancy(Vacancy vacancy);
+    OfferBid getBidByEmployeeAndVacancy(Employee employee, Vacancy vacancy);
 
-    public List<Employee> getOffersForVacancy(Vacancy vacancy);
+    List<Employee> getBidsForVacancy(Vacancy vacancy);
 
-    
+    List<Employee> getOffersForVacancy(Vacancy vacancy);
+
+    boolean deleteAllBidsForVacancy(Vacancy vacancy);
+
+    boolean deleteAllOffersForEmployee(Employee employee);
+
 }

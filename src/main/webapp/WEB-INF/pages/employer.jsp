@@ -75,16 +75,60 @@
         </c:if>
 
         <c:if test="${empty vacancies}">
-            <fmt:message key="employer.no.vacancies"/>
+            <br/><fmt:message key="employer.no.vacancies"/>
         </c:if>
-        
+
         <c:if test="${not empty vacancy_delete_error}">
-            <fmt:message key="employer.vacancy.delete.error"/>
+            <br/><fmt:message key="employer.vacancy.delete.error"/>
         </c:if>
 
         <form method="post" action="toAddEmployerVacancy.html">
             <fmt:message key="employer.add.vacancy" var="toLoginPage"/>
             <input type="submit" value="${toLoginPage}" />
+        </form>
+
+        <c:if test="${not empty checkDocuments}">
+            <br/><fmt:message key="employer.checkdocuments.list"/>
+
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th><fmt:message key="employee.name"/> </th>
+                        <th><fmt:message key="employee.surname"/></th>
+                        <th><fmt:message key="employee.occupation"/></th>
+                        <th><fmt:message key="employee.hire.status"/></th>
+                        <th><fmt:message key="employer.company.name"/></th>
+                        <th><fmt:message key="employer.adress"/></th>
+                        <th><fmt:message key="employer.telephone.number"/></th>
+                        <th><fmt:message key="vacancy.position"/></th>
+                        <th><fmt:message key="vacancy.salary"/></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="checkDocument" items="${checkDocuments}">
+                        <tr>
+                            <td>${checkDocument.employee.name}</td>
+                            <td>${checkDocument.employee.surname}</td>
+                            <td>${checkDocument.employee.occupation}</td>
+                            <td><fmt:message key="employee.hired"/></td>
+                            <td>${checkDocument.vacancy.employer.companyName}</td>
+                            <td>${checkDocument.vacancy.employer.adress}</td>
+                            <td>${checkDocument.vacancy.employer.telephoneNumber}</td>
+                            <td>${checkDocument.vacancy.position}</td>
+                            <td>${checkDocument.vacancy.salary}</td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </c:if>
+
+        <c:if test="${empty checkDocuments}">
+            <br/><fmt:message key="employer.no.checkdocuments"/>
+        </c:if>
+
+        <form method="post" action="dontSaveEmployerInfo.html">
+            <fmt:message key="employer.page.reflesh" var="dontSaveInfo"/>
+            <input type="submit" value="${dontSaveInfo}" />
         </form>
 
         <form method="post" action="toLoginPage.html">

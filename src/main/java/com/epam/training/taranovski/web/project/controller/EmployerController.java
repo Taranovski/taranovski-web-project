@@ -31,7 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Alyx
  */
 @Controller
-@SessionAttributes(value = {"user", "vacancies"})
+@SessionAttributes(value = {"user", "vacancies", "checkDocuments"})
 public class EmployerController {
 
     private static final String TELEPHONE_NUMBER_ERROR = "tel_error";
@@ -60,6 +60,7 @@ public class EmployerController {
 
     @Autowired
     private VacancyService vacancyService;
+    
 
     @RequestMapping("/editEmployerInfo")
     public ModelAndView editEmployerPersonalInfo(ModelAndView modelAndView) {
@@ -68,10 +69,12 @@ public class EmployerController {
     }
 
     @RequestMapping("/dontSaveEmployerInfo")
-    public ModelAndView dontSaveEmployerInfo(
+    public ModelAndView toEmployerPage(
             @ModelAttribute(value = "user") Employer employer,
             ModelAndView modelAndView) {
         modelAndView.addObject("vacancies", vacancyService.getActiveVacancyList(employer));
+        
+        modelAndView.addObject("checkDocuments", businessService.getAllCheckDocuments(employer));
         modelAndView.setViewName("employer.jsp");
         return modelAndView;
     }
@@ -291,7 +294,7 @@ public class EmployerController {
             ModelAndView modelAndView) {
         Vacancy vacancy = vacancyService.getVacancyById(vacancyId);
         boolean success = employerService.deleteVacancy(vacancy);
-
+        
         if (success) {
             modelAndView.addObject("vacancies", vacancyService.getActiveVacancyList(employer));
         } else {

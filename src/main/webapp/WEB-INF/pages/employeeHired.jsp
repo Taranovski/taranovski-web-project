@@ -24,17 +24,19 @@
     <body>
         <fmt:message key="employee.greetings"/>${user.login}<br/>
         <br/>
-        <fmt:message key="employee.name"/>           ${user.name}          <br/>
-        <fmt:message key="employee.surname"/>        ${user.surname}       <br/>
-        <fmt:message key="employee.patronymic"/>     ${user.patronymic}    <br/>
-        <fmt:message key="employee.qualification"/>  ${user.qualification} <br/>
-        <fmt:message key="employee.occupation"/>     ${user.occupation}    <br/>
+        <fmt:message key="employee.name"/>           ${checkDocument.employee.name}          <br/>
+        <fmt:message key="employee.surname"/>        ${checkDocument.employee.surname}       <br/>
+        <fmt:message key="employee.patronymic"/>     ${checkDocument.employee.patronymic}    <br/>
+        <fmt:message key="employee.qualification"/>  ${checkDocument.employee.qualification} <br/>
+        <fmt:message key="employee.occupation"/>     ${checkDocument.employee.occupation}    <br/>
 
         <table border="1">
             <thead>
                 <tr>
                     <th><fmt:message key="employee.hire.status"/></th>
                     <th><fmt:message key="employer.company.name"/></th>
+                    <th><fmt:message key="employer.adress"/></th>
+                    <th><fmt:message key="employer.telephone.number"/></th>
                     <th><fmt:message key="vacancy.position"/></th>
                     <th><fmt:message key="vacancy.salary"/></th>
                 </tr>
@@ -43,6 +45,8 @@
                 <tr>
                     <td><fmt:message key="employee.hired"/></td>
                     <td>${checkDocument.vacancy.employer.companyName}</td>
+                    <td>${checkDocument.vacancy.employer.adress}</td>
+                    <td>${checkDocument.vacancy.employer.telephoneNumber}</td>
                     <td>${checkDocument.vacancy.position}</td>
                     <td>${checkDocument.vacancy.salary}</td>
                 </tr>

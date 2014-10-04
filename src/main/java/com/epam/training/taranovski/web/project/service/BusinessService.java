@@ -7,6 +7,7 @@ package com.epam.training.taranovski.web.project.service;
 
 import com.epam.training.taranovski.web.project.domain.CheckDocument;
 import com.epam.training.taranovski.web.project.domain.Employee;
+import com.epam.training.taranovski.web.project.domain.Employer;
 import com.epam.training.taranovski.web.project.domain.OfferBid;
 import com.epam.training.taranovski.web.project.domain.Vacancy;
 import java.util.List;
@@ -43,6 +44,8 @@ public interface BusinessService {
 
     OfferBid getBid(Employee employee, Vacancy vacancy);
 
-    public boolean deleteOfferBid(OfferBid offerBid);
+    boolean deleteOfferBid(OfferBid offerBid);
+
+    List<CheckDocument> getAllCheckDocuments(Employer employer);
 
 }

@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -248,6 +249,52 @@ public class OfferBidRepositoryImplementation implements OfferBidRepository {
         }
 
         return list;
+    }
+
+    @Override
+    public boolean deleteAllBidsForVacancy(Vacancy vacancy) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        boolean success = true;
+        try {
+            em.getTransaction().begin();
+            Query query = em.createNamedQuery("OfferBid.deleteByVacancy");
+            query.setParameter("vacancy", vacancy);
+            query.executeUpdate();
+            em.getTransaction().commit();
+
+            success = true;
+        } finally {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+                success = false;
+            }
+            em.close();
+        }
+
+        return success;
+    }
+
+    @Override
+    public boolean deleteAllOffersForEmployee(Employee employee) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        boolean success = true;
+        try {
+            em.getTransaction().begin();
+            Query query = em.createNamedQuery("OfferBid.deleteByEmployee");
+            query.setParameter("employee", employee);
+            query.executeUpdate();
+            em.getTransaction().commit();
+
+            success = true;
+        } finally {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+                success = false;
+            }
+            em.close();
+        }
+
+        return success;
     }
 
 }

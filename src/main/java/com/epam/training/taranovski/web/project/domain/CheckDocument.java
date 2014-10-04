@@ -30,6 +30,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "\"CheckDocument\"")
 @NamedQueries({
     @NamedQuery(name = "CheckDocument.findAll", query = "SELECT c FROM CheckDocument c"),
+    @NamedQuery(name = "CheckDocument.findAllForEmployer", query = "SELECT c FROM CheckDocument c where c.vacancy.employer = :employer"),
     @NamedQuery(name = "CheckDocument.findByCommissions", query = "SELECT c FROM CheckDocument c WHERE c.commissions = :commissions"),
     @NamedQuery(name = "CheckDocument.findByEmployee", query = "SELECT c FROM CheckDocument c WHERE c.employee = :employee"),
     @NamedQuery(name = "CheckDocument.findByVacancy", query = "SELECT c FROM CheckDocument c WHERE c.vacancy = :vacancy"),

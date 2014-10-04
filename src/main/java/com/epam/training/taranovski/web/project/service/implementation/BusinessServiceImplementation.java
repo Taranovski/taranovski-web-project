@@ -7,6 +7,7 @@ package com.epam.training.taranovski.web.project.service.implementation;
 
 import com.epam.training.taranovski.web.project.domain.CheckDocument;
 import com.epam.training.taranovski.web.project.domain.Employee;
+import com.epam.training.taranovski.web.project.domain.Employer;
 import com.epam.training.taranovski.web.project.domain.OfferBid;
 import com.epam.training.taranovski.web.project.domain.Vacancy;
 import com.epam.training.taranovski.web.project.repository.CheckDocumentRepository;
@@ -47,7 +48,7 @@ public class BusinessServiceImplementation implements BusinessService {
 
     @Override
     public List<Employee> getAvailableEmployees(Vacancy vacancy) {
-        return vacancyRepository.getAppropriateEmployees(vacancy);
+        return vacancyRepository.getAppropriateAvailableEmployees(vacancy);
     }
 
     @Override
@@ -110,6 +111,8 @@ public class BusinessServiceImplementation implements BusinessService {
 
             boolean error = !employeeRepository.update(employee);
             error = error & !offerBidRepository.update(offerBid);
+            error = error & !offerBidRepository.deleteAllBidsForVacancy(vacancy);
+            error = error & !offerBidRepository.deleteAllOffersForEmployee(employee);
             error = error & !vacancyRepository.update(vacancy);
             error = error & !checkDocumentRepository.create(checkDocument);
 
@@ -140,6 +143,8 @@ public class BusinessServiceImplementation implements BusinessService {
 
             boolean error = !employeeRepository.update(employee);
             error = error & !offerBidRepository.update(offerBid);
+            error = error & !offerBidRepository.deleteAllBidsForVacancy(vacancy);
+            error = error & !offerBidRepository.deleteAllOffersForEmployee(employee);
             error = error & !vacancyRepository.update(vacancy);
             error = error & !checkDocumentRepository.create(checkDocument);
 
@@ -183,5 +188,10 @@ public class BusinessServiceImplementation implements BusinessService {
     @Override
     public boolean deleteOfferBid(OfferBid offerBid) {
         return offerBidRepository.delete(offerBid);
+    }
+
+    @Override
+    public List<CheckDocument> getAllCheckDocuments(Employer employer) {
+        return checkDocumentRepository.findAllForEmployer(employer);
     }
 }

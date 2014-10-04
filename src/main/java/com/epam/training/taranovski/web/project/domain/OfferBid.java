@@ -39,8 +39,9 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "OfferBid.findOfferByEmployeeAndVacancy", query = "SELECT o FROM OfferBid o WHERE o.employee = :employee and o.vacancy = :vacancy and o.employerSigned = 'signed'"),
     @NamedQuery(name = "OfferBid.findBidByEmployeeAndVacancy", query = "SELECT o FROM OfferBid o WHERE o.employee = :employee and o.vacancy = :vacancy and o.employeeSigned = 'signed'"),
     @NamedQuery(name = "OfferBid.findEmployeeOffersForVacancy", query = "SELECT o.employee FROM OfferBid o WHERE o.vacancy = :vacancy and o.employerSigned = 'signed'"),
-    @NamedQuery(name = "OfferBid.findEmployeeBidsForVacancy", query = "SELECT o.employee FROM OfferBid o WHERE o.vacancy = :vacancy and o.employeeSigned = 'signed'")
-
+    @NamedQuery(name = "OfferBid.findEmployeeBidsForVacancy", query = "SELECT o.employee FROM OfferBid o WHERE o.vacancy = :vacancy and o.employeeSigned = 'signed'"),
+    @NamedQuery(name = "OfferBid.deleteByVacancy", query = "delete FROM OfferBid o WHERE o.vacancy = :vacancy"),
+    @NamedQuery(name = "OfferBid.deleteByEmployee", query = "delete FROM OfferBid o WHERE o.employee = :employee")
 })
 public class OfferBid implements Serializable {
 

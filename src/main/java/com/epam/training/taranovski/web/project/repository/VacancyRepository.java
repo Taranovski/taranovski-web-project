@@ -24,5 +24,5 @@ public interface VacancyRepository extends TemplateRepository<Vacancy> {
 
     List<VacancySkill> getSkills(Vacancy vacancy);
     
-    List<Employee> getAppropriateEmployees(Vacancy vacancy);
+    List<Employee> getAppropriateAvailableEmployees(Vacancy vacancy);
 }

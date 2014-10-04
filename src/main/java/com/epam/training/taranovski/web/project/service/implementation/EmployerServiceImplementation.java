@@ -11,6 +11,7 @@ import com.epam.training.taranovski.web.project.domain.Vacancy;
 import com.epam.training.taranovski.web.project.domain.VacancySkill;
 import com.epam.training.taranovski.web.project.repository.BasicSkillRepository;
 import com.epam.training.taranovski.web.project.repository.EmployerRepository;
+import com.epam.training.taranovski.web.project.repository.OfferBidRepository;
 import com.epam.training.taranovski.web.project.repository.VacancyRepository;
 import com.epam.training.taranovski.web.project.repository.VacancySkillRepository;
 import com.epam.training.taranovski.web.project.service.EmployerService;
@@ -37,7 +38,8 @@ public class EmployerServiceImplementation implements EmployerService {
     @Autowired
     private VacancySkillRepository vacancySkillRepository;
 
-    
+    @Autowired
+    private OfferBidRepository offerBidRepository;
 
     @Override
     public boolean save(Employer employer) {
@@ -48,7 +50,6 @@ public class EmployerServiceImplementation implements EmployerService {
     public boolean updateVacancyInformation(Vacancy vacancy) {
         return vacancyRepository.update(vacancy);
     }
-
 
     @Override
     public boolean updateVacancySkill(int skillId, int exp) {
@@ -68,7 +69,6 @@ public class EmployerServiceImplementation implements EmployerService {
         return vacancyRepository.clearSkills(vacancy);
     }
 
-
     @Override
     public boolean addSkill(Vacancy vacancy, int skill, int exp) {
         BasicSkill basicSkill = basicSkillRepository.getById(skill);
@@ -82,8 +82,9 @@ public class EmployerServiceImplementation implements EmployerService {
     @Override
     public boolean deleteVacancy(Vacancy vacancy) {
         boolean deleteSkills = vacancyRepository.clearSkills(vacancy);
+        boolean deleteAllOfferBids = offerBidRepository.deleteAllBidsForVacancy(vacancy);
         boolean deleteVacancy = vacancyRepository.delete(vacancy);
-        return deleteSkills & deleteVacancy;
+        return deleteSkills & deleteVacancy & deleteAllOfferBids;
     }
 
     @Override

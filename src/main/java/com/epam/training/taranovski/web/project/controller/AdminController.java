@@ -6,6 +6,7 @@
 package com.epam.training.taranovski.web.project.controller;
 
 import com.epam.training.taranovski.web.project.domain.Admin;
+import com.epam.training.taranovski.web.project.domain.Employer;
 import com.epam.training.taranovski.web.project.repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,14 +23,18 @@ import org.springframework.web.servlet.ModelAndView;
 @SessionAttributes(value = "user")
 public class AdminController {
 
-//    @Autowired
-//    AdminRepository adminRepository;
-    @RequestMapping("/admin")
-    public ModelAndView getAdminById(@ModelAttribute(value = "user") Admin admin, ModelAndView modelAndView) {
-        admin.setAdminName("newName");
-        modelAndView.addObject("admin", admin);
+    @Autowired
+    AdminRepository adminRepository;
+
+    @RequestMapping("/toAdminPage")
+    public ModelAndView toAdminPage(
+            @ModelAttribute(value = "user") Admin admin,
+            ModelAndView modelAndView) {
+
+        
+        
         modelAndView.setViewName("admin.jsp");
         return modelAndView;
     }
-    
+
 }

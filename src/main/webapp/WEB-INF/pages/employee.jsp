@@ -179,6 +179,11 @@
         </c:if>
 
 
+        <form method="post" action="dontSaveEmployeePersonalInfo.html">
+            <fmt:message key="employee.page.reflesh" var="dontSaveInfo"/>
+            <input type="submit" value="${dontSaveInfo}" />
+        </form>
+
         <form method="post" action="toLoginPage.html">
             <fmt:message key="login.logout" var="toLoginPage"/>
             <input type="submit" value="${toLoginPage}" />

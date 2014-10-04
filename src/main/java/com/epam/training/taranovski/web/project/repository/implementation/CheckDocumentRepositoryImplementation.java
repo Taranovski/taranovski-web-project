@@ -7,6 +7,7 @@ package com.epam.training.taranovski.web.project.repository.implementation;
 
 import com.epam.training.taranovski.web.project.domain.CheckDocument;
 import com.epam.training.taranovski.web.project.domain.Employee;
+import com.epam.training.taranovski.web.project.domain.Employer;
 import com.epam.training.taranovski.web.project.domain.Vacancy;
 import com.epam.training.taranovski.web.project.repository.CheckDocumentRepository;
 import java.util.LinkedList;
@@ -117,6 +118,30 @@ public class CheckDocumentRepositoryImplementation implements CheckDocumentRepos
         }
 
         return checkDocument;
+    }
+
+    @Override
+    public List<CheckDocument> findAllForEmployer(Employer employer) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        List<CheckDocument> list = new LinkedList<>();
+        try {
+            em.getTransaction().begin();
+
+            TypedQuery<CheckDocument> query = em.createNamedQuery("CheckDocument.findAllForEmployer", CheckDocument.class);
+            query.setParameter("employer", employer);
+            list = query.getResultList();
+
+            em.getTransaction().commit();
+        } catch (RuntimeException e) {
+            System.out.println(e);
+        } finally {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            em.close();
+        }
+
+        return list;
     }
 
 }
