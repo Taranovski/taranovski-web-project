@@ -28,6 +28,15 @@ import org.springframework.web.servlet.ModelAndView;
 public class LoginController {
 
     private static final String LOGIN_ERROR = "login_error";
+    private static final String LOGIN_PAGE = "login.jsp";
+    
+    private static final String PARAMETER_USER = "user";
+    private static final String PARAMETER_USERNAME = "username";
+    private static final String PARAMETER_PASSWORD = "password";
+    private static final String PARAMETER_EMPLOYEE = "employee";
+    private static final String PARAMETER_EMPLOYER = "employer";
+    private static final String PARAMETER_ADMIN = "admin";
+    
 
     @Autowired
     private LoginService loginService;
@@ -53,7 +62,7 @@ public class LoginController {
     @RequestMapping("/toLoginPage")
     public ModelAndView logout(ModelAndView modelAndView, SessionStatus sessionStatus) {
         sessionStatus.setComplete();
-        modelAndView.setViewName("login.jsp");
+        modelAndView.setViewName(LOGIN_PAGE);
         return modelAndView;
     }
 
@@ -66,8 +75,8 @@ public class LoginController {
      */
     @RequestMapping("/loginSystem")
     public ModelAndView login(
-            @RequestParam(required = false, value = "username") String userName,
-            @RequestParam(required = false, value = "password") String password,
+            @RequestParam(required = false, value = PARAMETER_USERNAME) String userName,
+            @RequestParam(required = false, value = PARAMETER_PASSWORD) String password,
             ModelAndView modelAndView
     ) {
 
@@ -83,24 +92,24 @@ public class LoginController {
 
         if (error) {
             modelAndView.addObject(LOGIN_ERROR, LOGIN_ERROR);
-            modelAndView.setViewName("login.jsp");
+            modelAndView.setViewName(LOGIN_PAGE);
         } else {
             String type = user.getUserType();
-            modelAndView.addObject("user", user);
+            modelAndView.addObject(PARAMETER_USER, user);
 
             switch (type) {
-                case "employee": {
+                case PARAMETER_EMPLOYEE: {
                     return employeeController.toEmployeePage((Employee) user, modelAndView);
                 }
-                case "employer": {
+                case PARAMETER_EMPLOYER: {
                     return employerController.toEmployerPage((Employer) user, modelAndView);
                 }
-                case "admin": {
+                case PARAMETER_ADMIN: {
                     return adminController.toAdminPage((Admin) user, modelAndView);
                 }
                 default: {
                     modelAndView.addObject(LOGIN_ERROR, LOGIN_ERROR);
-                    modelAndView.setViewName("login.jsp");
+                    modelAndView.setViewName(LOGIN_PAGE);
                 }
             }
         }

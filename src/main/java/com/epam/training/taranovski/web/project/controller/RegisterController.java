@@ -23,6 +23,11 @@ public class RegisterController {
     private static final String PASSWORD_ERROR = "password_error";
     private static final String REGISTER_ERROR = "register_error";
     private static final String REGISTER_SUCCESS = "register_success";
+    
+    private static final String REGISTER_PAGE = "register.jsp";
+    private static final String PARAMETER_USERNAME = "username";
+    private static final String PARAMETER_PASSWORD = "password";
+    private static final String PARAMETER_USERTYPE = "usertype";
 
     @Autowired
     private RegisterService registerService;
@@ -34,7 +39,7 @@ public class RegisterController {
      */
     @RequestMapping("/toRegister")
     public ModelAndView toRegister(ModelAndView modelAndView) {
-        modelAndView.setViewName("register.jsp");
+        modelAndView.setViewName(REGISTER_PAGE);
         return modelAndView;
     }
 
@@ -48,9 +53,9 @@ public class RegisterController {
      */
     @RequestMapping("/register")
     public ModelAndView register(
-            @RequestParam(value = "username") String userName,
-            @RequestParam(value = "password") String password,
-            @RequestParam(value = "usertype") String usertype,
+            @RequestParam(value = PARAMETER_USERNAME) String userName,
+            @RequestParam(value = PARAMETER_PASSWORD) String password,
+            @RequestParam(value = PARAMETER_USERTYPE) String usertype,
             ModelAndView modelAndView) {
 
         boolean error = false;
@@ -74,7 +79,7 @@ public class RegisterController {
             }
         }
 
-        modelAndView.setViewName("register.jsp");
+        modelAndView.setViewName(REGISTER_PAGE);
         return modelAndView;
     }
 }
