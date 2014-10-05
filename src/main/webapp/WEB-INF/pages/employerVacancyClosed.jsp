@@ -33,8 +33,8 @@
                     <th><fmt:message key="employee.occupation"/></th>
                     <th><fmt:message key="employee.hire.status"/></th>
                     <th><fmt:message key="employer.company.name"/></th>
-                    <th><fmt:message key="employer.adress"/><th>
-                    <th><fmt:message key="employer.telephone.number"/><th>
+                    <th><fmt:message key="employer.adress"/></th>
+                    <th><fmt:message key="employer.telephone.number"/></th>
                     <th><fmt:message key="vacancy.position"/></th>
                     <th><fmt:message key="vacancy.salary"/></th>
                 </tr>
