@@ -14,6 +14,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -36,7 +37,7 @@ public class BasicSkillRepositoryImplementation implements BasicSkillRepository 
             skill = em.find(BasicSkill.class, id);
             em.getTransaction().commit();
         } catch (RuntimeException e) {
-            System.out.println(e);
+           Logger.getLogger(BasicSkillRepositoryImplementation.class.getName()).info(e);
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -49,22 +50,26 @@ public class BasicSkillRepositoryImplementation implements BasicSkillRepository 
 
     @Override
     public List<BasicSkill> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean create(BasicSkill something) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean update(BasicSkill something) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean delete(BasicSkill something) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -80,7 +85,7 @@ public class BasicSkillRepositoryImplementation implements BasicSkillRepository 
             
             em.getTransaction().commit();
         } catch (RuntimeException e) {
-            System.out.println(e);
+            Logger.getLogger(BasicSkillRepositoryImplementation.class.getName()).info(e);
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -104,7 +109,7 @@ public class BasicSkillRepositoryImplementation implements BasicSkillRepository 
             
             em.getTransaction().commit();
         } catch (RuntimeException e) {
-            System.out.println(e);
+            Logger.getLogger(BasicSkillRepositoryImplementation.class.getName()).info(e);
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();

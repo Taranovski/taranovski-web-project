@@ -5,7 +5,6 @@
  */
 package com.epam.training.taranovski.web.project.repository.implementation;
 
-import com.epam.training.taranovski.web.project.domain.CheckDocument;
 import com.epam.training.taranovski.web.project.domain.Employee;
 import com.epam.training.taranovski.web.project.domain.UserSkill;
 import com.epam.training.taranovski.web.project.domain.Vacancy;
@@ -16,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -31,39 +31,36 @@ public class EmployeeRepositoryImplementation implements EmployeeRepository {
 
     @Override
     public Employee getByCredentials(String firstName, String lastName, String patronymic) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean addSkill(Employee employee, UserSkill skill) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean removeSkill(Employee employee, UserSkill skill) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean clearSkills(Employee employee) {
         EntityManager em = entityManagerFactory.createEntityManager();
-        List<UserSkill> list = new LinkedList<>();
         boolean success = true;
         try {
             em.getTransaction().begin();
 
-            TypedQuery<UserSkill> query = em.createNamedQuery("UserSkill.findByEmployee", UserSkill.class);
+           Query query = em.createNamedQuery("UserSkill.clearSkillsForEmployee");
             query.setParameter("employee", employee);
-            list = query.getResultList();
-
-            for (UserSkill userSkill : list) {
-                em.remove(userSkill);
-            }
-
+            
             em.getTransaction().commit();
             success = true;
         } catch (RuntimeException e) {
-            System.out.println(e);
+            Logger.getLogger(EmployeeRepositoryImplementation.class.getName()).info(e);
             success = false;
         } finally {
             if (em.getTransaction().isActive()) {
@@ -89,7 +86,7 @@ public class EmployeeRepositoryImplementation implements EmployeeRepository {
 
             em.getTransaction().commit();
         } catch (RuntimeException e) {
-            System.out.println(e);
+            Logger.getLogger(EmployeeRepositoryImplementation.class.getName()).info(e);
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -109,7 +106,7 @@ public class EmployeeRepositoryImplementation implements EmployeeRepository {
             employee = em.find(Employee.class, id);
             em.getTransaction().commit();
         } catch (RuntimeException e) {
-            System.out.println(e);
+            Logger.getLogger(EmployeeRepositoryImplementation.class.getName()).info(e);
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -132,7 +129,7 @@ public class EmployeeRepositoryImplementation implements EmployeeRepository {
 
             em.getTransaction().commit();
         } catch (RuntimeException e) {
-            System.out.println(e);
+            Logger.getLogger(EmployeeRepositoryImplementation.class.getName()).info(e);
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -145,7 +142,8 @@ public class EmployeeRepositoryImplementation implements EmployeeRepository {
 
     @Override
     public boolean create(Employee admin) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -160,6 +158,8 @@ public class EmployeeRepositoryImplementation implements EmployeeRepository {
 
             em.getTransaction().commit();
             success = true;
+        } catch (RuntimeException e) {
+            Logger.getLogger(EmployeeRepositoryImplementation.class.getName()).info(e);
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -173,7 +173,8 @@ public class EmployeeRepositoryImplementation implements EmployeeRepository {
 
     @Override
     public boolean delete(Employee admin) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -188,7 +189,7 @@ public class EmployeeRepositoryImplementation implements EmployeeRepository {
 
             em.getTransaction().commit();
         } catch (RuntimeException e) {
-            System.out.println(e);
+            Logger.getLogger(EmployeeRepositoryImplementation.class.getName()).info(e);
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -200,10 +201,10 @@ public class EmployeeRepositoryImplementation implements EmployeeRepository {
     }
 
     @Override
-    public List<Vacancy> getAvailableVacancies(Employee employee) {
+    public List<Vacancy> getAvailableActiveVacancies(Employee employee) {
         EntityManager em = entityManagerFactory.createEntityManager();
-        List<Integer> list = new LinkedList<>();
-        List<Vacancy> list1 = new LinkedList<>();
+        List<Integer> list = null;
+        List<Vacancy> list1 = null;
 
         try {
             em.getTransaction().begin();
@@ -214,14 +215,14 @@ public class EmployeeRepositoryImplementation implements EmployeeRepository {
             if (list.isEmpty()) {
                 list.add(0);
             }
-            
-            TypedQuery<Vacancy> query1 = em.createNamedQuery("Vacancy.findByIds", Vacancy.class);
+
+            TypedQuery<Vacancy> query1 = em.createNamedQuery("Vacancy.findActiveVacanciesByIds", Vacancy.class);
             query1.setParameter("vacancyIdList", list);
             list1 = query1.getResultList();
-            
+
             em.getTransaction().commit();
         } catch (RuntimeException e) {
-            System.out.println(e);
+            Logger.getLogger(EmployeeRepositoryImplementation.class.getName()).info(e);
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();

@@ -6,6 +6,7 @@
 package com.epam.training.taranovski.web.project.domain;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -64,10 +65,6 @@ public class Employee extends User implements Serializable {
     @Column(name = "\"employeeUserId\"")
     private Integer employeeUserId;
 
-//    @OneToMany//(mappedBy = "\"employeeId\"")
-//    @JoinColumn (name = "\"EMPLOYEEID\"")
-//    //@Basic(fetch = FetchType.LAZY)
-//    private Collection<UserSkill> skillCollection;
     public Employee() {
     }
 
@@ -127,21 +124,14 @@ public class Employee extends User implements Serializable {
         this.status = status;
     }
 
-//    public Collection<UserSkill> getSkillCollection() {
-//        return skillCollection;
-//    }
-//
-//    public void setSkillCollection(Collection<UserSkill> skillCollection) {
-//        this.skillCollection = skillCollection;
-//    }
     @Override
     public int hashCode() {
-        int hash = super.hashCode();
-        hash = 83 * hash + (this.name != null ? this.name.hashCode() : 0);
-        hash = 83 * hash + (this.surname != null ? this.surname.hashCode() : 0);
-        hash = 83 * hash + (this.patronymic != null ? this.patronymic.hashCode() : 0);
-        hash = 83 * hash + (this.qualification != null ? this.qualification.hashCode() : 0);
-        hash = 83 * hash + (this.occupation != null ? this.occupation.hashCode() : 0);
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.name);
+        hash = 59 * hash + Objects.hashCode(this.surname);
+        hash = 59 * hash + Objects.hashCode(this.patronymic);
+        hash = 59 * hash + Objects.hashCode(this.qualification);
+        hash = 59 * hash + Objects.hashCode(this.occupation);
         return hash;
     }
 
@@ -154,26 +144,25 @@ public class Employee extends User implements Serializable {
             return false;
         }
         final Employee other = (Employee) obj;
-        if (!super.equals((User) obj)) {
+        if (!Objects.equals(this.name, other.name)) {
             return false;
         }
-        if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
+        if (!Objects.equals(this.surname, other.surname)) {
             return false;
         }
-        if ((this.surname == null) ? (other.surname != null) : !this.surname.equals(other.surname)) {
+        if (!Objects.equals(this.patronymic, other.patronymic)) {
             return false;
         }
-        if ((this.patronymic == null) ? (other.patronymic != null) : !this.patronymic.equals(other.patronymic)) {
+        if (!Objects.equals(this.qualification, other.qualification)) {
             return false;
         }
-        if ((this.qualification == null) ? (other.qualification != null) : !this.qualification.equals(other.qualification)) {
-            return false;
-        }
-        if ((this.occupation == null) ? (other.occupation != null) : !this.occupation.equals(other.occupation)) {
+        if (!Objects.equals(this.occupation, other.occupation)) {
             return false;
         }
         return true;
     }
+
+    
 
     @Override
     public String toString() {

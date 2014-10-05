@@ -15,7 +15,6 @@ import com.epam.training.taranovski.web.project.repository.OfferBidRepository;
 import com.epam.training.taranovski.web.project.repository.VacancyRepository;
 import com.epam.training.taranovski.web.project.repository.VacancySkillRepository;
 import com.epam.training.taranovski.web.project.service.EmployerService;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

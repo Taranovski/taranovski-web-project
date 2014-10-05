@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -30,34 +31,31 @@ public class VacancyRepositoryImplementation implements VacancyRepository {
     
     @Override
     public boolean addSkill(Vacancy vacancy, VacancySkill skill) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean removeSkill(Vacancy vacancy, VacancySkill skill) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean clearSkills(Vacancy vacancy) {
         EntityManager em = entityManagerFactory.createEntityManager();
-        List<VacancySkill> list = new LinkedList<>();
         boolean success = true;
         try {
             em.getTransaction().begin();
             
-            TypedQuery<VacancySkill> query = em.createNamedQuery("VacancySkill.findByVacancy", VacancySkill.class);
+            Query query = em.createNamedQuery("VacancySkill.clearSkillsForVacancy");
             query.setParameter("vacancy", vacancy);
-            list = query.getResultList();
-            
-            for (VacancySkill vacancySkill : list) {
-                em.remove(vacancySkill);
-            }
+            query.executeUpdate();
             
             em.getTransaction().commit();
             success = true;
         } catch (RuntimeException e) {
-            System.out.println(e);
+            Logger.getLogger(VacancyRepositoryImplementation.class.getName()).info(e);
             success = false;
         } finally {
             if (em.getTransaction().isActive()) {
@@ -83,7 +81,7 @@ public class VacancyRepositoryImplementation implements VacancyRepository {
             
             em.getTransaction().commit();
         } catch (RuntimeException e) {
-            System.out.println(e);
+            Logger.getLogger(VacancyRepositoryImplementation.class.getName()).info(e);
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -97,11 +95,13 @@ public class VacancyRepositoryImplementation implements VacancyRepository {
     @Override
     public Vacancy getById(int id) {
         EntityManager em = entityManagerFactory.createEntityManager();
-        Vacancy vacancy;
+        Vacancy vacancy = null;
         try {
             em.getTransaction().begin();
             vacancy = em.find(Vacancy.class, id);
             em.getTransaction().commit();
+        } catch (RuntimeException e) {
+           Logger.getLogger(VacancyRepositoryImplementation.class.getName()).info(e);
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -124,7 +124,7 @@ public class VacancyRepositoryImplementation implements VacancyRepository {
             
             em.getTransaction().commit();
         } catch (RuntimeException e) {
-            System.out.println(e);
+           Logger.getLogger(VacancyRepositoryImplementation.class.getName()).info(e);
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -144,6 +144,8 @@ public class VacancyRepositoryImplementation implements VacancyRepository {
             em.persist(vacancy);
             em.getTransaction().commit();
             success = true;
+        } catch (RuntimeException e) {
+           Logger.getLogger(VacancyRepositoryImplementation.class.getName()).info(e);
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -164,6 +166,8 @@ public class VacancyRepositoryImplementation implements VacancyRepository {
             em.merge(vacancy);
             em.getTransaction().commit();
             success = true;
+        } catch (RuntimeException e) {
+           Logger.getLogger(VacancyRepositoryImplementation.class.getName()).info(e);
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -187,6 +191,8 @@ public class VacancyRepositoryImplementation implements VacancyRepository {
             em.getTransaction().commit();
 
             success = true;
+        } catch (RuntimeException e) {
+           Logger.getLogger(VacancyRepositoryImplementation.class.getName()).info(e);
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -201,7 +207,7 @@ public class VacancyRepositoryImplementation implements VacancyRepository {
     @Override
     public List<Employee> getAppropriateAvailableEmployees(Vacancy vacancy) {
         EntityManager em = entityManagerFactory.createEntityManager();
-        List<Integer> list = new LinkedList<>();
+        List<Integer> list = null;
         List<Employee> list1 = new LinkedList<>();
 
         try {
@@ -220,7 +226,7 @@ public class VacancyRepositoryImplementation implements VacancyRepository {
 
             em.getTransaction().commit();
         } catch (RuntimeException e) {
-            System.out.println(e);
+           Logger.getLogger(VacancyRepositoryImplementation.class.getName()).info(e);
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();

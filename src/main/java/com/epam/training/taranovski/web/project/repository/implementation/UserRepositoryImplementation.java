@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -31,17 +32,20 @@ public class UserRepositoryImplementation implements UserRepository {
 
     @Override
     public String getTypeOf(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public User getById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<User> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -55,6 +59,7 @@ public class UserRepositoryImplementation implements UserRepository {
             em.getTransaction().commit();
             success = true;
         } catch (RuntimeException e) {
+            Logger.getLogger(OfferBidRepositoryImplementation.class.getName()).info(e);
             success = false;
         } finally {
             if (em.getTransaction().isActive()) {
@@ -69,13 +74,15 @@ public class UserRepositoryImplementation implements UserRepository {
     @Override
     public boolean update(User user
     ) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean delete(User user
     ) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
+//To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -103,6 +110,7 @@ public class UserRepositoryImplementation implements UserRepository {
             em.getTransaction().commit();
             exists = true;
         } catch (NoResultException ex) {
+            Logger.getLogger(OfferBidRepositoryImplementation.class.getName()).info(ex);
             exists = false;
         } finally {
             if (em.getTransaction().isActive()) {
@@ -131,11 +139,12 @@ public class UserRepositoryImplementation implements UserRepository {
             TypedQuery<User> query = em.createNamedQuery("User.findByLogin", User.class);
             query.setParameter("login", name);
 
-            User user = query.getSingleResult();
+            query.getSingleResult();
 
             em.getTransaction().commit();
             exists = true;
         } catch (NoResultException ex) {
+            Logger.getLogger(OfferBidRepositoryImplementation.class.getName()).info(ex);
             exists = false;
         } finally {
             if (em.getTransaction().isActive()) {

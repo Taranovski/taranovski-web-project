@@ -32,7 +32,9 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "VacancySkill.findAll", query = "SELECT u FROM VacancySkill u"),
     @NamedQuery(name = "VacancySkill.findByExperience", query = "SELECT u FROM VacancySkill u WHERE u.experience = :experience"),
     @NamedQuery(name = "VacancySkill.findBySkillId", query = "SELECT u FROM VacancySkill u WHERE u.skillId = :skillId"),
-    @NamedQuery(name = "VacancySkill.findByVacancy", query = "SELECT u FROM VacancySkill u WHERE u.vacancy = :vacancy")})
+    @NamedQuery(name = "VacancySkill.findByVacancy", query = "SELECT u FROM VacancySkill u WHERE u.vacancy = :vacancy"),
+    @NamedQuery(name = "VacancySkill.clearSkillsForVacancy", query = "delete FROM VacancySkill u WHERE u.vacancy = :vacancy")
+})
 
 public class VacancySkill implements Serializable {
 
@@ -128,7 +130,5 @@ public class VacancySkill implements Serializable {
     public String toString() {
         return "VacancySkill{" + "experience=" + experience + ", skill=" + skill + '}';
     }
-
-    
 
 }

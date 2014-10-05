@@ -39,7 +39,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Vacancy.findActiveByEmployer", query = "SELECT v FROM Vacancy v WHERE v.status = 'active' and v.employer = :employer"),
     @NamedQuery(name = "Vacancy.findByEmployer", query = "SELECT v FROM Vacancy v WHERE v.employer = :employer"),
     @NamedQuery(name = "Vacancy.findForEmployee", query = "SELECT v FROM Vacancy v WHERE v.employer = :employer"),
-    @NamedQuery(name = "Vacancy.findByIds", query = "SELECT v FROM Vacancy v WHERE v.vacancyId in :vacancyIdList")
+    @NamedQuery(name = "Vacancy.findActiveVacanciesByIds", query = "SELECT v FROM Vacancy v WHERE v.vacancyId in :vacancyIdList and v.status = 'active'")
 })
 public class Vacancy implements Serializable {
 
@@ -74,13 +74,6 @@ public class Vacancy implements Serializable {
     @Column(name = "\"status\"")
     private String status;
 
-//    @OneToOne
-//    @JoinColumn(referencedColumnName = "\"checkDocumentId\"")
-//    private CheckDocument checkDocumentId;
-//    @OneToMany
-//    @Basic(fetch = FetchType.LAZY)
-//    @JoinColumn(referencedColumnName = "\"skillId\"")
-//    private Collection<UserSkill> skillCollection;
     public Vacancy() {
     }
 
@@ -101,9 +94,6 @@ public class Vacancy implements Serializable {
     }
 
     public void setSalary(BigDecimal salary) {
-//        System.out.println(salary);
-//        System.out.println(salary.precision());
-//        System.out.println(salary.scale());
         this.salary = salary.setScale(2, RoundingMode.HALF_EVEN);
     }
 
@@ -123,20 +113,6 @@ public class Vacancy implements Serializable {
         this.vacancyId = vacancyId;
     }
 
-//    public CheckDocument getCheckDocumentId() {
-//        return checkDocumentId;
-//    }
-//
-//    public void setCheckDocumentId(CheckDocument checkDocumentId) {
-//        this.checkDocumentId = checkDocumentId;
-//    }
-//    public Collection<UserSkill> getSkillCollection() {
-//        return skillCollection;
-//    }
-//
-//    public void setSkillCollection(Collection<UserSkill> skillCollection) {
-//        this.skillCollection = skillCollection;
-//    }
     public Employer getEmployer() {
         return employer;
     }

@@ -15,6 +15,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -30,12 +31,14 @@ public class CheckDocumentRepositoryImplementation implements CheckDocumentRepos
 
     @Override
     public CheckDocument getById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<CheckDocument> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -49,6 +52,7 @@ public class CheckDocumentRepositoryImplementation implements CheckDocumentRepos
             em.getTransaction().commit();
             success = true;
         } catch (RuntimeException e) {
+            Logger.getLogger(BasicSkillRepositoryImplementation.class.getName()).info(e);
             success = false;
         } finally {
             if (em.getTransaction().isActive()) {
@@ -62,12 +66,14 @@ public class CheckDocumentRepositoryImplementation implements CheckDocumentRepos
 
     @Override
     public boolean update(CheckDocument admin) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean delete(CheckDocument admin) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -84,7 +90,7 @@ public class CheckDocumentRepositoryImplementation implements CheckDocumentRepos
 
             em.getTransaction().commit();
         } catch (RuntimeException e) {
-            System.out.println(e);
+            Logger.getLogger(BasicSkillRepositoryImplementation.class.getName()).info(e);
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -109,7 +115,7 @@ public class CheckDocumentRepositoryImplementation implements CheckDocumentRepos
 
             em.getTransaction().commit();
         } catch (RuntimeException e) {
-            System.out.println(e);
+            Logger.getLogger(BasicSkillRepositoryImplementation.class.getName()).info(e);
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -133,7 +139,7 @@ public class CheckDocumentRepositoryImplementation implements CheckDocumentRepos
 
             em.getTransaction().commit();
         } catch (RuntimeException e) {
-            System.out.println(e);
+            Logger.getLogger(BasicSkillRepositoryImplementation.class.getName()).info(e);
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();

@@ -6,7 +6,6 @@
 package com.epam.training.taranovski.web.project.domain;
 
 import java.io.Serializable;
-//import java.math.BigDecimal;
 import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -113,6 +112,9 @@ public class User implements Serializable {
             return false;
         }
         if (getClass() != obj.getClass()) {
+            return false;
+        }
+        if (!super.equals(obj)) {
             return false;
         }
         final User other = (User) obj;

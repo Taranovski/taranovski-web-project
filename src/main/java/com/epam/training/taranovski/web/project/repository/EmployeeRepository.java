@@ -28,5 +28,5 @@ public interface EmployeeRepository extends TemplateRepository<Employee> {
 
     public List<Employee> getAllFreeEmployees();
 
-    public List<Vacancy> getAvailableVacancies(Employee employee);
+    public List<Vacancy> getAvailableActiveVacancies(Employee employee);
 }

@@ -14,6 +14,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -29,17 +30,20 @@ public class EmployerRepositoryImplementation implements EmployerRepository {
 
     @Override
     public boolean addVacancy(Employer employer, Vacancy vacancy) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean removeVacancy(Employer employer, Vacancy vacancy) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean clearVacancies(Employer employer) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -48,14 +52,15 @@ public class EmployerRepositoryImplementation implements EmployerRepository {
         List<Vacancy> list = new LinkedList<>();
         try {
             em.getTransaction().begin();
-            
+
             TypedQuery<Vacancy> query = em.createNamedQuery("Vacancy.findActiveByEmployer", Vacancy.class);
             query.setParameter("employer", employer);
             list = query.getResultList();
-            
+
             em.getTransaction().commit();
         } catch (RuntimeException e) {
-            System.out.println(e);
+            Logger.getLogger(BasicSkillRepositoryImplementation.class.getName()).info(e);
+
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -68,37 +73,44 @@ public class EmployerRepositoryImplementation implements EmployerRepository {
 
     @Override
     public boolean addCheckDocument(Employer employer, CheckDocument checkDocument) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean removeCheckDocument(Employer employer, CheckDocument checkDocument) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean clearCheckDocuments(Employer employer) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<CheckDocument> getCheckDocuments(Employer employer) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Employer getById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<Employer> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean create(Employer admin) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -113,6 +125,8 @@ public class EmployerRepositoryImplementation implements EmployerRepository {
 
             em.getTransaction().commit();
             success = true;
+        } catch (RuntimeException e) {
+            Logger.getLogger(BasicSkillRepositoryImplementation.class.getName()).info(e);
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -126,7 +140,8 @@ public class EmployerRepositoryImplementation implements EmployerRepository {
 
     @Override
     public boolean delete(Employer admin) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
+//To change body of generated methods, choose Tools | Templates.
     }
 
 }

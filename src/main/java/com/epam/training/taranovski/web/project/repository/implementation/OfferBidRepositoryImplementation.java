@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -30,12 +31,14 @@ public class OfferBidRepositoryImplementation implements OfferBidRepository {
 
     @Override
     public OfferBid getById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<OfferBid> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -49,6 +52,7 @@ public class OfferBidRepositoryImplementation implements OfferBidRepository {
             em.getTransaction().commit();
             success = true;
         } catch (RuntimeException e) {
+            Logger.getLogger(OfferBidRepositoryImplementation.class.getName()).info(e);
             success = false;
         } finally {
             if (em.getTransaction().isActive()) {
@@ -71,6 +75,7 @@ public class OfferBidRepositoryImplementation implements OfferBidRepository {
             em.getTransaction().commit();
             success = true;
         } catch (RuntimeException e) {
+            Logger.getLogger(OfferBidRepositoryImplementation.class.getName()).info(e);
             success = false;
         } finally {
             if (em.getTransaction().isActive()) {
@@ -94,6 +99,8 @@ public class OfferBidRepositoryImplementation implements OfferBidRepository {
             em.getTransaction().commit();
 
             success = true;
+        } catch (RuntimeException e) {
+            Logger.getLogger(OfferBidRepositoryImplementation.class.getName()).info(e);
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -118,7 +125,7 @@ public class OfferBidRepositoryImplementation implements OfferBidRepository {
 
             em.getTransaction().commit();
         } catch (RuntimeException e) {
-            System.out.println(e);
+            Logger.getLogger(OfferBidRepositoryImplementation.class.getName()).info(e);
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -143,6 +150,7 @@ public class OfferBidRepositoryImplementation implements OfferBidRepository {
 
             em.getTransaction().commit();
         } catch (RuntimeException e) {
+            Logger.getLogger(OfferBidRepositoryImplementation.class.getName()).info(e);
             offer = null;
         } finally {
             if (em.getTransaction().isActive()) {
@@ -167,7 +175,7 @@ public class OfferBidRepositoryImplementation implements OfferBidRepository {
 
             em.getTransaction().commit();
         } catch (RuntimeException e) {
-            System.out.println(e);
+            Logger.getLogger(OfferBidRepositoryImplementation.class.getName()).info(e);
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -192,6 +200,7 @@ public class OfferBidRepositoryImplementation implements OfferBidRepository {
 
             em.getTransaction().commit();
         } catch (RuntimeException e) {
+            Logger.getLogger(OfferBidRepositoryImplementation.class.getName()).info(e);
             offer = null;
         } finally {
             if (em.getTransaction().isActive()) {
@@ -216,7 +225,7 @@ public class OfferBidRepositoryImplementation implements OfferBidRepository {
 
             em.getTransaction().commit();
         } catch (RuntimeException e) {
-            System.out.println(e);
+            Logger.getLogger(OfferBidRepositoryImplementation.class.getName()).info(e);
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -240,7 +249,7 @@ public class OfferBidRepositoryImplementation implements OfferBidRepository {
 
             em.getTransaction().commit();
         } catch (RuntimeException e) {
-            System.out.println(e);
+            Logger.getLogger(OfferBidRepositoryImplementation.class.getName()).info(e);
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -263,6 +272,8 @@ public class OfferBidRepositoryImplementation implements OfferBidRepository {
             em.getTransaction().commit();
 
             success = true;
+        } catch (RuntimeException e) {
+            Logger.getLogger(OfferBidRepositoryImplementation.class.getName()).info(e);
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -286,6 +297,8 @@ public class OfferBidRepositoryImplementation implements OfferBidRepository {
             em.getTransaction().commit();
 
             success = true;
+        } catch (RuntimeException e) {
+            Logger.getLogger(OfferBidRepositoryImplementation.class.getName()).info(e);
         } finally {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();

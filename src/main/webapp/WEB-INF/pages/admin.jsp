@@ -23,7 +23,7 @@
     </head>
     <body>
         <fmt:message key="admin.greetings"/>${user.login}<br/>
-        ${user.adminName}<br/>
+        
         <fmt:message key="admin.employee.list"/><br/>
         
         <fmt:message key="admin.employer.list"/><br/>
@@ -32,10 +32,7 @@
         
         <fmt:message key="admin.checkdocument.list"/><br/>
         
-        <form method="post" action="admin.html">
-            <fmt:message key="index.to.login.page" var="toLoginPage"/>
-            <input type="submit" value="${toLoginPage}" />
-        </form>
+        
         
         <form method="post" action="toLoginPage.html">
             <fmt:message key="login.logout" var="toLoginPage"/>

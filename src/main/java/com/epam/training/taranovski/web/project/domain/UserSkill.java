@@ -32,7 +32,9 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "UserSkill.findAll", query = "SELECT u FROM UserSkill u"),
     @NamedQuery(name = "UserSkill.findByExperience", query = "SELECT u FROM UserSkill u WHERE u.experience = :experience"),
     @NamedQuery(name = "UserSkill.findBySkillId", query = "SELECT u FROM UserSkill u WHERE u.skillId = :skillId"),
-    @NamedQuery(name = "UserSkill.findByEmployee", query = "SELECT u FROM UserSkill u WHERE u.employee = :employee")})
+    @NamedQuery(name = "UserSkill.findByEmployee", query = "SELECT u FROM UserSkill u WHERE u.employee = :employee"),
+    @NamedQuery(name = "UserSkill.clearSkillsForEmployee", query = "delete FROM UserSkill u WHERE u.employee = :employee")
+})
 public class UserSkill implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,7 +44,7 @@ public class UserSkill implements Serializable {
     @NotNull
     @SequenceGenerator(name = "userSkillSequence", sequenceName = "\"UserSkillSequence\"", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userSkillSequence")
-    
+
     @Column(name = "\"skillId\"")
     private Integer skillId;
 
@@ -129,5 +131,4 @@ public class UserSkill implements Serializable {
         return "UserSkill{" + "experience=" + experience + ", skill=" + skill + '}';
     }
 
-    
 }

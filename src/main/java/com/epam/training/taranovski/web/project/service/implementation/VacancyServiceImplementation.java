@@ -12,7 +12,6 @@ import com.epam.training.taranovski.web.project.domain.VacancySkill;
 import com.epam.training.taranovski.web.project.repository.BasicSkillRepository;
 import com.epam.training.taranovski.web.project.repository.EmployerRepository;
 import com.epam.training.taranovski.web.project.repository.VacancyRepository;
-import com.epam.training.taranovski.web.project.repository.VacancySkillRepository;
 import com.epam.training.taranovski.web.project.service.VacancyService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

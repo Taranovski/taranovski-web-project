@@ -26,7 +26,7 @@ public class RegisterServiceImpementation implements RegisterService {
     private UserRepository userRepository;
 
     @Autowired
-    private ValidationService passwordRequirementService;
+    private ValidationService validationService;
 
     @Autowired
     private EncryptionService encryptionService;
@@ -36,7 +36,7 @@ public class RegisterServiceImpementation implements RegisterService {
 
         boolean error = false;
         User user = null;
-        System.out.println("");
+        
         if (null != type) {
             switch (type) {
                 case "employee": {
@@ -62,7 +62,6 @@ public class RegisterServiceImpementation implements RegisterService {
             user.setPassword(encryptionService.encrypt(password));
             user.setUserType(type);
 
-            System.out.println(user.toString());
             return userRepository.create(user);
         } else {
             return false;
@@ -79,7 +78,7 @@ public class RegisterServiceImpementation implements RegisterService {
 
     @Override
     public boolean passwordAllowed(String password) {
-        return passwordRequirementService.passwordIsValid(password);
+        return validationService.passwordIsValid(password);
     }
 
 }

@@ -98,11 +98,11 @@
         </dependency>
         
         <!--oracle jdbc--> 
-<!--        <dependency>
+        <dependency>
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc12</artifactId>
             <version>12c</version>
-        </dependency>-->
+        </dependency>
         
         <!-- Apache Commons Upload --> 
 	<dependency>

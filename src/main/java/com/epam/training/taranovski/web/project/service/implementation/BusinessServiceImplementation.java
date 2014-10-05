@@ -43,7 +43,7 @@ public class BusinessServiceImplementation implements BusinessService {
 
     @Override
     public List<Vacancy> getAvailableVacancies(Employee employee) {
-        return employeeRepository.getAvailableVacancies(employee);
+        return employeeRepository.getAvailableActiveVacancies(employee);
     }
 
     @Override

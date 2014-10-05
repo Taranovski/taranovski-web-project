@@ -5,11 +5,8 @@
  */
 package com.epam.training.taranovski.web.project.service;
 
-import com.epam.training.taranovski.web.project.domain.BasicSkill;
 import com.epam.training.taranovski.web.project.domain.Employer;
 import com.epam.training.taranovski.web.project.domain.Vacancy;
-import com.epam.training.taranovski.web.project.domain.VacancySkill;
-import java.util.List;
 
 /**
  *

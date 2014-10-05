@@ -6,6 +6,7 @@
 package com.epam.training.taranovski.web.project.domain;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -47,29 +48,15 @@ public class Employer extends User implements Serializable {
 
     @Column(name = "\"telephoneNumber\"")
     private String telephoneNumber;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-//    @Id
-//    @Basic(optional = false)
-//    @NotNull
+    
+    
     @Column(name = "\"employerUserId\"")
     private Integer employerUserId;
-//    @OneToMany(cascade = CascadeType.ALL)
-//    @JoinColumn(referencedColumnName = "\"vacancyId\"")
-//    @Basic(fetch = FetchType.LAZY)
-//    private Collection<Vacancy> vacancyCollection;
-//    @JoinColumn(name = "userId", referencedColumnName = "USER_ID")
-//    @ManyToOne(optional = false)
-//    private User userId;
-//    @OneToMany(cascade = CascadeType.ALL)
-//    @JoinColumn(referencedColumnName = "\"checkDocumentId\"")
-//    private Collection<CheckDocument> checkDocumentCollection;
+
 
     public Employer() {
     }
 
-//    public Employer(Integer employerUserId) {
-//        this.employerUserId = employerUserId;
-//    }
     public String getCompanyName() {
         return companyName;
     }
@@ -110,26 +97,6 @@ public class Employer extends User implements Serializable {
         this.employerUserId = employerUserId;
     }
 
-//    public Collection<Vacancy> getVacancyCollection() {
-//        return vacancyCollection;
-//    }
-//
-//    public void setVacancyCollection(Collection<Vacancy> vacancyCollection) {
-//        this.vacancyCollection = vacancyCollection;
-//    }
-//    public User getUserId() {
-//        return userId;
-//    }
-//    public void setUserId(User userId) {
-//        this.userId = userId;
-//    }
-//    public Collection<CheckDocument> getCheckDocumentCollection() {
-//        return checkDocumentCollection;
-//    }
-//
-//    public void setCheckDocumentCollection(Collection<CheckDocument> checkDocumentCollection) {
-//        this.checkDocumentCollection = checkDocumentCollection;
-//    }
     @Override
     public String toString() {
         return super.toString() + "Employer{" + "companyName=" + companyName + ", field=" + field + ", adress=" + adress + ", telephoneNumber=" + telephoneNumber + '}';
@@ -137,11 +104,11 @@ public class Employer extends User implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = super.hashCode();
-        hash = 59 * hash + (this.companyName != null ? this.companyName.hashCode() : 0);
-        hash = 59 * hash + (this.field != null ? this.field.hashCode() : 0);
-        hash = 59 * hash + (this.adress != null ? this.adress.hashCode() : 0);
-        hash = 59 * hash + (this.telephoneNumber != null ? this.telephoneNumber.hashCode() : 0);
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.companyName);
+        hash = 79 * hash + Objects.hashCode(this.field);
+        hash = 79 * hash + Objects.hashCode(this.adress);
+        hash = 79 * hash + Objects.hashCode(this.telephoneNumber);
         return hash;
     }
 
@@ -153,24 +120,27 @@ public class Employer extends User implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        if (!super.equals((User) obj)) {
+        if (!super.equals(obj)) {
             return false;
         }
-
         final Employer other = (Employer) obj;
-        if ((this.companyName == null) ? (other.companyName != null) : !this.companyName.equals(other.companyName)) {
+        if (!Objects.equals(this.companyName, other.companyName)) {
             return false;
         }
-        if ((this.field == null) ? (other.field != null) : !this.field.equals(other.field)) {
+        if (!Objects.equals(this.field, other.field)) {
             return false;
         }
-        if ((this.adress == null) ? (other.adress != null) : !this.adress.equals(other.adress)) {
+        if (!Objects.equals(this.adress, other.adress)) {
             return false;
         }
-        if (this.telephoneNumber != other.telephoneNumber && (this.telephoneNumber == null || !this.telephoneNumber.equals(other.telephoneNumber))) {
+        if (!Objects.equals(this.telephoneNumber, other.telephoneNumber)) {
             return false;
         }
         return true;
     }
+
+    
+
+    
 
 }

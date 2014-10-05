@@ -58,13 +58,13 @@ public class EmployeeController {
             @ModelAttribute(value = "user") Employee employee,
             ModelAndView modelAndView) {
 
-        if (employee.getStatus().equals("free")) {
+        if ("free".equals(employee.getStatus())) {
             modelAndView.addObject("vacancies", businessService.getAvailableVacancies(employee));
             modelAndView.addObject("offers", businessService.getOffersForEmployee(employee));
             modelAndView.addObject("bids", businessService.getBidsForEmployee(employee));
             modelAndView.addObject("skills", employeeService.getSkillList(employee));
             modelAndView.setViewName("employee.jsp");
-        } else if (employee.getStatus().equals("hired")) {
+        } else if ("hired".equals(employee.getStatus())) {
             modelAndView.addObject("checkDocument", businessService.getJobCheckDocument(employee));
             modelAndView.setViewName("employeeHired.jsp");
         }

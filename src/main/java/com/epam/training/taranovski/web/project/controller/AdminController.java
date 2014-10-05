@@ -6,7 +6,6 @@
 package com.epam.training.taranovski.web.project.controller;
 
 import com.epam.training.taranovski.web.project.domain.Admin;
-import com.epam.training.taranovski.web.project.domain.Employer;
 import com.epam.training.taranovski.web.project.repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

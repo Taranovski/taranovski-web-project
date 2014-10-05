@@ -43,7 +43,8 @@ public class VacancySkillRepositoryImplementation implements VacancySkillReposit
 
     @Override
     public List<VacancySkill> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
+//To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
